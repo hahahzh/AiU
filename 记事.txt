@@ -1,0 +1,43 @@
+mysql
+mysqld -nt --skip-grant-tables
+CREATE DATABASE IF NOT EXISTS AiU default charset utf8 COLLATE utf8_general_ci;
+source /home/test/temp/aiu.sql;
+
+GPS
+userName=kortide
+password=123456
+ip=42.96.164.23
+
+139.159.32.29
+MK08ta%*
+
+/usr/local/mysql/bin/mysql -uroot -p -S/tmp/mysql.sock
+
+export JAVA_HOME=/usr/java/jdk1.7.0_45
+export PATH=$PATH:$JAVA_HOME/bin
+export CLASSPATH=.:$JAVA_HOME/lib
+
+
+2 4 7 8 9
+初学Linux什么都不懂，我刚从官网下载的JDK，文件是java_ee_sdk-6u1-jdk-linux.sh
+从网上找了好多资料大体都一样，没有安装.sh这种文件的。
+把我的命令贴出来：
+[root@mgm jdk]# sudo chmod 755 java_ee_sdk-6u1-jdk-linux.sh
+[root@mgm jdk]# sudo ./java_ee_sdk-6u1-jdk-linux.sh
+Could not locate a suitable jar utility.
+Please ensure that you have Java 6 or newer installed on your system
+and accessible in your PATH or by setting JAVA_HOME
+
+要先装java_se的sdk，然后把JAVA_HOME环境变量设置好
+
+export DISPLAY=:0.0
+echo $DISPLAY
+set env DISPLAY 127.0.0.1:0.0
+
+
+用户 只显示不能修改 OK
+每日一游 icon不要  OK
+客户端登陆页管理 去掉外链 OK
+游戏详细 10个图 1个说明 OK
+新闻 多图 OK
+礼包 介绍图 一个礼包有多个key 礼包排序 固定1234 不固定 0

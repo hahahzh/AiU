@@ -1,0 +1,94 @@
+f2e8d93c-c205-468a-8c6d-4f0df01302c3
+1 升级OK
+http://139.159.32.29:9000/c/update?version=1.1&type=1
+vsrsion版本号
+type 1 IOS 2 Android 3 WP
+
+
+2 注册OK
+http://139.159.32.29:9000/c/reg?z=MjN8MTIzNDV8MS4wfDEyLDE0LDg3LGpqLGZmfDF85Zyf6LGq6YeRNVN8MTM4MzgzODk0Mzl8MTI0OHxoYWhhfDEyMzQ1NnwzMjE=
+
+23|   12345| 1.0  |12,14,87,jj,ff|1                         |土豪金5S |13838389436|1248|  haha|123456|321
+随机 渠道号 版本号  MAC           操作系统 1IOS 2android 3WP  手机型号 手机号      验证码 昵称  密码  随即
+MjN8MTIzNDV8MS4wfDEyLDE0LDg3LGpqLGZmfDF85Zyf6LGq6YeRNVN8MTM4MzgzODk0MzZ8MTI0
+OHxoYWhhfDEyMzQ1NnwzMjE=
+
+
+3 登陆OK
+http://139.159.32.29:9000/c/login?phone=13838389438&psd=123456&type=1&serialNumber=11111
+phone：手机号 
+psd：密码 
+type：1 IOS 2 Android 3 WP  
+serialNumber：IPhone serial（推送用）安卓可省略
+
+
+4 首页之前定义为login?z= OK
+http://139.159.32.29:9000/c/indexpage?z=af017cae-d043-4cd7-8dea-a38315bc44a4
+
+
+5 下载OK
+http://139.159.32.29:9000/c/download?id=3&fileID=icon&entity=models.New&z=af017cae-d043-4cd7-8dea-a38315bc44a4
+此接口所有数据由服务器提供，客户端可以不关心此接口
+
+
+6 订阅OK
+http://139.159.32.29:9000/c/subscription?id=4&z=af017cae-d043-4cd7-8dea-a38315bc44a4
+id：游戏id
+
+6.5退订OK
+http://139.159.32.29:9000/c/unsubscription?id=4&z=af017cae-d043-4cd7-8dea-a38315bc44a4
+id：游戏id
+
+7 新闻OK
+http://139.159.32.29:9000/c/new?z=af017cae-d043-4cd7-8dea-a38315bc44a4&num=3&page=1&time=
+num：请求每页的数量
+page：当前页号（1 2 3 ...）
+time:时间
+
+
+8 新闻详细
+http://139.159.32.29:9000/c/newinfo?id=3&z=af017cae-d043-4cd7-8dea-a38315bc44a4
+id：新闻ID
+
+
+9 每日一游
+http://139.159.32.29:9000/c/invite?num=5&time=98&page=0&z=af017cae-d043-4cd7-8dea-a38315bc44a4
+num：同新闻
+page：同新闻
+time：同新闻
+
+
+10 评测具体内容
+http://139.159.32.29:9000/c/textinfo?z=af017cae-d043-4cd7-8dea-a38315bc44a4&id=4
+id：评测ID
+
+
+11 礼包
+http://139.159.32.29:9000/c/package?num=5&time=98&page=1&z=af017cae-d043-4cd7-8dea-a38315bc44a4
+num：同新闻
+page：同新闻
+time：同新闻
+此接口尚未完全完成
+
+
+12 玩嗨周五
+http://139.159.32.29:9000/c/game_play?num=5&time=98&page=1&z=af017cae-d043-4cd7-8dea-a38315bc44a4
+参数同每日一游
+
+
+13 推荐
+http://139.159.32.29:9000/c/game_invite?z=af017cae-d043-4cd7-8dea-a38315bc44a4
+
+
+14 游戏详细
+http://139.159.32.29:9000/c/gameinfo?z=af017cae-d043-4cd7-8dea-a38315bc44a4&id=4
+id:游戏ID
+
+15 增加评论
+http://127.0.0.1:9000/c/addcomment?id=4&msg=%E6%88%91%E7%9F%A5%E9%81%93%E6%88%91%E9%94%99%E4%BA%86&z=af017cae-d043-4cd7-8dea-a38315bc44a4
+
+16 查看评论
+http://127.0.0.1:9000/c/getcomment?id=4&num=3&page=1&z=af017cae-d043-4cd7-8dea-a38315bc44a4
+id：游戏ID
+num：同新闻
+page：同新闻
