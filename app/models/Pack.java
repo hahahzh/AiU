@@ -29,9 +29,6 @@ public class Pack extends BaseModel {
 	public Integer star; // 热度
 	
 	@Required
-	public String pkey; // 礼包代码
-	
-	@Required
 	public Integer allnum;
 	
 	@Required
