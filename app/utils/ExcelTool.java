@@ -50,7 +50,6 @@ public class ExcelTool {
 		    	cell = row.getCell(j);
 		    	switch(cell.getCellType()){
 		    		case XSSFCell.CELL_TYPE_NUMERIC:   //数字
-		    			
 		    			Double doubleValue = cell.getNumericCellValue();
 		    			str = doubleValue.toString();
 		    			if(str.contains("E")){

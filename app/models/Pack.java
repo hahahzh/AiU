@@ -38,6 +38,9 @@ public class Pack extends BaseModel {
 	@ManyToOne(fetch=FetchType.LAZY,cascade=javax.persistence.CascadeType.REFRESH)
 	public Game game;
 	
+	@Required
+	public int ranking; // 自动排序 0 其他排序 1234
+	
 	public String toString(){
 		return title;
 	}

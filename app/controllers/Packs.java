@@ -79,10 +79,10 @@ public class Packs extends CRUD {
         notFound();
     }
 
-    public static void save(String id) throws Exception {
+    public static void save(String id, File pack_file) throws Exception {
         ObjectType type = ObjectType.get(getControllerClass());
         notFoundIfNull(type);
-        Model object = type.findById(id);
+        Pack object = (Pack)type.findById(id);
         notFoundIfNull(object);
         Binder.bindBean(params.getRootParamNode(), "object", object);
         validation.valid(object);
@@ -94,7 +94,11 @@ public class Packs extends CRUD {
                 render("CRUD/show.html", type, object);
             }
         }
-        object._save();
+        Pack p = object.save();
+        if(pack_file != null && pack_file.isFile()){
+        	savePkey(pack_file.getPath(), p);
+        	pack_file.delete();
+        }
         flash.success(play.i18n.Messages.get("crud.saved", type.modelName));
         if (params.get("_save") != null) {
             redirect(request.controller + ".list");
@@ -132,12 +136,13 @@ public class Packs extends CRUD {
             }
         }
         flash.success(play.i18n.Messages.get("crud.created", type.modelName));
-        
+
+        Pack p = object.save();
         if(pack_file != null && pack_file.isFile()){
-        	savePkey(pack_file.getPath(), object);
+        	savePkey(pack_file.getPath(), p);
         	pack_file.delete();
         }
-        object._save();
+        
         if (params.get("_save") != null) {
             redirect(request.controller + ".list");
         }
