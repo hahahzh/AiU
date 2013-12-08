@@ -75,7 +75,7 @@ public class Customer extends Model {
 	
 	@OneToMany(fetch=FetchType.LAZY,cascade = { CascadeType.REMOVE})
 	public List<Game> addgame;
-
+	
 	public String toString() {
 		return nickname;
 	}

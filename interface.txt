@@ -1,4 +1,3 @@
-f2e8d93c-c205-468a-8c6d-4f0df01302c3
 1 升级OK
 http://139.159.32.29:9000/c/update?version=1.1&type=1
 vsrsion版本号
@@ -24,6 +23,8 @@ serialNumber：IPhone serial（推送用）安卓可省略
 
 4 首页之前定义为login?z= OK
 http://139.159.32.29:9000/c/indexpage?z=af017cae-d043-4cd7-8dea-a38315bc44a4
+result 例
+{"state":"1","results":{"user":{"exp":0,"lv":"小学生"},"adlist":[{"id":14,"icon":"/c/download?id=1&fileID=picture1&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","url":"/c/gameinfo?id=1&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","type":1,"star":4,"data":"1385913433940"},{"id":13,"icon":"/c/download?id=3&fileID=picture&entity=models.EveryGame&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","url":"/c/invite?num=5&page=1&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","type":1,"star":3,"data":"1385913995444"},{"id":9,"icon":"/c/download?id=3&fileID=picture1&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","url":"/c/newinfo?id=3&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","data":"1385914458181"},{"id":8,"icon":"/c/download?id=1&fileID=picture&entity=models.EveryGame&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","url":"/c/invite?num=5&page=1&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","type":0,"star":4,"data":"1385913920244"}],"pubchannel":[{"id":"6","icon":"/c/download?id=6&fileID=icon&entity=models.PublicChannel&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","exp":"60","data":"1385913100638"},{"id":"5","icon":"/c/download?id=5&fileID=icon&entity=models.PublicChannel&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","exp":"50","data":"1385913080012"},{"id":"4","icon":"/c/download?id=4&fileID=icon&entity=models.PublicChannel&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","exp":"40","data":"1385913057388"},{"id":"3","icon":"/c/download?id=3&fileID=icon&entity=models.PublicChannel&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","exp":"30","data":"1385913048386"},{"id":"2","icon":"/c/download?id=2&fileID=icon&entity=models.PublicChannel&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","exp":"20","data":"1385913034688"},{"id":"1","icon":"/c/download?id=1&fileID=icon&entity=models.PublicChannel&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","exp":"10","data":"1385912996253"}],"prechannel":[{"id":"1","icon":"/c/download?id=1&fileID=icon&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","type":"1","exp":"20","star":"4","data":"1385913433940"},{"id":"2","icon":"/c/download?id=2&fileID=icon&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","type":"1","exp":"30","star":"5","data":"1385913644187"}]}}
 
 
 5 下载OK
@@ -35,60 +36,136 @@ http://139.159.32.29:9000/c/download?id=3&fileID=icon&entity=models.New&z=af017c
 http://139.159.32.29:9000/c/subscription?id=4&z=af017cae-d043-4cd7-8dea-a38315bc44a4
 id：游戏id
 
-6.5退订OK
+7 退订OK
 http://139.159.32.29:9000/c/unsubscription?id=4&z=af017cae-d043-4cd7-8dea-a38315bc44a4
 id：游戏id
 
-7 新闻OK
+8 新闻OK
 http://139.159.32.29:9000/c/new?z=af017cae-d043-4cd7-8dea-a38315bc44a4&num=3&page=1&time=
 num：请求每页的数量
 page：当前页号（1 2 3 ...）
 time:时间
 
 
-8 新闻详细
+9 新闻详细OK
 http://139.159.32.29:9000/c/newinfo?id=3&z=af017cae-d043-4cd7-8dea-a38315bc44a4
 id：新闻ID
+result 例
+{"state":"1","results":{"user":{"exp":0,"lv":"小学生"},"newlist":[{"id":2,"icon":"/c/download?id=2&fileID=icon&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","pic":"/c/download?id=2&fileID=picture1&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"新闻测试2","txt":"简介2","hit":400,"data":1385914407447},{"id":1,"icon":"/c/download?id=1&fileID=icon&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","pic":"/c/download?id=1&fileID=picture1&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"新闻测试1","txt":"简介1","hit":400,"data":1385914285993}]}}
 
 
-9 每日一游
+10 每日一游OK
 http://139.159.32.29:9000/c/invite?num=5&time=98&page=0&z=af017cae-d043-4cd7-8dea-a38315bc44a4
 num：同新闻
 page：同新闻
 time：同新闻
+result 例
+{"state":"1","results":{"user":{"exp":0,"lv":"小学生"},"list":[{"id":5,"title":"每日一游测试2","txt":"测试2","data":1385913960042,"picture":"/c/download?id=2&fileID=picture&entity=models.EveryGame&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3"},{"id":4,"title":"每日一游测试1","txt":"是非得失飞个个 打撒","hit":500,"data":1385913920244,"picture":"/c/download?id=1&fileID=picture&entity=models.EveryGame&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3"}]}}
 
 
-10 评测具体内容
+11 评测具体内容
 http://139.159.32.29:9000/c/textinfo?z=af017cae-d043-4cd7-8dea-a38315bc44a4&id=4
 id：评测ID
+result 例
+{"state":"1","results":{"user":{"exp":0,"lv":"小学生"},"newinfo":{"id":4,"icon":"/c/download?id=4&fileID=icon&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"评测1","author":"","res":"","data":1385914556244,"picture1":"/c/download?id=4&fileID=picture1&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt1":"饿位","picture2":"/c/download?id=4&fileID=picture2&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt2":"额外 饿"}}}
 
-
-11 礼包
+12 礼包列表OK
 http://139.159.32.29:9000/c/package?num=5&time=98&page=1&z=af017cae-d043-4cd7-8dea-a38315bc44a4
 num：同新闻
 page：同新闻
 time：同新闻
-此接口尚未完全完成
+
+result 例
+{"state":"1","results":{"user":{"exp":0,"lv":"小学生"},"packagelist":[{"id":5,"game_id":1,"icon":"/c/download?id=5&fileID=icon&entity=models.Pack&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"娜美","star":"4","data":1386482165335},{"id":3,"game_id":1,"icon":"/c/download?id=3&fileID=icon&entity=models.Pack&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"左诺","star":"4","data":1386482095036},{"id":4,"game_id":2,"icon":"/c/download?id=4&fileID=icon&entity=models.Pack&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"山治","star":"4","data":1386482126507},{"id":2,"game_id":1,"icon":"/c/download?id=2&fileID=icon&entity=models.Pack&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"路飞","star":"1","data":1386482048893},{"id":6,"game_id":1,"icon":"/c/download?id=6&fileID=icon&entity=models.Pack&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"骗人布","star":"4","data":1386482970478},{"id":1,"game_id":1,"icon":"/c/download?id=1&fileID=icon&entity=models.Pack&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"火影忍者","star":"4","data":1386470056206}]}}
 
 
-12 玩嗨周五
+13 礼包信息OK
+http://139.159.32.29:9000/c/packagelist?id=1&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3
+id：礼包ID
+result 例
+{"state":"1","results":{"user":{"exp":0,"lv":"小学生"},"packinfo":{"id":1,"icon":"/c/download?id=1&fileID=icon&entity=models.Pack&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"火影忍者","txt":"出席这次选择","star":"4","num":"1","allnum":3,"data":1386470056206}}}
+
+
+14 礼包领取OK
+http://139.159.32.29:9000/c/packagepay?id=1&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3
+id：礼包ID
+{"state":"1","results":{"user":{"exp":0,"lv":"小学生"},"pack":{"pkey":"54675765"}}}
+{"state":"0","msg":"不能重复领取礼包"}
+
+
+
+16 玩嗨周五OK
 http://139.159.32.29:9000/c/game_play?num=5&time=98&page=1&z=af017cae-d043-4cd7-8dea-a38315bc44a4
 参数同每日一游
 
 
-13 推荐
+16 精品游戏&游戏列表&推荐OK
 http://139.159.32.29:9000/c/game_invite?z=af017cae-d043-4cd7-8dea-a38315bc44a4
+result 例
+{"state":"1","results":{"user":{"exp":0,"lv":"小学生"},"list":[{"id":1,"icon":"/c/download?id=1&fileID=icon&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","url":"/c/gameinfo?id=1&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"游戏测试1","star":4,"data":1385913433940,"gtype":"动作冒险","downloadurl":"www.hao123.com"},{"id":2,"icon":"/c/download?id=2&fileID=icon&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","url":"/c/gameinfo?id=2&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"游戏测试22","star":5,"data":1385913644187,"gtype":"休闲娱乐","downloadurl":"www.hao123.com"},{"id":3,"icon":"/c/download?id=3&fileID=icon&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","url":"/c/gameinfo?id=3&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"火影忍者","star":4,"data":1386510098010,"gtype":"动作冒险","downloadurl":"www.hao123.com"},{"id":5,"icon":"/c/download?id=5&fileID=icon&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","url":"/c/gameinfo?id=5&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"犬夜叉","star":4,"data":1386510221931,"gtype":"休闲娱乐","downloadurl":"www.hao123.com"},{"id":4,"icon":"/c/download?id=4&fileID=icon&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","url":"/c/gameinfo?id=4&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"23 飞","star":4,"data":1386510175857,"gtype":"休闲娱乐","downloadurl":"www.hao123.com"}]}}
+
+id:游戏ID
+icon：游戏icon
+url：跳转到游戏专区
+title：标题
+star：星级
+data：时间
+gtype：游戏类型
+downloadurl：游戏下载地址（外部）
 
 
-14 游戏详细
+17 游戏详细&游戏专区
 http://139.159.32.29:9000/c/gameinfo?z=af017cae-d043-4cd7-8dea-a38315bc44a4&id=4
 id:游戏ID
+result 例
+{"state":"1","results":{"user":{"exp":0,"lv":"小学生"},"game":{"id":1,"icon":"/c/download?id=1&fileID=icon&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"游戏测试1","res":"","belong":"动作冒险","bbsurl":"http://www.hao123.com","type":1,"star":"4","hit":400,"data":1385913433940,"img1":"/c/download?id=1&fileID=picture1&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","img2":"/c/download?id=1&fileID=picture2&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","img3":"/c/download?id=1&fileID=picture3&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","img4":"/c/download?id=1&fileID=picture4&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","img5":"/c/download?id=1&fileID=picture5&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","img6":"/c/download?id=1&fileID=picture6&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","img7":"/c/download?id=1&fileID=picture7&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","img8":"/c/download?id=1&fileID=picture8&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","img9":"/c/download?id=1&fileID=picture9&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","img10":"/c/download?id=1&fileID=picture10&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt":" 游戏1测试"}}}
 
-15 增加评论
-http://127.0.0.1:9000/c/addcomment?id=4&msg=%E6%88%91%E7%9F%A5%E9%81%93%E6%88%91%E9%94%99%E4%BA%86&z=af017cae-d043-4cd7-8dea-a38315bc44a4
-
-16 查看评论
-http://127.0.0.1:9000/c/getcomment?id=4&num=3&page=1&z=af017cae-d043-4cd7-8dea-a38315bc44a4
 id：游戏ID
+icon：icon
+title：标题
+res：来源
+belong：游戏类型
+bbsurl：论坛
+type：0：普通可浏览 1:只能跳到外链
+star：星级
+hit：点击量
+data：时间
+img1--img10：大图片地址
+txt：介绍
+
+18 + 
+http://139.159.32.29:9000/c/plus?key=22&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3
+key：搜索关键字
+
+result 例
+{"state":"1","results":{"user":{"exp":0,"lv":"小学生"},"gamelist":[{"id":2,"icon":"/c/download?id=2&fileID=icon&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","url":"/c/gameinfo?id=2&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"游戏测试22","star":5,"data":1385913644187},{"id":1,"icon":"/c/download?id=1&fileID=icon&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","url":"/c/gameinfo?id=1&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"游戏测试1","star":4,"data":1385913433940}]}}
+返回的各个参数与精品推荐相同
+
+
+19 增加评论OK #目前只有游戏有评论
+http://127.0.0.1:9000/c/addcomment?id=2&msg=%E6%88%91%E4%BA%86&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3&type=n
+id:游戏、新闻、评测、攻略的ID
+type=g(游戏) type=n（新闻）
+
+20 查看评论Ok
+http://127.0.0.1:9000/c/getcomment?id=4&num=3&page=1&z=af017cae-d043-4cd7-8dea-a38315bc44a4&type=n
+id:游戏、新闻、评测、攻略的ID
+type=g(游戏) type=n（新闻）
 num：同新闻
 page：同新闻
+
+result 例
+{"state":"1","results":{"user":{"exp":0,"lv":"小学生"},"list":[{"id":12,"news_id":2,"msg":"我道规范4的负担9ee我了","data":1386513145945},{"id":11,"news_id":2,"msg":"我道规范的负担9ee我了","data":1386513142632},{"id":10,"news_id":2,"msg":"我道[p99ee我了","data":1386513138576}]}}
+
+21 用户信息更新
+http://127.0.0.1:9000/c/customerinfo?z=f2e8d93c-c205-468a-8c6d-4f0df01302c3&nickname=ss&os=1&type=土豪金5s&m_number=13838389438&psd=123456&gender=1&portrait=468a-8c6d-4f
+nickname：昵称
+os:1=IPhone 2=Android
+type:手机型号
+m_number：手机号码
+psd：密码
+gender：性别
+portrait：头像（Blob）
+
+22 登出
+http://127.0.0.1:9000/c/logout?z=f2e8d93c-c205-468a-8c6d-4f0df01302c3

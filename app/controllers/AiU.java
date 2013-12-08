@@ -1,9 +1,11 @@
 package controllers;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import models.CPkey;
 import models.Carousel;
 import models.ClientVersion;
 import models.Customer;
@@ -13,8 +15,8 @@ import models.GameMessage;
 import models.LevelType;
 import models.New;
 import models.Pack;
+import models.PackPKey;
 import models.PublicChannel;
-import models.Recommend;
 import models.Session;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONException;
@@ -28,6 +30,7 @@ import play.i18n.Messages;
 import play.mvc.Before;
 import play.mvc.Controller;
 import utils.Coder;
+import utils.DateUtil;
 import utils.JSONUtil;
 import controllers.CRUD.ObjectType;
 
@@ -245,14 +248,35 @@ public class AiU extends Controller {
 		List<Carousel> adlistData = Carousel.find("mtype=? order by id desc",customer.os).fetch(0,5);
 		for(Carousel data:adlistData){
 			JSONObject subad = initResultJSON();
-			subad.put("id", data.ad_game.id);
-			subad.put("icon", "/c/download?id=" + data.ad_game.id + "&fileID=picture1&entity=" + data.ad_game.getClass().getName() + "&z=" + z);
-			//TODO
-//			subad.put("url", data.ad_game.);
-			subad.put("type", data.ad_game.type);
-			subad.put("star", data.ad_game.star);
-			subad.put("data", data.ad_game.data+"");
-			adlistArr.add(subad);
+			subad.put("id", data.id);
+	        
+	  	  if("每日一游&玩嗨周五".equals(data.ct.type)){
+	  		EveryGame l = EveryGame.findById(data.ad_id);
+	  		subad.put("icon", "/c/download?id=" + l.id + "&fileID=picture&entity=" + l.getClass().getName() + "&z=" + z);
+			subad.put("url", "/c/invite?num=5&page=1&z="+z);
+			subad.put("type", l.type);
+			subad.put("star", l.star);
+			subad.put("data", l.data+"");
+	  	  } else if("游戏".equals(data.ct.type)){
+	  		Game l = Game.findById(data.ad_id);
+		  	subad.put("icon", "/c/download?id=" + l.id + "&fileID=picture1&entity=" + l.getClass().getName() + "&z=" + z);
+			subad.put("url", "/c/gameinfo?id="+l.id+"&z="+z);
+			subad.put("type", l.type);
+			subad.put("star", l.star);
+			subad.put("data", l.data+"");
+	  	  }else if("新闻".equals(data.ct.type)){
+	  		New l = New.findById(data.ad_id);
+		  	subad.put("icon", "/c/download?id=" + l.id + "&fileID=picture1&entity=" + l.getClass().getName() + "&z=" + z);
+			subad.put("url", "/c/newinfo?id="+l.id+"&z="+z);
+			subad.put("data", l.data+"");
+	  	  }else if("礼包".equals(data.ct.type)){
+	  		Pack l = Pack.findById(data.ad_id);
+		  	subad.put("icon", "/c/download?id=" + l.id + "&fileID=icon&entity=" + l.getClass().getName() + "&z=" + z);
+			subad.put("url", "c/package?num=5&page=1&z="+z);
+			subad.put("data", l.data+"");
+	  	  }
+			
+		adlistArr.add(subad);
 		}
 		results.put("adlist", adlistArr);
 
@@ -263,8 +287,7 @@ public class AiU extends Controller {
 		for(PublicChannel pc : publicChannel){
 			subpubc.put("id", pc.id+"");
 			subpubc.put("icon", "/c/download?id=" + pc.id + "&fileID=icon&entity=" + pc.getClass().getName() + "&z=" + z);
-				//TODO
-//				subad.put("url", data.ad_game.);
+//			subad.put("url", pc..ad_game.);
 			subpubc.put("exp", pc.exp+"");
 			subpubc.put("data", pc.data+"");
 			pubchannel.add(subpubc);
@@ -279,7 +302,7 @@ public class AiU extends Controller {
 			subprec.put("id", g.id+"");
 			//TODO
 //			subad.put("url", data.ad_game.);
-			subprec.put("icon", "/c/download?id=" + g.id + "&fileID=icon&entity=" + g.getClass().getName() + "&z=" + z);
+			subprec.put("icon", "/c/download?id=" + g.id + "&fileID=icon&entity=models.Game&z=" + z);
 			subprec.put("type", g.type+"");
 			subprec.put("exp", g.exp+"");
 			subprec.put("star", g.star+"");
@@ -315,7 +338,7 @@ public class AiU extends Controller {
 			JSONObject subad = initResultJSON();
 			subad.put("id", data.id);
 			subad.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=" + data.getClass().getName() + "&z=" + z);
-			//TODO
+			subad.put("pic", "/c/download?id=" + data.id + "&fileID=picture1&entity=" + data.getClass().getName() + "&z=" + z);
 //			subad.put("url", data.ad_game.);
 			subad.put("title", data.title);
 			subad.put("txt", data.describe_aiu);
@@ -399,6 +422,8 @@ public class AiU extends Controller {
 			newinfo.put("txt10", data.txt10);
 		}
 		results.put("newinfo", newinfo);
+		data.hit++;
+		data.save();
 		renderSuccess(results);
 	}
 	
@@ -470,10 +495,25 @@ public class AiU extends Controller {
 		if(skey != null && !skey.isEmpty()){
 			sTmp = " and title like '%" + skey + "%' ";
 		}
-		List<Pack> listData = Pack.find("mtype = ? " + sTmp + " order by id desc", c.os).fetch(page, num);
+		List<Pack> listData = Pack.find("mtype="+ c.os + sTmp + " and ranking>0 order by ranking desc,id desc").fetch(page, num);
 		for(Pack data:listData){
 			JSONObject subad = initResultJSON();
 			subad.put("id", data.id);
+			subad.put("game_id", data.game.id);
+			subad.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=" + data.getClass().getName() + "&z=" + z);
+			//TODO
+//			subad.put("url", data.ad_game.);
+			subad.put("title", data.title);
+			subad.put("star", data.star+"");
+			subad.put("data", data.data);
+			
+			packagelist.add(subad);
+		}
+		List<Pack> listData1 = Pack.find("mtype="+ c.os + sTmp + " and ranking=0 order by id desc").fetch(page, num);
+		for(Pack data:listData1){
+			JSONObject subad = initResultJSON();
+			subad.put("id", data.id);
+			subad.put("game_id", data.game.id);
 			subad.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=" + data.getClass().getName() + "&z=" + z);
 			//TODO
 //			subad.put("url", data.ad_game.);
@@ -485,6 +525,95 @@ public class AiU extends Controller {
 		}
 		results.put("packagelist", packagelist);
 		
+		renderSuccess(results);
+	}
+	
+	public static void packageInfo(@Required Long id, @Required String z) throws ParseException {
+		// 参数验证
+		if (Validation.hasErrors()) {
+			renderFail("error_parameter_required");
+		}
+		
+		Session s = sessionCache.get();
+		if(s == null){
+			renderFail("error_session_expired");
+		}
+		Customer c = s.customer;
+
+		JSONObject results = initResultJSON();
+		
+		JSONObject user = initResultJSON();
+		user.put("exp", c.exp);
+		user.put("lv", c.lv.level_name);
+		results.put("user", user);
+		
+		Pack data = Pack.findById(id);
+		
+		JSONObject subad = initResultJSON();
+		subad.put("id", data.id);
+		subad.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=" + data.getClass().getName() + "&z=" + z);
+		//TODO
+//			subad.put("url", data.ad_game.);
+		subad.put("title", data.title);
+		subad.put("txt", data.describe_aiu);
+		subad.put("star", data.star+"");
+		long allnum = PackPKey.count("pack_id=?", data.id);
+		long day = DateUtil.intervalOfDay(new Date(), data.remaining);
+		if(allnum == 0){
+			subad.put("num", "0");
+		}else if(allnum <= day){
+			subad.put("num", "1");
+		}else{
+			subad.put("num", allnum/day+"");
+		}
+		
+		subad.put("allnum", allnum);
+		subad.put("data", data.data);
+	
+		results.put("packinfo", subad);
+		renderSuccess(results);
+	}
+	
+	public static void packagePay(@Required Long id, @Required String z) {
+		// 参数验证
+		if (Validation.hasErrors()) {
+			renderFail("error_parameter_required");
+		}
+		
+		Session s = sessionCache.get();
+		if(s == null){
+			renderFail("error_session_expired");
+		}
+		Customer c = s.customer;
+
+		CPkey cpk= CPkey.find("c_id=? and p_id=?", c.id, id).first();
+		boolean isnew = false;
+		if(cpk == null){
+			cpk = new CPkey();
+			cpk.c = c;
+			cpk.p = Pack.findById(id);
+			cpk.updatetime = new Date().getTime();
+			cpk.save();
+			isnew = true;
+		}
+		
+		if(!isnew){
+			if(new Date().getTime() - cpk.updatetime <= 86400000){
+				renderFail("error_exists_pay");
+			}
+		}
+		JSONObject results = initResultJSON();
+		
+		JSONObject user = initResultJSON();
+		user.put("exp", c.exp);
+		user.put("lv", c.lv.level_name);
+		results.put("user", user);
+		
+		PackPKey data = PackPKey.find("pack_id=?", id).first();
+		JSONObject pkey = initResultJSON();
+		pkey.put("pkey", data.pkey);
+		PackPKey.delete("id=?", data.id);
+		results.put("pack", pkey);
 		renderSuccess(results);
 	}
 	
@@ -512,8 +641,7 @@ public class AiU extends Controller {
 		List<EveryGame> listData = EveryGame.find("mtype = ? and everygametype_id=2 order by id desc", c.os).fetch(page, num);
 		for(EveryGame data:listData){
 			JSONObject subad = initResultJSON();
-			subad.put("id", data.game.id);
-			subad.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=" + data.getClass().getName() + "&z=" + z);
+			subad.put("id", data.id);
 			//TODO
 //				subad.put("url", data.ad_game.);
 			subad.put("title", data.title);
@@ -529,8 +657,8 @@ public class AiU extends Controller {
 		renderSuccess(results);
 	}
 	
-	//精品推荐
-	public static void gameinvite(@Required String z) {
+	//精品推荐 游戏列表
+	public static void gameinvite(int num, long time, int page, @Required String z) {
 		// 参数验证
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
@@ -550,23 +678,24 @@ public class AiU extends Controller {
 		results.put("user", user);
 		
 		JSONArray list = initResultJSONArray();
-		List<Recommend> listData = Recommend.find("mtype = ? order by ranking asc", c.os).fetch();
-		for(Recommend data:listData){
+		List<Game> listData = Game.find("mtype = ? order by ranking desc,id desc", c.os).fetch();
+		for(Game data:listData){
 			JSONObject subad = initResultJSON();
-			subad.put("id", data.game.id);
-			subad.put("icon", "/c/download?id=" + data.game.id + "&fileID=icon&entity=" + data.game.getClass().getName() + "&z=" + z);
-			//TODO
-//					subad.put("url", data.ad_game.);
-			subad.put("title", data.game.title);
-			subad.put("hit", data.game.star);
-			subad.put("data", data.game.data);
+			subad.put("id", data.id);
+			subad.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=models.Game&z=" + z);
+			subad.put("url", "/c/gameinfo?id="+data.id+"&z="+z);
+			subad.put("title", data.title);
+			subad.put("star", data.star);
+			subad.put("data", data.data);
+			subad.put("gtype", data.gtype.gametype_name);
+			subad.put("downloadurl", data.downloadurl);
 			list.add(subad);
 		}
+		
 		results.put("list", list);
 		
 		renderSuccess(results);
 	}
-	
 	
 	public static void getGameinfo(@Required Long id, @Required String z) {
 		// 参数验证
@@ -601,18 +730,21 @@ public class AiU extends Controller {
 		game.put("star", data.star+"");
 		game.put("hit", data.hit);
 		game.put("data", data.data);
-		game.put("img1", "/c/download?id=" + data.id + "&fileID=img1&entity=" + data.getClass().getName() + "&z=" + z);
-		game.put("img2", "/c/download?id=" + data.id + "&fileID=img2&entity=" + data.getClass().getName() + "&z=" + z);
-		game.put("img3", "/c/download?id=" + data.id + "&fileID=img3&entity=" + data.getClass().getName() + "&z=" + z);
-		game.put("img4", "/c/download?id=" + data.id + "&fileID=img4&entity=" + data.getClass().getName() + "&z=" + z);
-		game.put("img5", "/c/download?id=" + data.id + "&fileID=img5&entity=" + data.getClass().getName() + "&z=" + z);
-		game.put("img6", "/c/download?id=" + data.id + "&fileID=img6&entity=" + data.getClass().getName() + "&z=" + z);
-		game.put("img7", "/c/download?id=" + data.id + "&fileID=img7&entity=" + data.getClass().getName() + "&z=" + z);
-		game.put("img8", "/c/download?id=" + data.id + "&fileID=img8&entity=" + data.getClass().getName() + "&z=" + z);
-		game.put("img9", "/c/download?id=" + data.id + "&fileID=img9&entity=" + data.getClass().getName() + "&z=" + z);
-		game.put("img10", "/c/download?id=" + data.id + "&fileID=img10&entity=" + data.getClass().getName() + "&z=" + z);
-		game.put("text", data.txt);
+		game.put("img1", "/c/download?id=" + data.id + "&fileID=picture1&entity=" + data.getClass().getName() + "&z=" + z);
+		game.put("img2", "/c/download?id=" + data.id + "&fileID=picture2&entity=" + data.getClass().getName() + "&z=" + z);
+		game.put("img3", "/c/download?id=" + data.id + "&fileID=picture3&entity=" + data.getClass().getName() + "&z=" + z);
+		game.put("img4", "/c/download?id=" + data.id + "&fileID=picture4&entity=" + data.getClass().getName() + "&z=" + z);
+		game.put("img5", "/c/download?id=" + data.id + "&fileID=picture5&entity=" + data.getClass().getName() + "&z=" + z);
+		game.put("img6", "/c/download?id=" + data.id + "&fileID=picture6&entity=" + data.getClass().getName() + "&z=" + z);
+		game.put("img7", "/c/download?id=" + data.id + "&fileID=picture7&entity=" + data.getClass().getName() + "&z=" + z);
+		game.put("img8", "/c/download?id=" + data.id + "&fileID=picture8&entity=" + data.getClass().getName() + "&z=" + z);
+		game.put("img9", "/c/download?id=" + data.id + "&fileID=picture9&entity=" + data.getClass().getName() + "&z=" + z);
+		game.put("img10", "/c/download?id=" + data.id + "&fileID=picture10&entity=" + data.getClass().getName() + "&z=" + z);
+		game.put("txt", data.txt);
 		results.put("game", game);
+		
+		data.hit++;
+		data.save();
 		renderSuccess(results);
 	}
 	
@@ -669,7 +801,7 @@ public class AiU extends Controller {
 		renderSuccess(initResultJSON());
 	}
 	
-	public static void addComment(@Required Long id, @Required String msg, @Required String z) {
+	public static void addComment(@Required Long id, @Required String type, @Required String msg, @Required String z) {
 		// 参数验证
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
@@ -679,18 +811,20 @@ public class AiU extends Controller {
 		if(s == null){
 			renderFail("error_session_expired");
 		}
-		Customer c = s.customer;
-		
 		GameMessage gm = new GameMessage();
+		if("g".equals(type)){
+			gm.game = Game.findById(id);
+		}else if("n".equals(type)){
+			gm.news = New.findById(id);
+		}
 		gm.data = new Date().getTime();
 		gm.msg = msg;
-		gm.mtype = c.os;
-		gm.game = Game.findById(id);
+		
 		gm.save();
 		renderSuccess(initResultJSON());
 	}
 	
-	public static void getComment(@Required Long id, int num, long time, int page, @Required String z) {
+	public static void getComment(@Required Long id, @Required String type, int num, long time, int page, @Required String z) {
 		// 参数验证
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
@@ -709,17 +843,64 @@ public class AiU extends Controller {
 		results.put("user", user);
 		
 		JSONArray list = initResultJSONArray();
-		List<GameMessage> listData = GameMessage.find("mtype = ? and game_id = ? order by id desc", c.os, id).fetch(page, num);
+		String sql = null;
+		if("g".equals(type)){
+			sql = "game_id="+id;
+		}else if("n".equals(type)){
+			sql = "news_id="+id;
+		}
+		List<GameMessage> listData = GameMessage.find(sql+" order by id desc").fetch(page, num);
 		for(GameMessage data:listData){
 			JSONObject subad = initResultJSON();
 			subad.put("id", data.id);
-			subad.put("game_id", data.game.id);
+			if("g".equals(type)){
+				subad.put("game_id", data.game.id);
+			}else if("n".equals(type)){
+				subad.put("news_id", data.news.id);
+			}
 			subad.put("msg", data.msg);
 			subad.put("data", data.data);
 			list.add(subad);
 		}
 		results.put("list", list);
 		
+		renderSuccess(results);
+	}
+	
+	//+
+	public static void plus(@Required String key, @Required String z){
+		// 参数验证
+		if (Validation.hasErrors()) {
+			renderFail("error_parameter_required");
+		}
+		Session s = sessionCache.get();
+		if(s == null){
+			renderFail("error_session_expired");
+		}
+		Customer c = s.customer;
+
+		JSONObject results = initResultJSON();
+		
+		JSONObject user = initResultJSON();
+		user.put("exp", c.exp);
+		user.put("lv", c.lv.level_name);
+		results.put("user", user);
+		
+		JSONArray gamelist = initResultJSONArray();
+		key = "title like '%"+key.trim()+"%' order by id desc";
+		List<Game> l = Game.find(key).fetch();
+		for(Game g : l){
+			JSONObject subad = initResultJSON();
+			subad.put("id", g.id);
+			subad.put("icon", "/c/download?id=" + g.id + "&fileID=icon&entity=models.Game&z=" + z);
+			subad.put("img", "/c/download?id=" + g.id + "&fileID=picture1&entity=models.Game&z=" + z);
+			subad.put("url", "/c/gameinfo?id="+g.id+"&z="+z);
+			subad.put("title", g.title);
+			subad.put("star", g.star);
+			subad.put("data", g.data);
+			gamelist.add(subad);
+		}
+		results.put("gamelist", gamelist);
 		renderSuccess(results);
 	}
 

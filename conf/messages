@@ -25,6 +25,7 @@ error_already_exists=已被其他账户绑定
 error_not_find_game=此款游戏已被移除
 error_too_big_size=已超出最多订阅数
 error_exists_ss=已被订阅
+error_exists_pay=不能重复领取礼包
 
 register_ok=注册成功.
 login_ok=登录成功.
@@ -189,3 +190,6 @@ allnum=总量
 pubchannelname=公共频道名称
 ranking=排名
 gtype=游戏类型
+ct=轮播位类型
+remaining=活动时间
+downloadurl=下载地址

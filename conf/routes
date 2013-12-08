@@ -23,6 +23,10 @@ GET     /                                       Application.index
 *       /c/addcomment							AiU.addComment
 *       /c/getcomment							AiU.getComment
 *       /c/searchgame							AiU.searchGame
+*       /c/packagelist							AiU.packageInfo
+*       /c/packagepay							AiU.packagePay
+*       /c/plus									AiU.plus
+*       /c/logout								AiU.logout
 
 
 # Ignore favicon requests

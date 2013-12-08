@@ -29,13 +29,11 @@ public class GameMessage extends Model {
 	
 	public long data;
 	
-	@Required
 	@ManyToOne(fetch=FetchType.LAZY,cascade=javax.persistence.CascadeType.REFRESH)
 	public Game game;
 	
-	@Required
-	// 1 IOS 2 Android 3 WP
-	public int mtype;
+	@ManyToOne(fetch=FetchType.LAZY,cascade=javax.persistence.CascadeType.REFRESH)
+	public New news;
 	
 	public String toString(){
 		return msg;

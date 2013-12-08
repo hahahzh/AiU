@@ -27,6 +27,7 @@ public class New extends ThirdModel {
 	@ManyToOne(fetch=FetchType.LAZY,cascade=javax.persistence.CascadeType.REFRESH)
 	public Game game;
 	
+	@Required
 	public Blob picture1;
 	
 	@Column(columnDefinition="TEXT")

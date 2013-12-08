@@ -5,6 +5,19 @@
         <title>#{get 'title' /}</title>
         <meta charset="${_response_encoding}" />
         <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/crud.css'}" />
+                    #{get 'moreScripts' /}
+    #{script 'jquery-1.4.4.min.js' /}
+    #{script 'jquery-calendar.js' /}
+    #{script 'json2.js' /}
+        <!-- #{script 'jquery-ui-1.8.7.custom.min.js' /} -->
+    
+        <script type="text/javascript">
+		//<![CDATA[
+			$(document).ready(function (){ 
+				$(".crud_date input").calendar();
+			});
+		//]]>
+		</script>
     </head>
     <body id="crud">
 

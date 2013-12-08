@@ -1,4 +1,6 @@
 eclipse.preferences.version=1
 encoding//app/views/CRUD/layout.html=UTF-8
 encoding//app/views/main.html=GBK
+encoding//app/views/tags/carousel/form.html=UTF-8
+encoding//crud/views/CRUD/layout.html=UTF-8
 encoding/<project>=UTF-8

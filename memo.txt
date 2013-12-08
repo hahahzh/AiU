@@ -34,10 +34,14 @@ export DISPLAY=:0.0
 echo $DISPLAY
 set env DISPLAY 127.0.0.1:0.0
 
-
+Carousels
 用户 只显示不能修改 OK
 每日一游 icon不要  OK
 客户端登陆页管理 去掉外链 OK
 游戏详细 10个图 1个说明 OK
 新闻 多图 OK
 礼包 介绍图 一个礼包有多个key 礼包排序 固定1234 不固定 0
+
+
+        
+	

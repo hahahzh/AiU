@@ -1,22 +1,16 @@
 package models;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Index;
 
-import play.data.validation.MaxSize;
-import play.data.validation.MinSize;
-import play.data.validation.Password;
 import play.data.validation.Required;
-import play.data.validation.URL;
 import play.db.jpa.Blob;
-import play.db.jpa.Model;
 
 @Table(name="packs")
 @Entity
@@ -29,9 +23,6 @@ public class Pack extends BaseModel {
 	public Integer star; // 热度
 	
 	@Required
-	public Integer allnum;
-	
-	@Required
 	public String describe_aiu; // 简介
 	
 	@Required
@@ -40,6 +31,9 @@ public class Pack extends BaseModel {
 	
 	@Required
 	public int ranking; // 自动排序 0 其他排序 1234
+	
+	@Required
+	public Date remaining;
 	
 	public String toString(){
 		return title;

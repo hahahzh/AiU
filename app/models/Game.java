@@ -61,6 +61,12 @@ public class Game extends ThirdModel {
 	@MaxSize(1000)
 	public String txt; // 详细内容
 	
+	@Required
+	public String downloadurl;
+	
+	@Required
+	public int ranking;
+	
 	public String toString(){
 		return title;
 	}

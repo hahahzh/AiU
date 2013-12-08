@@ -1,0 +1,39 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('crud.show.title', type.modelName) /}
+
+<div id="crudShow" class="${type.name}">
+
+    <h2 id="crudShowTitle">&{'crud.show.title', type.modelName}</h2>
+
+    <div class="objectForm">
+    #{form action:@save(object._key()), enctype:'multipart/form-data'}
+        #{carousel.form /}
+        <p class="crudButtons">
+            <input type="submit" name="_save" value="&{'crud.save', type.modelName}" />
+            <input type="submit" name="_saveAndContinue" value="&{'crud.saveAndContinue', type.modelName}" />
+        </p>
+    #{/form}
+    </div>
+
+    #{form @delete(object._key())}
+        <p class="crudDelete">
+            <input type="submit" value="&{'crud.delete', type.modelName}" />
+        </p>
+    #{/form}
+
+</div>
+#{form action:@getEntityList(), name:'selForm', id:'selForm', method:'GET'}
+<input type="hidden" name="selval" id="selval"/>
+<input type="hidden" name="mtype" id="mtype"/>
+#{/form}
+<script type="text/javascript">  
+ function change1(){
+	
+	var form = document.getElementById("selForm");
+//	alert($("#selName").val());
+	$("#selval").val($("#selName").val());
+	$("#mtype").val($("#object_mtype").val());
+//	alert($("#selval").val());
+	form.submit();
+ }
+</script>

@@ -15,5 +15,6 @@ public class SecondModel extends BaseModel {
 
 	public String res; // 来源
 	
+	@Required
 	public Long hit;// 点击量
 }
