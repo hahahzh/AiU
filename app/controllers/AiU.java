@@ -1,12 +1,15 @@
 package controllers;
 
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import models.CPkey;
 import models.Carousel;
+import models.CheckDigit;
 import models.ClientVersion;
 import models.Customer;
 import models.EveryGame;
@@ -22,6 +25,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import play.cache.Cache;
+import play.data.validation.Phone;
 import play.data.validation.Required;
 import play.data.validation.Validation;
 import play.db.Model;
@@ -31,6 +35,7 @@ import play.mvc.Before;
 import play.mvc.Controller;
 import utils.Coder;
 import utils.DateUtil;
+import utils.Demo_Mt;
 import utils.JSONUtil;
 import controllers.CRUD.ObjectType;
 
@@ -105,7 +110,7 @@ public class AiU extends Controller {
 	 * 
 	 * @param sessionID
 	 */
-	@Before(unless={"register","login","sendResetPasswordMail","update"},priority=1)
+	@Before(unless={"checkDigit", "register", "login", "sendResetPasswordMail", "update"},priority=1)
 	public static void validateSessionID(@Required String z) {
 		
 		Session s = Session.find("bySessionID",z).first();
@@ -115,25 +120,53 @@ public class AiU extends Controller {
 		}
 	}
 	
-	/**
-	 * 用户注册
-	 * 
-	 * @param email
-	 * @param username
-	 * @param password
-	 * @param sex
-	 */
+	public static void checkDigit(@Required String m) {
+		// 参数验证
+		if (Validation.hasErrors()) {
+			renderFail("error_parameter_required");
+		}
+		if(!Validation.phone(SUCCESS, m).ok){
+			renderFail("error_parameter_required");
+		}
+		Random r = new Random();
+		int n = Math.abs(r.nextInt())/10000;
+		CheckDigit cd = new CheckDigit();
+		cd.d = n;
+		cd.updatetime = new Date().getTime();
+		cd._save();
+		
+		try {
+			Demo_Mt.sendSMS(m, "矮油互动娱乐欢迎您！验证码:"+n);
+		} catch (UnsupportedEncodingException e) {
+			cd._delete();
+			play.Logger.error(e.getMessage());
+			renderText("failed");
+		}
+		renderText("OK");
+	}
+	
+	// 注册
 	public static void register(@Required String z) {
 		// 参数验证
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
 		}
 
-		try {
-			
+		try {			
 			byte[] b = Coder.decryptBASE64(z);
 			String src = new String(b);
 			String[] arr = src.split("\\|");
+		
+			int i = Integer.parseInt(arr[7]);
+			CheckDigit c = CheckDigit.find("d=?", i).first();
+			if(c == null){
+				renderFail("error_checkdigit");
+			}
+			if(new Date().getTime() - c.updatetime > 1800000){
+				c.delete();
+				renderFail("error_checkdigit");
+			}
+			c.delete();
 			
 			Customer m = Customer.find("byM_number", arr[6]).first();
 			if (m == null) {

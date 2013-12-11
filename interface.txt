@@ -168,4 +168,11 @@ gender：性别
 portrait：头像（Blob）
 
 22 登出
-http://127.0.0.1:9000/c/logout?z=f2e8d93c-c205-468a-8c6d-4f0df01302c3
+http://139.159.32.29:9000/c/logout?z=f2e8d93c-c205-468a-8c6d-4f0df01302c3
+
+23 获取验证码
+http://139.159.32.29:9000/c/checkdigit?m=15111111111
+m：手机号码
+
+返回文本信息
+OK：成功  failed：失败

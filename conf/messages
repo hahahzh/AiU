@@ -26,6 +26,7 @@ error_not_find_game=此款游戏已被移除
 error_too_big_size=已超出最多订阅数
 error_exists_ss=已被订阅
 error_exists_pay=不能重复领取礼包
+error_checkdigit=校验码过期
 
 register_ok=注册成功.
 login_ok=登录成功.

@@ -27,7 +27,7 @@ GET     /                                       Application.index
 *       /c/packagepay							AiU.packagePay
 *       /c/plus									AiU.plus
 *       /c/logout								AiU.logout
-
+*       /c/checkdigit							AiU.checkDigit
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
