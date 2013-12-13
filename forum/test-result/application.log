@@ -1,0 +1,19 @@
+29 十一月 2013 16:00:58,564 INFO  ~ Starting E:\MyJava\play-1.2.5.3\forum
+29 十一月 2013 16:00:59,045 WARN  ~ You're running Play! in DEV mode
+29 十一月 2013 16:00:59,137 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
+29 十一月 2013 16:01:06,990 WARN  ~ The path for a staticDir route must end with / (GET /public -> staticDir:public)
+29 十一月 2013 16:01:09,990 INFO  ~ Connected to jdbc:mysql://127.0.0.1:3306/AiU?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false&rewriteBatchedStatements=true
+29 十一月 2013 16:01:11,379 INFO  ~ Application 'Sample Forum' is now started !
+29 十一月 2013 16:01:30,213 INFO  ~ From Mock Mailer
+	New email received by
+	From: admin@sampleforum.com
+	ReplyTo: help@sampleforum.com
+	To: "toto@sampleforum.com" <toto@sampleforum.com>, New users notice <new-users@sampleforum.com>
+	Subject: Welcome Toto
+	text/plain; charset=UTF-8: Hey Toto, 
+
+Please confirm your registration by clicking on http://localhost:9000/signup/a1f4290e-a6bb-4b6f-9096-5d34fb04745e
+
+Thank ! 
+	
+

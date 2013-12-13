@@ -1,0 +1,15 @@
+eclipse.preferences.version=1
+encoding//app/views/Application/login.html=UTF-8
+encoding//app/views/Forums/index.html=UTF-8
+encoding//app/views/Forums/show.html=UTF-8
+encoding//app/views/Topics/post.html=UTF-8
+encoding//app/views/Topics/reply.html=UTF-8
+encoding//app/views/Topics/show.html=UTF-8
+encoding//app/views/Users/index.html=UTF-8
+encoding//app/views/Users/show.html=UTF-8
+encoding//app/views/errors/403.html=UTF-8
+encoding//app/views/errors/404.html=UTF-8
+encoding//app/views/main.html=UTF-8
+encoding//app/views/tags/pagination.html=UTF-8
+encoding//app/views/tags/showPost.html=UTF-8
+encoding/<project>=UTF-8

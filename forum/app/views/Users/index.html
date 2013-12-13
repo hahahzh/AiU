@@ -1,0 +1,27 @@
+#{extends 'main.html' /}
+
+<h1 id="title">用户</h1>
+<p class="light">
+	#{pluralize size:nbUsers, word:'用户' /}
+</p>
+
+#{pagination page:page ?: 1, size:nbUsers /}
+
+<table id="users-list">
+	<thead>
+		<tr>
+			<th class="main">用户名</th>
+			<th class="infos">帖子</th>
+		</tr>
+	</thead>
+	#{list items:users, as:'user'}
+		<tr>
+			<td class="main">
+				<a href="@{Users.show(user.id)}">${user.name}</a>
+			</td>
+			<td class="infos">
+				${user.postsCount}
+			</td>
+		</tr>
+	#{/list}
+</table>

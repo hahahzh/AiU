@@ -1,0 +1,19 @@
+#{extends 'main.html' /}
+
+<div id="breadcrumb">
+	<a href="@{Forums.index}">论坛</a> 鈫�<a href="@{Forums.show(topic.forum.id)}">${topic.forum.name}</a> 鈫�<a href="@{Topics.show(topic.forum.id, topic.id)}">${topic.subject}</a>
+</div>
+
+<h1 id="title">回帖${topic.subject}禄</h1>
+<p class="light">
+	by ${connected.name}
+</p>
+
+<form id="post" action="@{Topics.createReply(topic.forum.id, topic.id)}" method="POST" accept-charset="${_response_encoding}">
+	<p>
+		<textarea name="content" rows="8" cols="40" id="contentText"></textarea>
+	</p>
+	<p class="buttons">
+		<input type="submit" value="回帖" id="postReply" /> or <a class="action" href="@{Topics.show(topic.forum.id, topic.id)}">取消</a>
+	</p>
+</form>

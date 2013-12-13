@@ -1,0 +1,22 @@
+#{extends 'main.html' /}
+
+<div id="breadcrumb">
+	<a href="@{Users.index}">用户</a> →
+</div>
+
+<h1 id="title">${user.name}</h1>
+<p class="light">
+	#{pluralize size:user.postsCount, word:'帖子' /} 在 #{pluralize size:user.topicsCount, word:'主题' /}
+</p>
+
+#{if user.recentsPosts}
+	<h2>搜寻记录 ...</h2>
+
+	#{list items:user.recentsPosts, as:'post'}
+		#{showPost arg:post, showTopic:true /}
+	#{/list}
+#{/if}
+
+#{else}
+	<h2>这个用户没有帖子</h2>
+#{/else}

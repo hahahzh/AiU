@@ -1,0 +1,20 @@
+#{extends 'main.html' /}
+
+<h1 id="title">登陆</h1>
+<p class="light">
+    
+</p>
+
+<form id="login" action="@{Application.authenticate}" method="POST" accept-charset="${_response_encoding}">
+	<p>
+		<label>手机号</label>
+		<input type="text" name="m" value="${flash.m}" id="m"/>
+	</p>
+	<p>
+		<label>密码</label>
+		<input type="password" name="password" value="" id="password" />
+	</p>
+	<p class="buttons">
+		<input type="submit" value="登陆" id="loginButton" />
+	</p>
+</form>

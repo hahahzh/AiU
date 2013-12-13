@@ -1,0 +1,36 @@
+#{extends 'main.html' /}
+
+<div id="breadcrumb">
+	<a href="@{Forums.index}">论坛</a>→<a href="@{Forums.show(topic.forum.id)}">${topic.forum.name}</a>
+</div>
+
+<h1 id="title">${topic.subject}</h1>
+<p class="light">
+	<strong>
+		#{pluralize size:topic.postsCount, word:'帖子' /} by #{pluralize size:topic.voicesCount, word:'用户' /}
+	</strong>
+</p>
+#{pagination page:page ?: 1, size:topic.postsCount /}
+
+#{list items:topic.getPosts(page ?: 1, pageSize), as:'post'}
+	#{showPost post /}
+#{/list}
+
+#{if connected}
+	<p>
+		<a class="action" href="@{Topics.reply(topic.forum.id, topic.id)}">回复</a>
+	</p>
+#{/if}
+
+#{if connected?.admin}
+	<div id="youreadmin">
+		管理员选项
+	</div>
+
+	<div class="box">
+		<h2>删除主题</h2>
+		<form action="@{Topics.delete(topic.forum.id, topic.id)}" method="POST">
+			<input type="submit" value="删除" id="deleteIt" />
+		</form>
+	</div>	
+#{/if}
