@@ -117,6 +117,9 @@ public class AiU extends Controller {
 		sessionCache.set(s);
 		if (s == null) {
 			renderFail("error_session_expired");
+			if(new Date().getTime() - s.data > 1800000){
+				
+			}
 		}
 	}
 	
@@ -244,8 +247,11 @@ public class AiU extends Controller {
 			s = new Session();
 			s.customer = customer;
 		}
-		s.sessionID = UUID.randomUUID().toString();
-		s.save();
+		if(phone.equals("10000000000") && phone.equals("20000000000")){
+			s.sessionID = UUID.randomUUID().toString();
+			s.data = new Date().getTime();
+			s.save();
+		}
 
 		JSONObject results = initResultJSON();
 		results.put("uid", customer.getId());
@@ -255,7 +261,6 @@ public class AiU extends Controller {
 		results.put("name", customer.nickname);
 		results.put("session", s.sessionID);
 		renderSuccess(results);
-
 	}
 	
 	public static void indexPage(@Required String z) {

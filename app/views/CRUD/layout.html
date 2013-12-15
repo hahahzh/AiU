@@ -23,9 +23,11 @@
     <body id="crud">
 
         <div id="crudHeader">
-            <h1><a href="@{CRUD.index()}">&{'crud.title'}</a></h1> 
+            <h1><font color="yellow">&{'crud.title'}</font></h1> 
         </div>
 		<div align="right">
+		你好 &nbsp;&nbsp;${session.admin_name}
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		    <a href="@{Secure.logout()}"></>退出</a>
 		</div>
 #{if request.actionMethod != 'index'}
@@ -44,9 +46,8 @@
                 ${error ?: flash.error}
             </div>
 #{/if}
-
         <div id="crudContent">
-#{doLayout /}
+				#{doLayout /}
         </div>
 
         <div id="crudFooter">

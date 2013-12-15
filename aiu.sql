@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: aiu
 Target Host: localhost
 Target Database: aiu
-Date: 2013/12/8 23:10:28
+Date: 2013/12/15 18:31:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -30,11 +30,11 @@ CREATE TABLE `appadmin` (
   `psd` varchar(255) DEFAULT NULL,
   `role` tinyint(4) DEFAULT NULL,
   `admingroup` int(11) DEFAULT NULL,
-  `game_id` bigint(20) NOT NULL,
+  `game_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK45B0B5CE4429C99E` (`game_id`),
   CONSTRAINT `FK45B0B5CE4429C99E` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for appsession
@@ -50,7 +50,7 @@ CREATE TABLE `appsession` (
   KEY `FK5698915555FD001E` (`customer_id`),
   KEY `idx_sessionID` (`sessionID`),
   CONSTRAINT `FK5698915555FD001E` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for carouseltype
@@ -60,6 +60,17 @@ CREATE TABLE `carouseltype` (
   `type` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for checkdigit
+-- ----------------------------
+CREATE TABLE `checkdigit` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `d` int(11) NOT NULL,
+  `updatetime` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `checkdigit_d` (`d`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for clientversion
@@ -116,7 +127,7 @@ CREATE TABLE `customer` (
   KEY `idx_m_number` (`m_number`),
   CONSTRAINT `FK24217FDE77569E2A` FOREIGN KEY (`lv_id`) REFERENCES `leveltype` (`id`),
   CONSTRAINT `FK24217FDEB2B1ADF2` FOREIGN KEY (`vid_id`) REFERENCES `clientversion` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for customer_games
@@ -140,8 +151,8 @@ CREATE TABLE `customer_packs` (
   UNIQUE KEY `addpack_id` (`addpack_id`),
   KEY `FK86E1E5D92E40847D` (`addpack_id`),
   KEY `FK86E1E5D955FD001E` (`customer_id`),
-  CONSTRAINT `FK86E1E5D955FD001E` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`),
-  CONSTRAINT `FK86E1E5D92E40847D` FOREIGN KEY (`addpack_id`) REFERENCES `packs` (`id`)
+  CONSTRAINT `FK86E1E5D92E40847D` FOREIGN KEY (`addpack_id`) REFERENCES `packs` (`id`),
+  CONSTRAINT `FK86E1E5D955FD001E` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -400,15 +411,27 @@ INSERT INTO `adlist` VALUES ('8', '1', '1', '2');
 INSERT INTO `adlist` VALUES ('9', '1', '3', '4');
 INSERT INTO `adlist` VALUES ('13', '1', '3', '2');
 INSERT INTO `adlist` VALUES ('14', '1', '1', '3');
+INSERT INTO `appadmin` VALUES ('1', 'admin', '123456', '0', '0', null);
+INSERT INTO `appadmin` VALUES ('5', '超级管理员', '222222', '0', '0', null);
+INSERT INTO `appadmin` VALUES ('6', '网易娱乐', '111111', '1', '1', '3');
+INSERT INTO `appsession` VALUES ('1', '1384545712555', '1', '1');
+INSERT INTO `appsession` VALUES ('2', '1385465657822', '2', '2');
 INSERT INTO `appsession` VALUES ('9', '1385912529376', 'f2e8d93c-c205-468a-8c6d-4f0df01302c3', '9');
+INSERT INTO `appsession` VALUES ('10', '1386778121884', '10546383-67f5-46fe-bfe9-21f8f8d9391e', '10');
+INSERT INTO `appsession` VALUES ('11', '1386778934425', '10a08874-a621-49f5-9a67-b71fe9dc50ca', '11');
 INSERT INTO `carouseltype` VALUES ('2', '每日一游&玩嗨周五');
 INSERT INTO `carouseltype` VALUES ('3', '游戏');
 INSERT INTO `carouseltype` VALUES ('4', '新闻');
 INSERT INTO `carouseltype` VALUES ('5', '礼包');
+INSERT INTO `checkdigit` VALUES ('8', '796', '1386778646798');
 INSERT INTO `clientversion` VALUES ('1', '1385912558590', '1', '这是一个更新测试', 'http://www.sohu.com', '1.0.0');
 INSERT INTO `cpkey` VALUES ('1', '1386490357528', '9', '1');
 INSERT INTO `cpkey` VALUES ('2', '1386490460373', '9', '4');
+INSERT INTO `customer` VALUES ('1', '1', '1385912569244', '0', '0', null, '10000000000', '11,22,33', '游客', '1', null, '123', null, null, '1', null);
+INSERT INTO `customer` VALUES ('2', '2', '1387455226566', '0', '0', null, '20000000000', '11,22,33', '游客', '2', null, '123', null, null, '1', null);
 INSERT INTO `customer` VALUES ('9', '12345', '1385912529359', '0', '0', null, '13838389439', '12,14,87,jj,ff', 'ss', '1', 'null|null', '123456', null, '土豪金5S', '1', null);
+INSERT INTO `customer` VALUES ('10', '12345', '1386778121836', '0', null, null, '13938389436', '12,14,87,jj,ff', 'haha', '1', null, '123456', null, '土豪金5S', '1', null);
+INSERT INTO `customer` VALUES ('11', '12345', '1386778934402', '0', null, null, '13938389437', '12,14,87,jj,ff', 'haha', '1', null, '123456', null, '土豪金5S', '1', null);
 INSERT INTO `customer_games` VALUES ('9', '1');
 INSERT INTO `customer_games` VALUES ('9', '2');
 INSERT INTO `everygame` VALUES ('1', '1385913920244', '1', '每日一游测试1', '500', '百度', 'http://baidu.com', '我', '50255be3-6ba9-4347-a672-dd2b84f187af|image/png', '4', '是非得失飞个个 打撒', '0', '1', '1');

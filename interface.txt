@@ -176,3 +176,16 @@ m：手机号码
 
 返回文本信息
 OK：成功  failed：失败
+
+
+24 游客账号
+phone：10000000000（IOS） 20000000000（安卓）
+psd：123（固定） 
+type：1 IOS 2 Android 3 WP  
+serialNumber：IPhone serial（不能为空可随意填写）安卓可省略
+
+返回
+{"state":"1","results":{"uid":1,"phone":"10000000000","exp":0,"lv":"小学生","name":"游客","session":"1"}}
+{"state":"1","results":{"uid":2,"phone":"20000000000","exp":0,"lv":"小学生","name":"游客","session":"2"}}
+
+

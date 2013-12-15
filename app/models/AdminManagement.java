@@ -26,8 +26,7 @@ public class AdminManagement extends Model {
 
 	@Required
 	@MaxSize(15)
-	@MinSize(6)
-	@Match(value = "^\\w*$", message = "Not a valid username")
+	@MinSize(3)
 	public String name;
 
 	@Required
@@ -36,11 +35,11 @@ public class AdminManagement extends Model {
 	@Password
 	public String psd;
 	
-	public Byte role;
+	public Integer role;
 	
 	public Integer admingroup;
 	
-	@OneToOne(optional = false, cascade = { CascadeType.ALL},fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.LAZY,cascade=javax.persistence.CascadeType.ALL)
 	public Game game;
 
 	public String toString() {

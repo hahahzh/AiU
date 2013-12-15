@@ -1,0 +1,43 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('crud.title') /}
+
+<div id="crudIndex">
+
+    <h2>&{'crud.index.title'}</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>&{'crud.index.objectType'}</th>
+                <th width="20%">&{'crud.index.action'}</th>
+            </tr>
+        </thead>
+        <tbody>
+#{default.types}
+	#{if session.admin_group=='1'}
+		#{if type.name=='News' || type.name=='Games'}
+          <tr>
+              <td>
+                  <a href="${type.listAction}">&{type.name}</a>
+              </td>
+              <td class="crudNew" >
+                  <a href="${type.blankAction}">&{'crud.index.add', type}</a>
+              </td>
+          </tr>
+          #{/if}
+	#{/if}
+	#{else}
+		<tr>
+              <td>
+                  <a href="${type.listAction}">&{type.name}</a>
+              </td>
+              <td class="crudNew" >
+                  <a href="${type.blankAction}">&{'crud.index.add', type}</a>
+              </td>
+          </tr>
+	#{/else}
+#{/default.types}
+        </tbody>
+    </table>
+
+</div>

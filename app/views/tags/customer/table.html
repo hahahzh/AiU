@@ -58,7 +58,12 @@
                                 
                              %{ } }%
                         %{ } else { }%
-                            ${object[field]?.escape()?.raw()}
+                        	#{if _caller.type.getField(field).name == 'gender'}
+                        		${object[field] == 0?'男':'女'}
+                        	#{/if}
+                        	#{else}
+                        		${object[field]?.escape()?.raw()}
+                        	#{/else}
                         %{ } }%
                     %{ } }%
                 %{ } }%

@@ -53,7 +53,7 @@ clear_cache_success=清空缓存成功.
 set_move_alarm_success=设置移动报警成功.
 get_version_success=获取最新版本成功.
 
-crud.title=管理
+crud.title=矮油互动娱乐管理平台
 crud.home=主页
 crud.blank=创建
 crud.index.title=请选择一个板块编辑
@@ -96,6 +96,7 @@ crud.help.past=以往.
 crud.help.after=在之后 %s.
 crud.help.before=在之前 %s.
 crud.help.range=在 %d 和 %d
+crud.help.numeric=数字
 
 secure.title=
 secure.username=用户名:
@@ -194,3 +195,5 @@ gtype=游戏类型
 ct=轮播位类型
 remaining=活动时间
 downloadurl=下载地址
+CarouselTypes=轮播位类型
+CarouselType=轮播位类型

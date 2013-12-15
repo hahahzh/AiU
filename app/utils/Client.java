@@ -1,7 +1,16 @@
-﻿package utils;
-import java.io.*;
-import java.net.*;
-import java.security.*;
+package utils;
+
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -575,5 +584,4 @@ public class Client {
 			return "";
 		}
 	}
-
 }
