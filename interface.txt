@@ -155,7 +155,7 @@ num：同新闻
 page：同新闻
 
 result 例
-{"state":"1","results":{"user":{"exp":0,"lv":"小学生"},"list":[{"id":12,"news_id":2,"msg":"我道规范4的负担9ee我了","data":1386513145945},{"id":11,"news_id":2,"msg":"我道规范的负担9ee我了","data":1386513142632},{"id":10,"news_id":2,"msg":"我道[p99ee我了","data":1386513138576}]}}
+{"state":"1","results":{"user":{"exp":0,"lv":"小学生"},"list":[{"id":17,"game_id":4,"msg":"提提意见7","data":1387212090063,"username":"ss","portrait":"/c/download?id=9&fileID=portrait&entity=models.Customer&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3"},{"id":16,"game_id":4,"msg":"提提意见6","data":1387212087671,"username":"ss","portrait":"/c/download?id=9&fileID=portrait&entity=models.Customer&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3"},{"id":15,"game_id":4,"msg":"提提意见2","data":1387212082635,"username":"ss","portrait":"/c/download?id=9&fileID=portrait&entity=models.Customer&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3"},{"id":3,"game_id":4,"msg":"我道我了","data":1386510943169,"username":"游客"},{"id":2,"game_id":4,"msg":"我知道我了","data":1386510941491,"username":"游客"}]}}
 
 21 用户信息更新
 http://127.0.0.1:9000/c/customerinfo?z=f2e8d93c-c205-468a-8c6d-4f0df01302c3&nickname=ss&os=1&type=土豪金5s&m_number=13838389438&psd=123456&gender=1&portrait=468a-8c6d-4f
@@ -188,4 +188,9 @@ serialNumber：IPhone serial（不能为空可随意填写）安卓可省略
 {"state":"1","results":{"uid":1,"phone":"10000000000","exp":0,"lv":"小学生","name":"游客","session":"1"}}
 {"state":"1","results":{"uid":2,"phone":"20000000000","exp":0,"lv":"小学生","name":"游客","session":"2"}}
 
+25 获得启动页
+http://127.0.0.1:9000/c/startpage
 
+result 例
+{"state":"1","results":{"imgs":["/c/download?id=1&fileID=pic&entity=models.IndexPage&z=1","/c/download?id=2&fileID=pic&entity=models.IndexPage&z=1","/c/download?id=3&fileID=pic&entity=models.IndexPage&z=1"]}}
+imgs为数组可以返回多张启动页图片

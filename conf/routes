@@ -28,6 +28,7 @@ GET     /                                       Application.index
 *       /c/plus									AiU.plus
 *       /c/logout								AiU.logout
 *       /c/checkdigit							AiU.checkDigit
+*       /c/startpage							AiU.startPage
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

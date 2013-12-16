@@ -35,6 +35,10 @@ public class GameMessage extends Model {
 	@ManyToOne(fetch=FetchType.LAZY,cascade=javax.persistence.CascadeType.REFRESH)
 	public New news;
 	
+	@Required
+	@ManyToOne(fetch=FetchType.LAZY,cascade=javax.persistence.CascadeType.REFRESH)
+	public Customer c;
+	
 	public String toString(){
 		return msg;
 	}

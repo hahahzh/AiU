@@ -15,6 +15,7 @@ import models.Customer;
 import models.EveryGame;
 import models.Game;
 import models.GameMessage;
+import models.IndexPage;
 import models.LevelType;
 import models.New;
 import models.Pack;
@@ -110,7 +111,7 @@ public class AiU extends Controller {
 	 * 
 	 * @param sessionID
 	 */
-	@Before(unless={"checkDigit", "register", "login", "sendResetPasswordMail", "update"},priority=1)
+	@Before(unless={"startPage", "checkDigit", "register", "login", "sendResetPasswordMail", "update"},priority=1)
 	public static void validateSessionID(@Required String z) {
 		
 		Session s = Session.find("bySessionID",z).first();
@@ -802,7 +803,7 @@ public class AiU extends Controller {
 		if(g == null){
 			renderFail("error_not_find_game");
 		}
-		if(customer.addgame != null && customer.addgame.size() > 20){
+		if(customer.addgame != null && customer.addgame.size() > 40){
 			renderFail("error_too_big_size");
 		}
 		for(Game gg:customer.addgame){
@@ -839,7 +840,7 @@ public class AiU extends Controller {
 		renderSuccess(initResultJSON());
 	}
 	
-	public static void addComment(@Required Long id, @Required String type, @Required String msg, @Required String z) {
+	public static void addComment(Long id, @Required String type, @Required String msg, @Required String z) {
 		// 参数验证
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
@@ -850,13 +851,16 @@ public class AiU extends Controller {
 			renderFail("error_session_expired");
 		}
 		GameMessage gm = new GameMessage();
-		if("g".equals(type)){
-			gm.game = Game.findById(id);
-		}else if("n".equals(type)){
-			gm.news = New.findById(id);
+		if(id != null){
+			if("g".equals(type)){
+				gm.game = Game.findById(id);
+			}else if("n".equals(type)){
+				gm.news = New.findById(id);
+			}
 		}
 		gm.data = new Date().getTime();
 		gm.msg = msg;
+		gm.c = s.customer;
 		
 		gm.save();
 		renderSuccess(initResultJSON());
@@ -898,6 +902,10 @@ public class AiU extends Controller {
 			}
 			subad.put("msg", data.msg);
 			subad.put("data", data.data);
+			subad.put("username", data.c.nickname);
+			if(data.c.portrait.exists()){
+				subad.put("portrait", "/c/download?id=" + data.c.id + "&fileID=portrait&entity=" + data.c.getClass().getName() + "&z=" + z);
+			}
 			list.add(subad);
 		}
 		results.put("list", list);
@@ -906,7 +914,7 @@ public class AiU extends Controller {
 	}
 	
 	//+
-	public static void plus(@Required String key, @Required String z){
+	public static void plus(@Required String key, String gtype, @Required String z){
 		// 参数验证
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
@@ -925,6 +933,9 @@ public class AiU extends Controller {
 		results.put("user", user);
 		
 		JSONArray gamelist = initResultJSONArray();
+//		if(gtype != null && !gtype.isEmpty()){
+//			gtype
+//		}
 		key = "title like '%"+key.trim()+"%' order by id desc";
 		List<Game> l = Game.find(key).fetch();
 		for(Game g : l){
@@ -939,6 +950,19 @@ public class AiU extends Controller {
 			gamelist.add(subad);
 		}
 		results.put("gamelist", gamelist);
+		renderSuccess(results);
+	}
+	
+	//启动页
+	public static void startPage(){
+
+		JSONObject results = initResultJSON();
+		JSONArray list = new JSONArray();
+		List<IndexPage> l = IndexPage.findAll();
+		for(IndexPage ip : l){
+			list.add("/c/download?id=" + ip.id + "&fileID=pic&entity=models.IndexPage&z=1");
+		}
+		results.put("imgs", list);
 		renderSuccess(results);
 	}
 
