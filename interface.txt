@@ -102,7 +102,7 @@ http://139.159.32.29:9000/c/game_play?num=5&time=98&page=1&z=af017cae-d043-4cd7-
 16 精品游戏&游戏列表&推荐OK
 http://139.159.32.29:9000/c/game_invite?z=af017cae-d043-4cd7-8dea-a38315bc44a4
 result 例
-{"state":"1","results":{"user":{"exp":0,"lv":"小学生"},"list":[{"id":1,"icon":"/c/download?id=1&fileID=icon&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","url":"/c/gameinfo?id=1&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"游戏测试1","star":4,"data":1385913433940,"gtype":"动作冒险","downloadurl":"www.hao123.com"},{"id":2,"icon":"/c/download?id=2&fileID=icon&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","url":"/c/gameinfo?id=2&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"游戏测试22","star":5,"data":1385913644187,"gtype":"休闲娱乐","downloadurl":"www.hao123.com"},{"id":3,"icon":"/c/download?id=3&fileID=icon&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","url":"/c/gameinfo?id=3&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"火影忍者","star":4,"data":1386510098010,"gtype":"动作冒险","downloadurl":"www.hao123.com"},{"id":5,"icon":"/c/download?id=5&fileID=icon&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","url":"/c/gameinfo?id=5&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"犬夜叉","star":4,"data":1386510221931,"gtype":"休闲娱乐","downloadurl":"www.hao123.com"},{"id":4,"icon":"/c/download?id=4&fileID=icon&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","url":"/c/gameinfo?id=4&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"23 飞","star":4,"data":1386510175857,"gtype":"休闲娱乐","downloadurl":"www.hao123.com"}]}}
+{"state":"1","results":{"user":{"exp":0,"lv":"小学生"},"list":[{"id":1,"icon":"/c/download?id=1&fileID=icon&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","url":"/c/gameinfo?id=1&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"游戏测试1","star":4,"data":1385913433940,"gtype":"动作冒险","downloadurl":"www.hao123.com","size":"100M","version":"1.0","comment":"0","downloadcount":"0"},{"id":2,"icon":"/c/download?id=2&fileID=icon&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","url":"/c/gameinfo?id=2&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"游戏测试22","star":5,"data":1385913644187,"gtype":"休闲娱乐","downloadurl":"www.hao123.com","size":"1G","version":"1.1","comment":"2","downloadcount":"3"},{"id":3,"icon":"/c/download?id=3&fileID=icon&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","url":"/c/gameinfo?id=3&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"火影忍者","star":4,"data":1386510098010,"gtype":"动作冒险","downloadurl":"www.hao123.com","size":"100M","version":"1.2","comment":"2","downloadcount":"0"},{"id":5,"icon":"/c/download?id=5&fileID=icon&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","url":"/c/gameinfo?id=5&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"犬夜叉","star":4,"data":1386510221931,"gtype":"休闲娱乐","downloadurl":"www.hao123.com","size":"100M","version":"1.3","comment":"0","downloadcount":"0"},{"id":4,"icon":"/c/download?id=4&fileID=icon&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","url":"/c/gameinfo?id=4&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"23 飞","star":4,"data":1386510175857,"gtype":"休闲娱乐","downloadurl":"www.hao123.com","size":"100M","version":"1.0","comment":"5","downloadcount":"10"}]}}
 
 id:游戏ID
 icon：游戏icon
@@ -112,13 +112,17 @@ star：星级
 data：时间
 gtype：游戏类型
 downloadurl：游戏下载地址（外部）
+size：包大小
+version：版本号
+comment：评论次数
+downloadcount：下载次数（总计）
 
 
 17 游戏详细&游戏专区
 http://139.159.32.29:9000/c/gameinfo?z=af017cae-d043-4cd7-8dea-a38315bc44a4&id=4
 id:游戏ID
 result 例
-{"state":"1","results":{"user":{"exp":0,"lv":"小学生"},"game":{"id":1,"icon":"/c/download?id=1&fileID=icon&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"游戏测试1","res":"","belong":"动作冒险","bbsurl":"http://www.hao123.com","type":1,"star":"4","hit":400,"data":1385913433940,"img1":"/c/download?id=1&fileID=picture1&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","img2":"/c/download?id=1&fileID=picture2&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","img3":"/c/download?id=1&fileID=picture3&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","img4":"/c/download?id=1&fileID=picture4&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","img5":"/c/download?id=1&fileID=picture5&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","img6":"/c/download?id=1&fileID=picture6&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","img7":"/c/download?id=1&fileID=picture7&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","img8":"/c/download?id=1&fileID=picture8&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","img9":"/c/download?id=1&fileID=picture9&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","img10":"/c/download?id=1&fileID=picture10&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt":" 游戏1测试"}}}
+{"state":"1","results":{"user":{"exp":0,"lv":"小学生"},"game":{"id":4,"icon":"/c/download?id=4&fileID=icon&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"23 飞","res":"","belong":"休闲娱乐","bbsurl":"","type":1,"star":"4","hit":500,"data":1386510175857,"img1":"/c/download?id=4&fileID=picture1&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","img2":"/c/download?id=4&fileID=picture2&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","img3":"/c/download?id=4&fileID=picture3&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","img4":"/c/download?id=4&fileID=picture4&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","img5":"/c/download?id=4&fileID=picture5&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","img6":"/c/download?id=4&fileID=picture6&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","img7":"/c/download?id=4&fileID=picture7&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","img8":"/c/download?id=4&fileID=picture8&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","img9":"/c/download?id=4&fileID=picture9&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","img10":"/c/download?id=4&fileID=picture10&entity=models.Game&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt":"游戏测试55","size":"100M","version":"1.0","comment":"5","subscription":"c/subscription?id=4&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3"}}}
 
 id：游戏ID
 icon：icon
@@ -132,6 +136,10 @@ hit：点击量
 data：时间
 img1--img10：大图片地址
 txt：介绍
+size：包大小
+version：版本号
+comment：评论数
+subscription：订阅地址
 
 18 + 
 http://139.159.32.29:9000/c/plus?key=22&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3
@@ -194,3 +202,16 @@ http://127.0.0.1:9000/c/startpage
 result 例
 {"state":"1","results":{"imgs":["/c/download?id=1&fileID=pic&entity=models.IndexPage&z=1","/c/download?id=2&fileID=pic&entity=models.IndexPage&z=1","/c/download?id=3&fileID=pic&entity=models.IndexPage&z=1"]}}
 imgs为数组可以返回多张启动页图片
+
+
+26 统计游戏下载次数
+http://139.159.32.29:9000/c/gDCount?id=2&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3
+id：游戏ID
+
+返回文本内容 OK
+
+
+27 用户得到已经领取的礼包
+http://127.0.0.1:9000/c/mypackage?z=f2e8d93c-c205-468a-8c6d-4f0df01302c3
+返回
+{"state":"1","results":{"packs":[{"name":"火影忍者","data":1386490357528,"key":"vrevre43g34544"},{"name":"山治","data":1386490460373,"key":"werwefefsefwe"},{"name":"山治","data":1387473102449,"key":"467867878"},{"name":"山治","data":1387473128788,"key":"4543543654754"},{"name":"山治","data":1387473179550,"key":"454356435433"},{"name":"山治","data":1387473249275,"key":"defeferfref"},{"name":"山治","data":1387473260917,"key":"gtrgtrgrthyhty"},{"name":"山治","data":1387473289250,"key":"fefwefwfwefwe"},{"name":"山治","data":1387473368888,"key":"greggrege"},{"name":"山治","data":1387473627571,"key":"5654654y46y"},{"name":"山治","data":1387473765139,"key":"543543535"},{"name":"山治","data":1387473824782,"key":"54365465475474"},{"name":"左诺","data":1387474033317,"key":"6565465465"}]}}

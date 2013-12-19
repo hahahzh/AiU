@@ -29,6 +29,8 @@ GET     /                                       Application.index
 *       /c/logout								AiU.logout
 *       /c/checkdigit							AiU.checkDigit
 *       /c/startpage							AiU.startPage
+*       /c/gDCount								AiU.gameDownloadCount
+*       /c/mypackage							AiU.getMyPackage
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

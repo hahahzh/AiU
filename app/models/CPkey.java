@@ -17,6 +17,8 @@ public class CPkey extends Model {
 	@ManyToOne(fetch=FetchType.LAZY,cascade=javax.persistence.CascadeType.REMOVE)
 	public Pack p;
 	
+	public String pkey;
+	
 	public long updatetime;
 	
 }

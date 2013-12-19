@@ -14,6 +14,7 @@ import models.ClientVersion;
 import models.Customer;
 import models.EveryGame;
 import models.Game;
+import models.GameDownloadCount;
 import models.GameMessage;
 import models.IndexPage;
 import models.LevelType;
@@ -625,22 +626,26 @@ public class AiU extends Controller {
 		}
 		Customer c = s.customer;
 
-		CPkey cpk= CPkey.find("c_id=? and p_id=?", c.id, id).first();
-		boolean isnew = false;
-		if(cpk == null){
-			cpk = new CPkey();
-			cpk.c = c;
-			cpk.p = Pack.findById(id);
-			cpk.updatetime = new Date().getTime();
-			cpk.save();
-			isnew = true;
-		}
-		
-		if(!isnew){
-			if(new Date().getTime() - cpk.updatetime <= 86400000){
+		CPkey oldcpk= CPkey.find("c_id=? and p_id=? order by id desc", c.id, id).first();
+		PackPKey data = PackPKey.find("pack_id=?", id).first();
+
+		if(oldcpk != null){
+			if(new Date().getTime() - oldcpk.updatetime <= 86400000){
 				renderFail("error_exists_pay");
 			}
 		}
+		
+		if(data == null){
+			renderFail("error_over_pay");
+		}
+		CPkey cpk = new CPkey();
+			cpk.c = c;
+			cpk.p = Pack.findById(id);
+			cpk.updatetime = new Date().getTime();
+			cpk.pkey = data.pkey;
+			cpk.save();
+			
+
 		JSONObject results = initResultJSON();
 		
 		JSONObject user = initResultJSON();
@@ -648,7 +653,6 @@ public class AiU extends Controller {
 		user.put("lv", c.lv.level_name);
 		results.put("user", user);
 		
-		PackPKey data = PackPKey.find("pack_id=?", id).first();
 		JSONObject pkey = initResultJSON();
 		pkey.put("pkey", data.pkey);
 		PackPKey.delete("id=?", data.id);
@@ -728,6 +732,17 @@ public class AiU extends Controller {
 			subad.put("data", data.data);
 			subad.put("gtype", data.gtype.gametype_name);
 			subad.put("downloadurl", data.downloadurl);
+			subad.put("size", data.size);
+			subad.put("version", data.version);
+			subad.put("comment", GameMessage.count("byGame", data)+"");
+			String count = null;
+			GameDownloadCount gdc = GameDownloadCount.find("byG", data).first();
+			if(gdc == null){
+				count = "0";
+			}else{
+				count = gdc.gcount + "";
+			}
+			subad.put("downloadcount", count);
 			list.add(subad);
 		}
 		
@@ -780,6 +795,11 @@ public class AiU extends Controller {
 		game.put("img9", "/c/download?id=" + data.id + "&fileID=picture9&entity=" + data.getClass().getName() + "&z=" + z);
 		game.put("img10", "/c/download?id=" + data.id + "&fileID=picture10&entity=" + data.getClass().getName() + "&z=" + z);
 		game.put("txt", data.txt);
+		game.put("size", data.size);
+		game.put("version", data.version);
+		game.put("comment", GameMessage.count("byGame", data)+"");
+		game.put("subscription", "c/subscription?id="+data.id+"&z="+z);
+//		game.put("downloadcount", ((GameDownloadCount)GameDownloadCount.find("byGame", data).first()).gcount+"");
 		results.put("game", game);
 		
 		data.hit++;
@@ -965,7 +985,48 @@ public class AiU extends Controller {
 		results.put("imgs", list);
 		renderSuccess(results);
 	}
-
+	
+	//统计游戏下载次数
+	public static void gameDownloadCount(@Required Long id, @Required String z){
+		// 参数验证
+		if (Validation.hasErrors()) {
+			renderFail("error_parameter_required");
+		}
+		GameDownloadCount gdc = GameDownloadCount.find("g_id=?", id).first();
+		if(gdc == null){
+			gdc = new GameDownloadCount();
+			gdc.g = Game.findById(id);
+		}
+		gdc.gcount++;
+		gdc._save();
+		renderText("OK");
+	}
+	
+	// 得到已领取的礼包
+	public static void getMyPackage(@Required String z){
+		// 参数验证
+		if (Validation.hasErrors()) {
+			renderFail("error_parameter_required");
+		}
+		Session s = sessionCache.get();
+		if(s == null){
+			renderFail("error_session_expired");
+		}
+		Customer c = s.customer;
+		JSONObject results = initResultJSON();
+		JSONArray list = new JSONArray();
+		List<CPkey> l = CPkey.find("c_id=?", c.id).fetch();
+		for(CPkey k : l){
+			JSONObject subad = initResultJSON();
+			subad.put("name", k.p.title);
+			subad.put("data", k.updatetime);
+			subad.put("key", k.pkey);
+			list.add(subad);
+		}
+		results.put("packs", list);
+		renderSuccess(results);
+	}
+	
 //	searchGame
 	/**
 	 * 登出接口

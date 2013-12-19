@@ -36,6 +36,12 @@ public class Game extends ThirdModel {
 	public String exp;
 	
 	@Required
+	public String size;
+	
+	@Required
+	public String version;
+	
+	@Required
 	public Blob picture1;
 	
 	public Blob picture2;

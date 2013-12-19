@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: aiu
 Target Host: localhost
 Target Database: aiu
-Date: 2013/12/15 18:31:56
+Date: 2013/12/20 1:32:59
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -94,12 +94,13 @@ CREATE TABLE `cpkey` (
   `updatetime` bigint(20) NOT NULL,
   `c_id` bigint(20) DEFAULT NULL,
   `p_id` bigint(20) DEFAULT NULL,
+  `pkey` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK5A79ED2BFCAF579` (`c_id`),
   KEY `FK5A79ED2500AF287` (`p_id`),
   CONSTRAINT `FK5A79ED2500AF287` FOREIGN KEY (`p_id`) REFERENCES `packs` (`id`),
   CONSTRAINT `FK5A79ED2BFCAF579` FOREIGN KEY (`c_id`) REFERENCES `customer` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for customer
@@ -193,6 +194,18 @@ CREATE TABLE `everygametype` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Table structure for g_d_count
+-- ----------------------------
+CREATE TABLE `g_d_count` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `gcount` bigint(20) NOT NULL,
+  `g_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK85CB299C5002C509` (`g_id`),
+  CONSTRAINT `FK85CB299C5002C509` FOREIGN KEY (`g_id`) REFERENCES `games` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
 -- Table structure for game_message
 -- ----------------------------
 CREATE TABLE `game_message` (
@@ -201,12 +214,15 @@ CREATE TABLE `game_message` (
   `msg` varchar(255) DEFAULT NULL,
   `game_id` bigint(20) DEFAULT NULL,
   `news_id` bigint(20) DEFAULT NULL,
+  `c_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKCAE0E0BA4429C99E` (`game_id`),
   KEY `FKCAE0E0BAEC7BD203` (`news_id`),
+  KEY `FKCAE0E0BABFCAF579` (`c_id`),
   CONSTRAINT `FKCAE0E0BA4429C99E` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`),
+  CONSTRAINT `FKCAE0E0BABFCAF579` FOREIGN KEY (`c_id`) REFERENCES `customer` (`id`),
   CONSTRAINT `FKCAE0E0BAEC7BD203` FOREIGN KEY (`news_id`) REFERENCES `news` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for games
@@ -239,6 +255,8 @@ CREATE TABLE `games` (
   `gtype_id` bigint(20) DEFAULT NULL,
   `downloadurl` varchar(255) DEFAULT NULL,
   `ranking` int(11) NOT NULL,
+  `size` varchar(255) DEFAULT NULL,
+  `version` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK5D932C1CAC7F769` (`gtype_id`),
   KEY `idx_games_star` (`star`),
@@ -263,7 +281,7 @@ CREATE TABLE `indexpage` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `pic` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for leveltype
@@ -393,7 +411,7 @@ CREATE TABLE `t_pkey` (
   PRIMARY KEY (`id`),
   KEY `FKCB6168DA1FBBC43E` (`pack_id`),
   CONSTRAINT `FKCB6168DA1FBBC43E` FOREIGN KEY (`pack_id`) REFERENCES `packs` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for ttt
@@ -425,40 +443,61 @@ INSERT INTO `carouseltype` VALUES ('4', '新闻');
 INSERT INTO `carouseltype` VALUES ('5', '礼包');
 INSERT INTO `checkdigit` VALUES ('8', '796', '1386778646798');
 INSERT INTO `clientversion` VALUES ('1', '1385912558590', '1', '这是一个更新测试', 'http://www.sohu.com', '1.0.0');
-INSERT INTO `cpkey` VALUES ('1', '1386490357528', '9', '1');
-INSERT INTO `cpkey` VALUES ('2', '1386490460373', '9', '4');
+INSERT INTO `cpkey` VALUES ('1', '1386490357528', '9', '1', 'vrevre43g34544');
+INSERT INTO `cpkey` VALUES ('2', '1386490460373', '9', '4', 'werwefefsefwe');
+INSERT INTO `cpkey` VALUES ('3', '1387473102449', '9', '4', '467867878');
+INSERT INTO `cpkey` VALUES ('4', '1387473128788', '9', '4', '4543543654754');
+INSERT INTO `cpkey` VALUES ('5', '1387473179550', '9', '4', '454356435433');
+INSERT INTO `cpkey` VALUES ('6', '1387473249275', '9', '4', 'defeferfref');
+INSERT INTO `cpkey` VALUES ('7', '1387473260917', '9', '4', 'gtrgtrgrthyhty');
+INSERT INTO `cpkey` VALUES ('8', '1387473289250', '9', '4', 'fefwefwfwefwe');
+INSERT INTO `cpkey` VALUES ('9', '1387473368888', '9', '4', 'greggrege');
+INSERT INTO `cpkey` VALUES ('10', '1387473627571', '9', '4', '5654654y46y');
+INSERT INTO `cpkey` VALUES ('11', '1387473765139', '9', '4', '543543535');
+INSERT INTO `cpkey` VALUES ('12', '1387473824782', '9', '4', '54365465475474');
+INSERT INTO `cpkey` VALUES ('13', '1387474033317', '9', '3', '6565465465');
 INSERT INTO `customer` VALUES ('1', '1', '1385912569244', '0', '0', null, '10000000000', '11,22,33', '游客', '1', null, '123', null, null, '1', null);
 INSERT INTO `customer` VALUES ('2', '2', '1387455226566', '0', '0', null, '20000000000', '11,22,33', '游客', '2', null, '123', null, null, '1', null);
-INSERT INTO `customer` VALUES ('9', '12345', '1385912529359', '0', '0', null, '13838389439', '12,14,87,jj,ff', 'ss', '1', 'null|null', '123456', null, '土豪金5S', '1', null);
+INSERT INTO `customer` VALUES ('9', '12345', '1385912529359', '0', '0', null, '13838389439', '12,14,87,jj,ff', 'ss', '1', '021568e9-aee5-4497-acb6-bbca2324256d|image/jpeg', '123456', null, '土豪金5S', '1', null);
 INSERT INTO `customer` VALUES ('10', '12345', '1386778121836', '0', null, null, '13938389436', '12,14,87,jj,ff', 'haha', '1', null, '123456', null, '土豪金5S', '1', null);
 INSERT INTO `customer` VALUES ('11', '12345', '1386778934402', '0', null, null, '13938389437', '12,14,87,jj,ff', 'haha', '1', null, '123456', null, '土豪金5S', '1', null);
 INSERT INTO `customer_games` VALUES ('9', '1');
 INSERT INTO `customer_games` VALUES ('9', '2');
+INSERT INTO `customer_games` VALUES ('9', '4');
 INSERT INTO `everygame` VALUES ('1', '1385913920244', '1', '每日一游测试1', '500', '百度', 'http://baidu.com', '我', '50255be3-6ba9-4347-a672-dd2b84f187af|image/png', '4', '是非得失飞个个 打撒', '0', '1', '1');
 INSERT INTO `everygame` VALUES ('2', '1385913960042', '1', '每日一游测试2', null, '', '', '你', '65b610a5-b7f3-4452-8b8d-870110b5b6f9|image/png', '5', '测试2', '1', '1', '2');
 INSERT INTO `everygame` VALUES ('3', '1385913995444', '1', '玩嗨周五1', null, '百度', '', '他', 'b1888773-0f65-422c-ae6f-667d696a9a2b|image/jpeg', '3', '非师范飞东方飞', '1', '2', '1');
 INSERT INTO `everygame` VALUES ('4', '1385914034437', '1', '玩嗨周五测试2', null, '', '', '', '40e36996-35f4-4f18-b64d-1f580414e641|image/png', '5', '规范过放电风格规范', '0', '2', '2');
 INSERT INTO `everygametype` VALUES ('1', '每日一游');
 INSERT INTO `everygametype` VALUES ('2', '玩嗨周五');
-INSERT INTO `game_message` VALUES ('2', '1386510941491', '我知道我了', '4', null);
-INSERT INTO `game_message` VALUES ('3', '1386510943169', '我道我了', '4', null);
-INSERT INTO `game_message` VALUES ('4', '1386513115557', '我道我了', '2', null);
-INSERT INTO `game_message` VALUES ('5', '1386513120616', '我道eee我了', '2', null);
-INSERT INTO `game_message` VALUES ('6', '1386513124324', '我道eee我了', '3', null);
-INSERT INTO `game_message` VALUES ('7', '1386513127573', '我道999ee我了', '3', null);
-INSERT INTO `game_message` VALUES ('8', '1386513131553', '我道999ee我了', null, '3');
-INSERT INTO `game_message` VALUES ('9', '1386513135257', '我道999ee我了', null, '2');
-INSERT INTO `game_message` VALUES ('10', '1386513138576', '我道[p99ee我了', null, '2');
-INSERT INTO `game_message` VALUES ('11', '1386513142632', '我道规范的负担9ee我了', null, '2');
-INSERT INTO `game_message` VALUES ('12', '1386513145945', '我道规范4的负担9ee我了', null, '2');
-INSERT INTO `games` VALUES ('1', '1385913433940', '1', '游戏测试1', '401', '', '', 'hzh', 'http://www.hao123.com', '20', '3d66f13a-6d52-4143-b66d-2345dbd530e8|image/x-icon', '1a65cf4c-bdbc-4fd1-802a-9706613cd5fd|image/jpeg', '1a455559-a712-4210-bc0a-4cd760efa0a1|image/png', '9b908617-e0a7-41d9-b4ac-8b2c5127999e|image/jpeg', 'ebd32760-e0e3-4648-b876-59401c040c4d|image/jpeg', '99fa05e0-85cc-4465-812a-a9de349ebaa3|image/jpeg', '913e4bff-a6ef-4211-b518-8e32b9dc2459|image/png', 'e04f2152-84a3-4e83-8db4-92b7e8f48831|image/png', 'be3e49e9-43a2-47dd-ac13-b4826ab2b147|image/png', '742a55fe-c991-47a5-b2cd-fb0c6930d8d6|image/png', 'b432f37d-a355-4a00-9e01-15f8fedfeced|image/png', '4', ' 游戏1测试', '1', '1', 'www.hao123.com', '20');
-INSERT INTO `games` VALUES ('2', '1385913644187', '1', '游戏测试22', '301', '百度', 'http://baidu.com', '我', 'http://www.hao123.com4', '30', '5fb1c525-bf2a-42ed-b502-da5d1d39160c|image/x-icon', '061ecddf-54f1-4af9-85c6-2ee170822aaa|image/png', 'bbb3316f-a4fe-41d2-ac05-0217c2ecfaed|image/jpeg', 'a9275030-f5d5-4041-afc6-c7802b8410fa|image/png', 'null|null', 'null|null', 'eb22fb86-f17f-4e56-aea9-0ed4f2e096c5|image/png', 'null|null', '5624937b-a943-4f59-97ad-7e5af520301e|image/png', 'null|null', 'null|null', '5', '游戏测试2', '1', '2', 'www.hao123.com', '19');
-INSERT INTO `games` VALUES ('3', '1386510098010', '1', '火影忍者', '400', '百度', '', 'hzh', 'http://www.hao123.com', '20', 'b0a410fa-e0c3-4438-a802-fd18534c2760|image/x-icon', '02686cc2-bb74-4d24-afa8-2b8b5e2461f6|image/png', null, null, null, null, null, null, null, null, null, '4', 'fdsdf 游戏简介', '1', '1', 'www.hao123.com', '18');
-INSERT INTO `games` VALUES ('4', '1386510175857', '1', '23 飞', '500', '', 'http://baidu.com', 'hzh', '', '30', '9a6d200a-801b-46a8-b80e-6deec73b1150|image/x-icon', '51b61d7e-44ae-4e3d-94ef-3c94f3f5df59|image/png', null, null, null, null, null, null, null, null, null, '4', '游戏测试55', '1', '2', 'www.hao123.com', '0');
-INSERT INTO `games` VALUES ('5', '1386510221931', '1', '犬夜叉', '500', '百度', 'http://baidu.com', '韩朝', 'http://www.hao123.com', '30', '40060477-7d48-4224-809a-b235fee9b85a|image/x-icon', '7d031e20-54f8-447a-90cd-22d0cc375691|image/png', null, null, null, null, null, null, null, null, null, '4', '测试', '0', '2', 'www.hao123.com', '0');
+INSERT INTO `g_d_count` VALUES ('1', '10', '4');
+INSERT INTO `g_d_count` VALUES ('2', '3', '2');
+INSERT INTO `game_message` VALUES ('2', '1386510941491', '我知道我了', '4', null, '1');
+INSERT INTO `game_message` VALUES ('3', '1386510943169', '我道我了', '4', null, '1');
+INSERT INTO `game_message` VALUES ('4', '1386513115557', '我道我了', '2', null, '2');
+INSERT INTO `game_message` VALUES ('5', '1386513120616', '我道eee我了', '2', null, '1');
+INSERT INTO `game_message` VALUES ('6', '1386513124324', '我道eee我了', '3', null, '1');
+INSERT INTO `game_message` VALUES ('7', '1386513127573', '我道999ee我了', '3', null, '10');
+INSERT INTO `game_message` VALUES ('8', '1386513131553', '我道999ee我了', null, '3', '11');
+INSERT INTO `game_message` VALUES ('9', '1386513135257', '我道999ee我了', null, '2', '1');
+INSERT INTO `game_message` VALUES ('10', '1386513138576', '我道[p99ee我了', null, '2', '2');
+INSERT INTO `game_message` VALUES ('11', '1386513142632', '我道规范的负担9ee我了', null, '2', '9');
+INSERT INTO `game_message` VALUES ('12', '1386513145945', '我道规范4的负担9ee我了', null, '2', '10');
+INSERT INTO `game_message` VALUES ('13', '1387212036366', '提提意见1', null, null, '9');
+INSERT INTO `game_message` VALUES ('14', '1387212049434', '提提意见2', null, null, '9');
+INSERT INTO `game_message` VALUES ('15', '1387212082635', '提提意见2', '4', null, '9');
+INSERT INTO `game_message` VALUES ('16', '1387212087671', '提提意见6', '4', null, '9');
+INSERT INTO `game_message` VALUES ('17', '1387212090063', '提提意见7', '4', null, '9');
+INSERT INTO `games` VALUES ('1', '1385913433940', '1', '游戏测试1', '402', '', '', 'hzh', 'http://www.hao123.com', '20', '3d66f13a-6d52-4143-b66d-2345dbd530e8|image/x-icon', '1a65cf4c-bdbc-4fd1-802a-9706613cd5fd|image/jpeg', '1a455559-a712-4210-bc0a-4cd760efa0a1|image/png', '9b908617-e0a7-41d9-b4ac-8b2c5127999e|image/jpeg', 'ebd32760-e0e3-4648-b876-59401c040c4d|image/jpeg', '99fa05e0-85cc-4465-812a-a9de349ebaa3|image/jpeg', '913e4bff-a6ef-4211-b518-8e32b9dc2459|image/png', 'e04f2152-84a3-4e83-8db4-92b7e8f48831|image/png', 'be3e49e9-43a2-47dd-ac13-b4826ab2b147|image/png', '742a55fe-c991-47a5-b2cd-fb0c6930d8d6|image/png', 'b432f37d-a355-4a00-9e01-15f8fedfeced|image/png', '4', ' 游戏1测试', '1', '1', 'www.hao123.com', '20', '100M', '1.0');
+INSERT INTO `games` VALUES ('2', '1385913644187', '1', '游戏测试22', '301', '百度', 'http://baidu.com', '我', 'http://www.hao123.com4', '30', '5fb1c525-bf2a-42ed-b502-da5d1d39160c|image/x-icon', '061ecddf-54f1-4af9-85c6-2ee170822aaa|image/png', 'bbb3316f-a4fe-41d2-ac05-0217c2ecfaed|image/jpeg', 'a9275030-f5d5-4041-afc6-c7802b8410fa|image/png', 'null|null', 'null|null', 'eb22fb86-f17f-4e56-aea9-0ed4f2e096c5|image/png', 'null|null', '5624937b-a943-4f59-97ad-7e5af520301e|image/png', 'null|null', 'null|null', '5', '游戏测试2', '1', '2', 'www.hao123.com', '19', '1G', '1.1');
+INSERT INTO `games` VALUES ('3', '1386510098010', '1', '火影忍者', '400', '百度', '', 'hzh', 'http://www.hao123.com', '20', 'b0a410fa-e0c3-4438-a802-fd18534c2760|image/x-icon', '02686cc2-bb74-4d24-afa8-2b8b5e2461f6|image/png', 'null|null', 'null|null', 'null|null', 'null|null', 'null|null', 'null|null', 'null|null', 'null|null', 'null|null', '4', 'fdsdf 游戏简介', '1', '1', 'www.hao123.com', '18', '100M', '1.2');
+INSERT INTO `games` VALUES ('4', '1386510175857', '1', '23 飞', '502', '', 'http://baidu.com', 'hzh', '', '30', '9a6d200a-801b-46a8-b80e-6deec73b1150|image/x-icon', '51b61d7e-44ae-4e3d-94ef-3c94f3f5df59|image/png', 'null|null', 'null|null', 'null|null', 'null|null', 'null|null', 'null|null', 'null|null', 'null|null', 'null|null', '4', '游戏测试55', '1', '2', 'www.hao123.com', '0', '100M', '1.0');
+INSERT INTO `games` VALUES ('5', '1386510221931', '1', '犬夜叉', '500', '百度', 'http://baidu.com', '韩朝', 'http://www.hao123.com', '30', '40060477-7d48-4224-809a-b235fee9b85a|image/x-icon', '7d031e20-54f8-447a-90cd-22d0cc375691|image/png', 'null|null', 'null|null', 'b51d1277-1b3e-455c-8d6d-afed174e6141|image/png', 'null|null', 'null|null', 'null|null', 'null|null', 'null|null', 'null|null', '4', '测试', '0', '2', 'www.hao123.com', '0', '100M', '1.3');
 INSERT INTO `gametype` VALUES ('1', '动作冒险');
 INSERT INTO `gametype` VALUES ('2', '休闲娱乐');
-INSERT INTO `indexpage` VALUES ('1', 'bb3d5989-24f9-4fdb-8191-f3322e5985c4|image/jpeg');
+INSERT INTO `indexpage` VALUES ('1', '67a7d25f-c260-4bb3-b895-cc43cbdeeb7b|image/png');
+INSERT INTO `indexpage` VALUES ('2', '021568e9-aee5-4497-acb6-bbca2324256d|image/jpeg');
+INSERT INTO `indexpage` VALUES ('3', '5426567e-3949-4225-afa3-b1b8f3da52d5|image/jpeg');
 INSERT INTO `leveltype` VALUES ('1', '小学生');
 INSERT INTO `leveltype` VALUES ('2', '中学生');
 INSERT INTO `leveltype` VALUES ('3', '高中生');
@@ -483,9 +522,7 @@ INSERT INTO `pubchannel` VALUES ('3', '1385913048386', '30', 'add17f12-27f9-4ab2
 INSERT INTO `pubchannel` VALUES ('4', '1385913057388', '40', 'fa4e371c-740d-455e-9812-348d3ff8cc51|image/png', '游戏礼包');
 INSERT INTO `pubchannel` VALUES ('5', '1385913080012', '50', '4207e504-7e82-46cb-9462-89f19d614d91|image/png', '火爆活动');
 INSERT INTO `pubchannel` VALUES ('6', '1385913100638', '60', '01b76d3a-76d4-4310-9a07-aef44b9b1380|image/png', '精品游戏');
-INSERT INTO `t_pkey` VALUES ('6', '6565465465', '3');
-INSERT INTO `t_pkey` VALUES ('9', '32645474', '1');
-INSERT INTO `t_pkey` VALUES ('10', '5665765', '1');
-INSERT INTO `t_pkey` VALUES ('11', '534543', '1');
-INSERT INTO `t_pkey` VALUES ('12', '467867878', '4');
+INSERT INTO `t_pkey` VALUES ('7', '4324234234', '4');
+INSERT INTO `t_pkey` VALUES ('8', '543543543', '4');
+INSERT INTO `t_pkey` VALUES ('9', '5423543543', '4');
 INSERT INTO `ttt` VALUES ('1', 0x34626333396362372D363561352D343065612D613337362D6530646465633836623163307C6170706C69636174696F6E2F6F637465742D73747265616D);
