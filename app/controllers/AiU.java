@@ -421,45 +421,67 @@ public class AiU extends Controller {
 		newinfo.put("res", data.res);
 		newinfo.put("hit", data.hit);
 		newinfo.put("data", data.data);
+		
+		JSONArray jsonarr = initResultJSONArray(); 
 		if(data.picture1.exists()){
-			newinfo.put("picture1", "/c/download?id=" + data.id + "&fileID=picture1&entity=" + data.getClass().getName() + "&z=" + z);
-			newinfo.put("txt1", data.txt1);
+			JSONObject img1 = initResultJSON();
+			img1.put("picture1", "/c/download?id=" + data.id + "&fileID=picture1&entity=" + data.getClass().getName() + "&z=" + z);
+			img1.put("txt1", data.txt1);
+			jsonarr.add(img1);
 		}
 		if(data.picture2.exists()){
-			newinfo.put("picture2", "/c/download?id=" + data.id + "&fileID=picture2&entity=" + data.getClass().getName() + "&z=" + z);
-			newinfo.put("txt2", data.txt2);
+			JSONObject img2 = initResultJSON();
+			img2.put("picture2", "/c/download?id=" + data.id + "&fileID=picture2&entity=" + data.getClass().getName() + "&z=" + z);
+			img2.put("txt2", data.txt2);
+			jsonarr.add(img2);
 		}
 		if(data.picture3.exists()){
-			newinfo.put("picture3", "/c/download?id=" + data.id + "&fileID=picture3&entity=" + data.getClass().getName() + "&z=" + z);
-			newinfo.put("txt3", data.txt3);
+			JSONObject img3 = initResultJSON();
+			img3.put("picture3", "/c/download?id=" + data.id + "&fileID=picture3&entity=" + data.getClass().getName() + "&z=" + z);
+			img3.put("txt3", data.txt3);
+			jsonarr.add(img3);
 		}
 		if(data.picture4.exists()){
-			newinfo.put("picture4", "/c/download?id=" + data.id + "&fileID=picture4&entity=" + data.getClass().getName() + "&z=" + z);
-			newinfo.put("txt4", data.txt4);
+			JSONObject img4 = initResultJSON();
+			img4.put("picture4", "/c/download?id=" + data.id + "&fileID=picture4&entity=" + data.getClass().getName() + "&z=" + z);
+			img4.put("txt4", data.txt4);
+			jsonarr.add(img4);
 		}
 		if(data.picture5.exists()){
-			newinfo.put("picture5", "/c/download?id=" + data.id + "&fileID=picture5&entity=" + data.getClass().getName() + "&z=" + z);
-			newinfo.put("txt5", data.txt5);
+			JSONObject img5 = initResultJSON();
+			img5.put("picture5", "/c/download?id=" + data.id + "&fileID=picture5&entity=" + data.getClass().getName() + "&z=" + z);
+			img5.put("txt5", data.txt5);
+			jsonarr.add(img5);
 		}
 		if(data.picture6.exists()){
-			newinfo.put("picture6", "/c/download?id=" + data.id + "&fileID=picture6&entity=" + data.getClass().getName() + "&z=" + z);
-			newinfo.put("txt6", data.txt6);
+			JSONObject img6 = initResultJSON();
+			img6.put("picture6", "/c/download?id=" + data.id + "&fileID=picture6&entity=" + data.getClass().getName() + "&z=" + z);
+			img6.put("txt6", data.txt6);
+			jsonarr.add(img6);
 		}
 		if(data.picture7.exists()){
-			newinfo.put("picture7", "/c/download?id=" + data.id + "&fileID=picture7&entity=" + data.getClass().getName() + "&z=" + z);
-			newinfo.put("txt7", data.txt7);
+			JSONObject img7 = initResultJSON();
+			img7.put("picture7", "/c/download?id=" + data.id + "&fileID=picture7&entity=" + data.getClass().getName() + "&z=" + z);
+			img7.put("txt7", data.txt7);
+			jsonarr.add(img7);
 		}
 		if(data.picture8.exists()){
-			newinfo.put("picture8", "/c/download?id=" + data.id + "&fileID=picture8&entity=" + data.getClass().getName() + "&z=" + z);
-			newinfo.put("txt8", data.txt8);
+			JSONObject img8 = initResultJSON();
+			img8.put("picture8", "/c/download?id=" + data.id + "&fileID=picture8&entity=" + data.getClass().getName() + "&z=" + z);
+			img8.put("txt8", data.txt8);
+			jsonarr.add(img8);
 		}
 		if(data.picture9.exists()){
-			newinfo.put("picture9", "/c/download?id=" + data.id + "&fileID=picture9&entity=" + data.getClass().getName() + "&z=" + z);
-			newinfo.put("txt9", data.txt9);
+			JSONObject img9 = initResultJSON();
+			img9.put("picture9", "/c/download?id=" + data.id + "&fileID=picture9&entity=" + data.getClass().getName() + "&z=" + z);
+			img9.put("txt9", data.txt9);
+			jsonarr.add(img9);
 		}
 		if(data.picture10.exists()){
-			newinfo.put("picture10", "/c/download?id=" + data.id + "&fileID=picture10&entity=" + data.getClass().getName() + "&z=" + z);
-			newinfo.put("txt10", data.txt10);
+			JSONObject img10 = initResultJSON();
+			img10.put("picture10", "/c/download?id=" + data.id + "&fileID=picture10&entity=" + data.getClass().getName() + "&z=" + z);
+			img10.put("txt10", data.txt10);
+			jsonarr.add(img10);
 		}
 		results.put("newinfo", newinfo);
 		data.hit++;
@@ -510,7 +532,7 @@ public class AiU extends Controller {
 		renderSuccess(results);
 	}
 	
-	public static void getPackage(int num, long time, int page, String skey, @Required String z) {
+	public static void getPackage(int num, long time, int page, String skey, @Required String z) throws ParseException {
 		// 参数验证
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
@@ -547,6 +569,17 @@ public class AiU extends Controller {
 			subad.put("star", data.star+"");
 			subad.put("data", data.data);
 			
+			long allnum = PackPKey.count("pack_id=?", data.id);
+			long day = DateUtil.intervalOfDay(new Date(), data.remaining);
+			if(allnum == 0){
+				subad.put("num", "0");
+			}else if(allnum <= day){
+				subad.put("num", "1");
+			}else{
+				subad.put("num", allnum/day+"");
+			}
+			subad.put("allnum", allnum);
+			
 			packagelist.add(subad);
 		}
 		List<Pack> listData1 = Pack.find("mtype="+ c.os + sTmp + " and ranking=0 order by id desc").fetch(page, num);
@@ -559,6 +592,18 @@ public class AiU extends Controller {
 //			subad.put("url", data.ad_game.);
 			subad.put("title", data.title);
 			subad.put("star", data.star+"");
+			
+			long allnum = PackPKey.count("pack_id=?", data.id);
+			long day = DateUtil.intervalOfDay(new Date(), data.remaining);
+			if(allnum == 0){
+				subad.put("num", "0");
+			}else if(allnum <= day){
+				subad.put("num", "1");
+			}else{
+				subad.put("num", allnum/day+"");
+			}
+			subad.put("allnum", allnum);
+			
 			subad.put("data", data.data);
 			
 			packagelist.add(subad);
@@ -798,7 +843,7 @@ public class AiU extends Controller {
 		game.put("size", data.size);
 		game.put("version", data.version);
 		game.put("comment", GameMessage.count("byGame", data)+"");
-		game.put("subscription", "c/subscription?id="+data.id+"&z="+z);
+		game.put("subscription", "/c/subscription?id="+data.id+"&z="+z);
 //		game.put("downloadcount", ((GameDownloadCount)GameDownloadCount.find("byGame", data).first()).gcount+"");
 		results.put("game", game);
 		
