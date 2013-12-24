@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: aiu
 Target Host: localhost
 Target Database: aiu
-Date: 2013/12/20 1:32:59
+Date: 2013/12/24 22:32:19
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -144,19 +144,6 @@ CREATE TABLE `customer_games` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Table structure for customer_packs
--- ----------------------------
-CREATE TABLE `customer_packs` (
-  `customer_id` bigint(20) NOT NULL,
-  `addpack_id` bigint(20) NOT NULL,
-  UNIQUE KEY `addpack_id` (`addpack_id`),
-  KEY `FK86E1E5D92E40847D` (`addpack_id`),
-  KEY `FK86E1E5D955FD001E` (`customer_id`),
-  CONSTRAINT `FK86E1E5D92E40847D` FOREIGN KEY (`addpack_id`) REFERENCES `packs` (`id`),
-  CONSTRAINT `FK86E1E5D955FD001E` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
 -- Table structure for everygame
 -- ----------------------------
 CREATE TABLE `everygame` (
@@ -223,6 +210,23 @@ CREATE TABLE `game_message` (
   CONSTRAINT `FKCAE0E0BABFCAF579` FOREIGN KEY (`c_id`) REFERENCES `customer` (`id`),
   CONSTRAINT `FKCAE0E0BAEC7BD203` FOREIGN KEY (`news_id`) REFERENCES `news` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for gameicon
+-- ----------------------------
+CREATE TABLE `gameicon` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `picture1` varchar(255) DEFAULT NULL,
+  `picture2` varchar(255) DEFAULT NULL,
+  `picture3` varchar(255) DEFAULT NULL,
+  `picture4` varchar(255) DEFAULT NULL,
+  `picture5` varchar(255) DEFAULT NULL,
+  `picture6` varchar(255) DEFAULT NULL,
+  `game_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK96963F6B4429C99E` (`game_id`),
+  CONSTRAINT `FK96963F6B4429C99E` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for games
@@ -411,7 +415,7 @@ CREATE TABLE `t_pkey` (
   PRIMARY KEY (`id`),
   KEY `FKCB6168DA1FBBC43E` (`pack_id`),
   CONSTRAINT `FKCB6168DA1FBBC43E` FOREIGN KEY (`pack_id`) REFERENCES `packs` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for ttt
@@ -488,7 +492,8 @@ INSERT INTO `game_message` VALUES ('14', '1387212049434', '提提意见2', null,
 INSERT INTO `game_message` VALUES ('15', '1387212082635', '提提意见2', '4', null, '9');
 INSERT INTO `game_message` VALUES ('16', '1387212087671', '提提意见6', '4', null, '9');
 INSERT INTO `game_message` VALUES ('17', '1387212090063', '提提意见7', '4', null, '9');
-INSERT INTO `games` VALUES ('1', '1385913433940', '1', '游戏测试1', '402', '', '', 'hzh', 'http://www.hao123.com', '20', '3d66f13a-6d52-4143-b66d-2345dbd530e8|image/x-icon', '1a65cf4c-bdbc-4fd1-802a-9706613cd5fd|image/jpeg', '1a455559-a712-4210-bc0a-4cd760efa0a1|image/png', '9b908617-e0a7-41d9-b4ac-8b2c5127999e|image/jpeg', 'ebd32760-e0e3-4648-b876-59401c040c4d|image/jpeg', '99fa05e0-85cc-4465-812a-a9de349ebaa3|image/jpeg', '913e4bff-a6ef-4211-b518-8e32b9dc2459|image/png', 'e04f2152-84a3-4e83-8db4-92b7e8f48831|image/png', 'be3e49e9-43a2-47dd-ac13-b4826ab2b147|image/png', '742a55fe-c991-47a5-b2cd-fb0c6930d8d6|image/png', 'b432f37d-a355-4a00-9e01-15f8fedfeced|image/png', '4', ' 游戏1测试', '1', '1', 'www.hao123.com', '20', '100M', '1.0');
+INSERT INTO `gameicon` VALUES ('1', 'cee288c4-095d-49a0-8cc7-cddcc173d214|image/png', 'a0b574dc-a8fa-4779-a50f-a02e68150f96|image/png', '5cad313a-8b78-489d-b883-c7c0769c61a5|image/png', '222882b0-6f5e-450c-b92e-242abe481747|image/png', '2a76e06d-15b1-4253-98f2-09d295ea4b30|image/png', '0b76c4c1-3fa2-4045-bf00-e5b44e827c5d|image/png', '3');
+INSERT INTO `games` VALUES ('1', '1385913433940', '1', '游戏测试1', '406', '', '', 'hzh', 'http://www.hao123.com', '20', '3d66f13a-6d52-4143-b66d-2345dbd530e8|image/x-icon', '1a65cf4c-bdbc-4fd1-802a-9706613cd5fd|image/jpeg', '1a455559-a712-4210-bc0a-4cd760efa0a1|image/png', '9b908617-e0a7-41d9-b4ac-8b2c5127999e|image/jpeg', 'ebd32760-e0e3-4648-b876-59401c040c4d|image/jpeg', '99fa05e0-85cc-4465-812a-a9de349ebaa3|image/jpeg', '913e4bff-a6ef-4211-b518-8e32b9dc2459|image/png', 'e04f2152-84a3-4e83-8db4-92b7e8f48831|image/png', 'be3e49e9-43a2-47dd-ac13-b4826ab2b147|image/png', '742a55fe-c991-47a5-b2cd-fb0c6930d8d6|image/png', 'b432f37d-a355-4a00-9e01-15f8fedfeced|image/png', '4', ' 游戏1测试', '1', '1', 'www.hao123.com', '20', '100M', '1.0');
 INSERT INTO `games` VALUES ('2', '1385913644187', '1', '游戏测试22', '301', '百度', 'http://baidu.com', '我', 'http://www.hao123.com4', '30', '5fb1c525-bf2a-42ed-b502-da5d1d39160c|image/x-icon', '061ecddf-54f1-4af9-85c6-2ee170822aaa|image/png', 'bbb3316f-a4fe-41d2-ac05-0217c2ecfaed|image/jpeg', 'a9275030-f5d5-4041-afc6-c7802b8410fa|image/png', 'null|null', 'null|null', 'eb22fb86-f17f-4e56-aea9-0ed4f2e096c5|image/png', 'null|null', '5624937b-a943-4f59-97ad-7e5af520301e|image/png', 'null|null', 'null|null', '5', '游戏测试2', '1', '2', 'www.hao123.com', '19', '1G', '1.1');
 INSERT INTO `games` VALUES ('3', '1386510098010', '1', '火影忍者', '400', '百度', '', 'hzh', 'http://www.hao123.com', '20', 'b0a410fa-e0c3-4438-a802-fd18534c2760|image/x-icon', '02686cc2-bb74-4d24-afa8-2b8b5e2461f6|image/png', 'null|null', 'null|null', 'null|null', 'null|null', 'null|null', 'null|null', 'null|null', 'null|null', 'null|null', '4', 'fdsdf 游戏简介', '1', '1', 'www.hao123.com', '18', '100M', '1.2');
 INSERT INTO `games` VALUES ('4', '1386510175857', '1', '23 飞', '502', '', 'http://baidu.com', 'hzh', '', '30', '9a6d200a-801b-46a8-b80e-6deec73b1150|image/x-icon', '51b61d7e-44ae-4e3d-94ef-3c94f3f5df59|image/png', 'null|null', 'null|null', 'null|null', 'null|null', 'null|null', 'null|null', 'null|null', 'null|null', 'null|null', '4', '游戏测试55', '1', '2', 'www.hao123.com', '0', '100M', '1.0');
@@ -502,9 +507,9 @@ INSERT INTO `leveltype` VALUES ('1', '小学生');
 INSERT INTO `leveltype` VALUES ('2', '中学生');
 INSERT INTO `leveltype` VALUES ('3', '高中生');
 INSERT INTO `leveltype` VALUES ('4', '大学生');
-INSERT INTO `news` VALUES ('1', '1385914285993', '1', '新闻测试1', '401', '百度', 'http://baidu.com', '我', '简介1', 'df051cdd-595d-44b9-a20a-547fef40721e|image/png', 'd47c2a93-6b1f-490c-88c0-2032d786e921|image/jpeg', '08474e31-251a-4d8b-93b9-2b5651d93e58|image/png', '1135cb6d-e477-43cc-b971-856957b91e5f|image/jpeg', 'f26dc25a-87fd-4249-987a-cf60bec5b3b4|image/jpeg', '8a5c0e77-39e2-46a5-8091-db3fe71d0904|image/jpeg', 'ee4e0d1d-06fb-42cb-85fc-22968d19adfa|image/png', '25ffea6a-bed3-4586-b777-c95979568c65|image/png', '36595ad1-a610-48f2-8f1b-04338120cbff|image/png', '0d71b1e8-4d29-4310-afbc-ca1830a79af5|image/png', 'd6b10861-5c38-4de2-9fc8-554b8dbafe98|image/png', '图片1', '图片10', '图片2', '图片3', '图片4', '图片5', '图片6', '图片7', '图片8', '图片9', '1', '1');
+INSERT INTO `news` VALUES ('1', '1385914285993', '1', '新闻测试1', '404', '百度', 'http://baidu.com', '我', '简介1', 'df051cdd-595d-44b9-a20a-547fef40721e|image/png', 'd47c2a93-6b1f-490c-88c0-2032d786e921|image/jpeg', '08474e31-251a-4d8b-93b9-2b5651d93e58|image/png', '1135cb6d-e477-43cc-b971-856957b91e5f|image/jpeg', 'f26dc25a-87fd-4249-987a-cf60bec5b3b4|image/jpeg', '8a5c0e77-39e2-46a5-8091-db3fe71d0904|image/jpeg', 'ee4e0d1d-06fb-42cb-85fc-22968d19adfa|image/png', '25ffea6a-bed3-4586-b777-c95979568c65|image/png', '36595ad1-a610-48f2-8f1b-04338120cbff|image/png', '0d71b1e8-4d29-4310-afbc-ca1830a79af5|image/png', 'd6b10861-5c38-4de2-9fc8-554b8dbafe98|image/png', '图片1', '图片10', '图片2', '图片3', '图片4', '图片5', '图片6', '图片7', '图片8', '图片9', '1', '1');
 INSERT INTO `news` VALUES ('2', '1385914407447', '1', '新闻测试2', '401', '', '', '', '简介2', '90a3414a-c745-4302-80d7-6a8d10eb758d|image/x-icon', 'face542b-0b43-4f3a-8963-d5c0e12d358d|image/png', 'null|null', 'null|null', '64a32316-dc03-4ec2-97aa-94c02f01b898|image/png', 'null|null', '91471805-c13d-4450-97ba-d71342da5e73|image/png', '4ee0e713-8233-4ae4-bbe4-a7a1e9a99e72|image/png', 'null|null', 'null|null', 'null|null', '打撒', '', '', '打撒', '', '', '的飞飞', '', '', '', null, '1');
-INSERT INTO `news` VALUES ('3', '1385914458181', '1', '攻略1', '501', '百度', 'http://baidu.com', '哈哈', '简介3', 'b0a50104-fc36-492d-988d-82edbe04f22f|image/x-icon', '3d59b21c-cfbe-4ca0-b15a-20e77d94e766|image/jpeg', 'd3a24502-35c8-4ddd-9bb4-f208e98a7c7e|image/png', '5c7a0bd0-ef6a-4d33-92bd-bca24003d841|image/jpeg', '9f4553f1-ccf5-40dc-aa5f-f12e691d93d2|image/jpeg', '0076db39-1861-47a9-988a-e848b8334266|image/jpeg', 'c00eec59-3be3-43b5-bf8f-b94dde5f638d|image/png', '0f5ce058-b275-4c6b-9c1f-e968b7ee5c23|image/png', '963fdc50-2771-425f-89b3-d41b4f75b076|image/png', '10ef7fc3-1bb7-41cf-ae72-3f1528a7f629|image/png', '57312d33-66c8-4dd0-a8a5-61365621b572|image/png', '图片1', '图片10', '图片2', '图片3', '图片4', '图片5', '图片6', '图片7', '图片8', '图片9', '2', '2');
+INSERT INTO `news` VALUES ('3', '1385914458181', '1', '攻略1', '502', '百度', 'http://baidu.com', '哈哈', '简介3', 'b0a50104-fc36-492d-988d-82edbe04f22f|image/x-icon', '3d59b21c-cfbe-4ca0-b15a-20e77d94e766|image/jpeg', 'd3a24502-35c8-4ddd-9bb4-f208e98a7c7e|image/png', '5c7a0bd0-ef6a-4d33-92bd-bca24003d841|image/jpeg', '9f4553f1-ccf5-40dc-aa5f-f12e691d93d2|image/jpeg', '0076db39-1861-47a9-988a-e848b8334266|image/jpeg', 'c00eec59-3be3-43b5-bf8f-b94dde5f638d|image/png', '0f5ce058-b275-4c6b-9c1f-e968b7ee5c23|image/png', '963fdc50-2771-425f-89b3-d41b4f75b076|image/png', '10ef7fc3-1bb7-41cf-ae72-3f1528a7f629|image/png', '57312d33-66c8-4dd0-a8a5-61365621b572|image/png', '图片1', '图片10', '图片2', '图片3', '图片4', '图片5', '图片6', '图片7', '图片8', '图片9', '2', '2');
 INSERT INTO `news` VALUES ('4', '1385914556244', '1', '评测1', '1', '', '', '', '简介5', '6c71dd5e-d7a0-4ee5-b82b-5b7275a8064c|image/x-icon', '36c126ca-4f95-450d-8f9a-bab2d9ae6da2|image/png', 'null|null', 'fe1c26bb-74a2-46a1-9a0d-0fdced1a4509|image/png', 'null|null', 'null|null', 'null|null', 'null|null', 'null|null', 'null|null', 'null|null', '饿位', '', '额外 饿', '', '', '', '', '', '', '', '1', '3');
 INSERT INTO `news` VALUES ('5', '1385914600642', '1', '评测2', '400', '', '', '辅导书', '简介11', 'a23c1884-5256-40dc-894b-e5f6716b0b22|image/x-icon', 'd473824c-c0f8-4a08-8daf-399e829b9b61|image/jpeg', '6615fcd8-c81a-4047-8eda-89a7aaf043f9|image/png', 'b8a17b0a-005c-44c4-a722-55c6eee3bd78|image/jpeg', '7ee23e04-3f06-4192-a63e-948d0a4f8846|image/jpeg', '61856e72-1318-476e-a1d2-99e2f6a00880|image/jpeg', 'c5505072-bfa5-4e40-a5e7-667d6ee54689|image/png', '233258dc-b27a-46f7-9bc8-518d4d1160bf|image/png', 'cd397c6c-60fe-489e-99b2-489b369321da|image/png', '90d7b879-faca-4b66-9df8-2fb219adf4c6|image/png', 'ba77812e-4461-47de-9bd8-72a2e4e6ef17|image/png', '图片1', '图片10', '图片2', '图片3', '图片4', '图片5', '图片6', '图片7', '图片8', '图片9', '2', '3');
 INSERT INTO `newtype` VALUES ('1', '游戏新闻');
