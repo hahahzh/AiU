@@ -19,6 +19,7 @@ import models.GameIcon;
 import models.GameMessage;
 import models.IndexPage;
 import models.LevelType;
+import models.Log;
 import models.New;
 import models.Pack;
 import models.PackPKey;
@@ -224,7 +225,7 @@ public class AiU extends Controller {
 	 */
 	public static void login(@Required String phone,
 			@Required String psd, @Required Integer type,
-			String serialNumber) {
+			String serialNumber, String ip, String imei) {
 		// 参数验证
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
@@ -262,6 +263,15 @@ public class AiU extends Controller {
 		results.put("lv", customer.lv.level_name);
 		results.put("name", customer.nickname);
 		results.put("session", s.sessionID);
+		
+		if((ip != null && !ip.isEmpty()) || (imei != null && imei.isEmpty())){
+			Log log = new Log();
+			log.customer_name = customer.m_number;
+			log.data = new Date();
+			log.ip = ip;
+			log.imei = imei;
+			log._save();
+		}
 		renderSuccess(results);
 	}
 	

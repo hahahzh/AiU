@@ -15,6 +15,10 @@ public class Log extends Model {
 	
 	public Date data = new Date();
 
+	public String ip;
+	
+	public String imei;
+	
 	public String toString() {
 		return customer_name;
 	}
