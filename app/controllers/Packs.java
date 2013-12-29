@@ -19,6 +19,7 @@ import play.db.jpa.JPA;
 import play.exceptions.TemplateNotFoundException;
 import play.mvc.With;
 import utils.ExcelTool;
+import utils.POIExcelUtil;
 import utils.TransactionUtil;
 
 @Check("admin")
@@ -168,7 +169,7 @@ public class Packs extends CRUD {
     }
     
     private static void savePkey(String path, Pack p) throws IOException{
-    	List<String> l = ExcelTool.poiReadExcel(path);
+    	List<String> l = POIExcelUtil.poiReadExcel(path);
     	Connection conn = null;
 		try {
 			conn = DB.datasource.getConnection();

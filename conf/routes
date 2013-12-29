@@ -32,6 +32,9 @@ GET     /                                       Application.index
 *       /c/gDCount								AiU.gameDownloadCount
 *       /c/mypackage							AiU.getMyPackage
 *       /c/gameicon								AiU.getGameIcon
+*       /c/gametype								AiU.getGameType
+*       /c/newstype								AiU.getNewsType
+
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

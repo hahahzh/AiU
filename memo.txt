@@ -1,7 +1,7 @@
 mysql
 mysqld -nt --skip-grant-tables
 CREATE DATABASE IF NOT EXISTS AiU default charset utf8 COLLATE utf8_general_ci;
-source /home/test/temp/aiu.sql;
+source /var/app/play-1.2.5.3/AiU/aiu.sql;
 
 GPS
 userName=kortide
