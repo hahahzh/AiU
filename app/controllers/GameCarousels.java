@@ -85,13 +85,17 @@ public class GameCarousels extends CRUD {
         notFoundIfNull(object);
         
         List l = null;
-	      if("新闻".equals(object.ct.type)){
-			  l = New.find("byGame", object.game).fetch();
-		  }else if("礼包".equals(object.ct.type)){
-			  l = Pack.find("byGame", object.game).fetch();
-		  }
+        String selval = null;
+        if(object.ct != null){
+        	if("新闻".equals(object.ct.type)){
+  			  l = New.find("byGame", object.game).fetch();
+  		  }else if("礼包".equals(object.ct.type)){
+  			  l = Pack.find("byGame", object.game).fetch();
+  		  }
+        	selval = object.ct.type;
+        }
 	  Long ad_id = object.ad_id;
-	  String selval = object.ct.type;
+	  
         try {
             render(type, object, l, selval, ad_id);
         } catch (TemplateNotFoundException e) {

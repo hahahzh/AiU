@@ -25,10 +25,10 @@
             %{ am = 'crud.help.numeric' }%
         #{/field}
 </div>
+
 <div class="crudField crud_text">
-           #{if field.type == 'relation'}
-            #{crud.relationField name:field.name, value:(currentObject ? currentObject[field.name] : null), field:field /}
-        #{/if}
+	<input type="text" value="${currentObject['game']}" name="game_show" readonly="readonly">
+	<input type="hidden" value="${currentObject['game'].id}" name="game">
 </div>
 
 <div class="crudField crud_relation">
@@ -36,30 +36,12 @@
     	<label for="ct">
            &{'ct'}
        	</label>
-        <select name="selName" id="selName" >
-        	<option value="" class="${field.errorClass}">请选择...</option>
+       <select name="selName" id="selName" >
+        	<option value="" >请选择...</option>
 	        #{list items:controllers.GameCarousels.findSimpleCarouselType(), as:'c'}
-
-	        		<option value="${c.type}" ${c.type == _caller.selval? 'selected="true"'.raw() : ''}>${c}</option>
+	        		<option value="${c.type}" ${c.type == _caller?.selval? 'selected="true"'.raw() : ''}>${c}</option>
 	        #{/list}
         </select>
-        <input type="button" value="查询" onclick="change1()"/>
-
-		#{ifError field.name}
-	        <span class="error">${field.error}</span>
-	    #{/ifError}
-  		#{/field}
+           <input type="button" value="查询" onclick="change1()"/>
+  	#{/field}
 </div>
-
-#{if _caller.l != null}
-<div class="crudField crud_relation">
-    	<label >
-           	轮播内容
-       	</label>
-        <select name="type_id">
-        	    #{list items:_caller.l, as:'c'}
-	        		<option value="${c.id}" ${_caller.ad_id == c.id? 'selected="true"'.raw() : ''}>${c}</option>
-	        #{/list}
-        </select>
-</div>
-#{/if}

@@ -18,10 +18,8 @@ import play.db.jpa.Model;
 public class GameCarousel extends Model {
 
 	@Hidden
-	@Required
 	public Long ad_id;
 	
-	@Required
 	public int mtype;
 	
 	@ManyToOne(fetch=FetchType.EAGER,cascade=javax.persistence.CascadeType.REFRESH)
@@ -32,6 +30,6 @@ public class GameCarousel extends Model {
 	public Game game;
 
 	public String toString(){
-		return ct.type;
+		return game.title;
 	}
 }

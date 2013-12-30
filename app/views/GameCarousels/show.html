@@ -15,12 +15,6 @@
     #{/form}
     </div>
 
-    #{form @delete(object._key())}
-        <p class="crudDelete">
-            <input type="submit" value="&{'crud.delete', type.modelName}" />
-        </p>
-    #{/form}
-
 </div>
 #{form action:@getEntityList(), name:'selForm', id:'selForm', method:'GET'}
 <input type="hidden" name="selval" id="selval"/>
