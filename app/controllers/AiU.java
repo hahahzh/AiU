@@ -14,6 +14,7 @@ import models.ClientVersion;
 import models.Customer;
 import models.EveryGame;
 import models.Game;
+import models.GameCarousel;
 import models.GameDownloadCount;
 import models.GameIcon;
 import models.GameMessage;
@@ -588,6 +589,76 @@ public class AiU extends Controller {
 		results.put("list", list);
 		
 		renderSuccess(results);
+	}
+	
+	//游戏轮播位
+	public static void gameCarosel(@Required Long id, @Required String z) {
+		// 参数验证
+		if (Validation.hasErrors()) {
+			renderFail("error_parameter_required");
+		}
+		
+		Session s = sessionCache.get();
+		if(s == null){
+			renderFail("error_session_expired");
+		}
+		Customer customer = s.customer;
+
+		JSONObject results = initResultJSON();
+		
+		GameCarousel data = GameCarousel.find("mtype=? and game_id=? order by id desc",customer.os,id).first();
+		if(data == null) renderFail("error_game_deleted");
+		results.put("id", data.id);
+		results.put("g_id", data.game.id);
+		
+		JSONArray adlistArr = initResultJSONArray();
+		if(data.ct != null && data.ad_id != null){
+			adlistArr.add(setGameCarosel(data.ct.type,data.ad_id, z));
+		}
+		if(data.ct2 != null && data.ad_id2 != null){
+			adlistArr.add(setGameCarosel(data.ct2.type,data.ad_id2, z));
+		}
+		if(data.ct3 != null && data.ad_id3 != null){
+			adlistArr.add(setGameCarosel(data.ct3.type,data.ad_id3, z));
+		}   
+		if(data.ct4 != null && data.ad_id4 != null){
+			adlistArr.add(setGameCarosel(data.ct4.type,data.ad_id4, z));
+		}
+		if(data.ct5 != null && data.ad_id5 != null){
+			adlistArr.add(setGameCarosel(data.ct5.type,data.ad_id5, z));
+		}
+		if(data.ct6 != null && data.ad_id6 != null){
+			adlistArr.add(setGameCarosel(data.ct6.type,data.ad_id6, z));
+		}
+		if(data.ct7 != null && data.ad_id7 != null){
+			adlistArr.add(setGameCarosel(data.ct7.type,data.ad_id7, z));
+		}
+		if(data.ct8 != null && data.ad_id8 != null){
+			adlistArr.add(setGameCarosel(data.ct8.type,data.ad_id8, z));
+		}
+		results.put("adlist", adlistArr);
+
+		renderSuccess(results);
+	}
+	
+	private static JSONObject setGameCarosel(String type, Long ad_id, String z){
+		JSONObject subad = new JSONObject();
+	  	  if("新闻".equals(type)){
+	  		New l = New.findById(ad_id);
+		  	subad.put("icon", "/c/download?id=" + l.id + "&fileID=picture1&entity=" + l.getClass().getName() + "&z=" + z);
+			subad.put("url", "/c/newinfo?id="+l.id+"&z="+z);
+			subad.put("data", l.data+"");
+			subad.put("t_id", l.id);
+			subad.put("t_type", "n");
+	  	  }else if("礼包".equals(type)){
+	  		Pack l = Pack.findById(ad_id);
+		  	subad.put("icon", "/c/download?id=" + l.id + "&fileID=icon&entity=" + l.getClass().getName() + "&z=" + z);
+			subad.put("url", "c/package?num=5&page=1&z="+z);
+			subad.put("data", l.data+"");
+			subad.put("t_id", l.id);
+			subad.put("t_type", "p");
+	  	  }
+	  	  return subad;
 	}
 	
 	public static void getPackage(int num, long time, int page, String skey, Long gid, @Required String z) throws ParseException {

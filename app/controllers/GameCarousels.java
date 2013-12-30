@@ -5,6 +5,7 @@ import java.lang.reflect.Constructor;
 import java.util.List;
 
 import models.CarouselType;
+import models.Game;
 import models.GameCarousel;
 import models.New;
 import models.Pack;
@@ -17,20 +18,21 @@ import play.mvc.With;
 @With(Secure.class)
 public class GameCarousels extends CRUD {
 	
-	  public static void getEntityList(String selval, String mtype, Long gid) throws Exception {
-		   ObjectType type = ObjectType.get(getControllerClass());
+	  public static void getEntityList(String id, String selval, Long gid) throws Exception {
+	       ObjectType type = ObjectType.get(getControllerClass());
 	        notFoundIfNull(type);
-	        Constructor<?> constructor = type.entityClass.getDeclaredConstructor();
-	        constructor.setAccessible(true);
-	        Model object = (Model) constructor.newInstance();
+	        GameCarousel object = (GameCarousel)type.findById(id);
+	        notFoundIfNull(object);
+	        
 	        List l = null;
 	      if("新闻".equals(selval)){
 			  l = New.find("game_id=?", gid).fetch();
 		  }else if("礼包".equals(selval)){
 			  l = Pack.find("game_id=?", gid).fetch();
 		  }
+	      Long ad_id = object.ad_id;
         try {
-            render("GameCarousels/show.html", type, object, l, selval, mtype, gid);
+            render("GameCarousels/show.html", type, object, l, selval, ad_id);
         } catch (TemplateNotFoundException e) {
             render("GameCarousels/show.html", type, object);
         }
@@ -56,10 +58,51 @@ public class GameCarousels extends CRUD {
         if(params.get("selName") != null && !params.get("selName").isEmpty()){
         	object.ct = CarouselType.find("byType", params.get("selName")).first();
         }
-        if(params.get("type_id") != null && !params.get("type_id").isEmpty()){
-        	object.ad_id = Long.parseLong(params.get("type_id"));
+        if(params.get("selName2") != null && !params.get("selName2").isEmpty()){
+        	object.ct2 = CarouselType.find("byType", params.get("selName2")).first();
         }
-        
+        if(params.get("selName3") != null && !params.get("selName3").isEmpty()){
+        	object.ct3 = CarouselType.find("byType", params.get("selName3")).first();
+        }
+        if(params.get("selName4") != null && !params.get("selName4").isEmpty()){
+        	object.ct4 = CarouselType.find("byType", params.get("selName4")).first();
+        }
+        if(params.get("selName5") != null && !params.get("selName5").isEmpty()){
+        	object.ct5 = CarouselType.find("byType", params.get("selName5")).first();
+        }
+        if(params.get("selName6") != null && !params.get("selName6").isEmpty()){
+        	object.ct6 = CarouselType.find("byType", params.get("selName6")).first();
+        }
+        if(params.get("selName7") != null && !params.get("selName7").isEmpty()){
+        	object.ct7 = CarouselType.find("byType", params.get("selName7")).first();
+        }
+        if(params.get("selName8") != null && !params.get("selName8").isEmpty()){
+        	object.ct8 = CarouselType.find("byType", params.get("selName8")).first();
+        }
+        if(params.get("ad_name1") != null && !params.get("ad_name1").isEmpty()){
+        	object.ad_id = Long.parseLong(params.get("ad_name1"));
+        }
+        if(params.get("ad_name2") != null && !params.get("ad_name2").isEmpty()){
+        	object.ad_id2 = Long.parseLong(params.get("ad_name2"));
+        }
+        if(params.get("ad_name3") != null && !params.get("ad_name3").isEmpty()){
+        	object.ad_id3 = Long.parseLong(params.get("ad_name3"));
+        }
+        if(params.get("ad_name4") != null && !params.get("ad_name4").isEmpty()){
+        	object.ad_id4 = Long.parseLong(params.get("ad_name4"));
+        }
+        if(params.get("ad_name5") != null && !params.get("ad_name5").isEmpty()){
+        	object.ad_id5 = Long.parseLong(params.get("ad_name5"));
+        }
+        if(params.get("ad_name6") != null && !params.get("ad_name6").isEmpty()){
+        	object.ad_id6 = Long.parseLong(params.get("ad_name6"));
+        }
+        if(params.get("ad_name7") != null && !params.get("ad_name7").isEmpty()){
+        	object.ad_id7 = Long.parseLong(params.get("ad_name7"));
+        }
+        if(params.get("ad_name8") != null && !params.get("ad_name8").isEmpty()){
+        	object.ad_id8 = Long.parseLong(params.get("ad_name8"));
+        }
         validation.valid(object);
         if (validation.hasErrors()) {
             renderArgs.put("error", play.i18n.Messages.get("crud.hasErrors"));

@@ -34,7 +34,7 @@ GET     /                                       Application.index
 *       /c/gameicon								AiU.getGameIcon
 *       /c/gametype								AiU.getGameType
 *       /c/newstype								AiU.getNewsType
-
+*       /c/gameadlist							AiU.gameCarosel
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

@@ -32,7 +32,12 @@ public class Games extends CRUD {
 	        Game g = object.save();
 	        GameCarousel gc = new GameCarousel();
 	        gc.game = g;
+	        gc.mtype = 1;
 	        gc._save();
+	        GameCarousel gc2 = new GameCarousel();
+	        gc2.game = g;
+	        gc2.mtype = 2;
+	        gc2._save();
 	        flash.success(play.i18n.Messages.get("crud.created", type.modelName));
 	        if (params.get("_save") != null) {
 	            redirect(request.controller + ".list");

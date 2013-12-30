@@ -18,7 +18,8 @@
 </div>
 #{form action:@getEntityList(), name:'selForm', id:'selForm', method:'GET'}
 <input type="hidden" name="selval" id="selval"/>
-<input type="hidden" name="mtype" id="mtype"/>
+<input type="hidden" name="gid" id="gid"/>
+<input type="hidden" name="id" id="search_id" value="${object._key()}"/>
 #{/form}
 <script type="text/javascript">  
  function change1(){
@@ -26,8 +27,7 @@
 	var form = document.getElementById("selForm");
 //	alert($("#selName").val());
 	$("#selval").val($("#selName").val());
-	$("#mtype").val($("#object_mtype").val());
-//	alert($("#selval").val());
+	$("#gid").val($("#game").val());
 	form.submit();
  }
 </script>

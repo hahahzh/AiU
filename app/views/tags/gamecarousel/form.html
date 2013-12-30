@@ -19,16 +19,10 @@
 }%
 %{ def field = currentType.getField(fieldName) }%
 
-<div class="crudField crud_text">
-        #{field 'mtype'}
-            #{crud.numberField name:'mtype', value:(_caller.mtype? _caller.mtype :(currentObject ? currentObject['mtype'] : null)) /}
-            %{ am = 'crud.help.numeric' }%
-        #{/field}
-</div>
 
 <div class="crudField crud_text">
 	<input type="text" value="${currentObject['game']}" name="game_show" readonly="readonly">
-	<input type="hidden" value="${currentObject['game'].id}" name="game">
+	<input type="hidden" value="${currentObject['game'].id}" name="game" id="game">
 </div>
 
 <div class="crudField crud_relation">
@@ -45,3 +39,229 @@
            <input type="button" value="查询" onclick="change1()"/>
   	#{/field}
 </div>
+
+#{if _caller.l == null || _caller.l.size() == 0}
+没有任何数据返回
+#{/if}
+#{else}
+    	<label for="ct1">
+		           播放信息1
+       	</label>
+       <select name="ad_name1" id="ad_id1" >
+        	<option value="" >请选择...</option>
+	        #{list items:_caller.l, as:'c'}
+	        		<option value="${c.id}">${c}</option>
+	        #{/list}
+        </select>
+#{/else}
+
+<div class="crudField crud_relation">
+	#{field 'object.ct2'}
+    	<label for="ct2">
+           &{'ct2'}
+       	</label>
+       <select name="selName2" id="selName2" >
+        	<option value="" >请选择...</option>
+	        #{list items:controllers.GameCarousels.findSimpleCarouselType(), as:'c'}
+	        		<option value="${c.type}" ${c.type == _caller?.selval? 'selected="true"'.raw() : ''}>${c}</option>
+	        #{/list}
+        </select>
+           <input type="button" value="查询" onclick="change1()"/>
+  	#{/field}
+</div>
+
+#{if _caller.l == null || _caller.l.size() == 0}
+没有任何数据返回
+#{/if}
+#{else}
+    	<label for="ct2">
+		           播放信息2
+       	</label>
+       <select name="ad_name2" id="ad_id2" >
+        	<option value="" >请选择...</option>
+	        #{list items:_caller.l, as:'c'}
+	        		<option value="${c.id}">${c}</option>
+	        #{/list}
+        </select>
+#{/else}
+
+<div class="crudField crud_relation">
+	#{field 'object.ct3'}
+    	<label for="ct3">
+           &{'ct3'}
+       	</label>
+       <select name="selName3" id="selName3" >
+        	<option value="" >请选择...</option>
+	        #{list items:controllers.GameCarousels.findSimpleCarouselType(), as:'c'}
+	        		<option value="${c.type}" ${c.type == _caller?.selval? 'selected="true"'.raw() : ''}>${c}</option>
+	        #{/list}
+        </select>
+           <input type="button" value="查询" onclick="change1()"/>
+  	#{/field}
+</div>
+
+#{if _caller.l == null || _caller.l.size() == 0}
+没有任何数据返回
+#{/if}
+#{else}
+    	<label for="ct3">
+		           播放信息3
+       	</label>
+       <select name="ad_name3" id="ad_id3" >
+        	<option value="" >请选择...</option>
+	        #{list items:_caller.l, as:'c'}
+	        		<option value="${c.id}">${c}</option>
+	        #{/list}
+        </select>
+#{/else}
+
+<div class="crudField crud_relation">
+	#{field 'object.ct4'}
+    	<label for="c4">
+           &{'ct4'}
+       	</label>
+       <select name="selName4" id="selName4" >
+        	<option value="" >请选择...</option>
+	        #{list items:controllers.GameCarousels.findSimpleCarouselType(), as:'c'}
+	        		<option value="${c.type}" ${c.type == _caller?.selval? 'selected="true"'.raw() : ''}>${c}</option>
+	        #{/list}
+        </select>
+           <input type="button" value="查询" onclick="change1()"/>
+  	#{/field}
+</div>
+
+#{if _caller.l == null || _caller.l.size() == 0}
+没有任何数据返回
+#{/if}
+#{else}
+    	<label for="ct4">
+		           播放信息4
+       	</label>
+       <select name="ad_name4" id="ad_id4" >
+        	<option value="" >请选择...</option>
+	        #{list items:_caller.l, as:'c'}
+	        		<option value="${c.id}">${c}</option>
+	        #{/list}
+        </select>
+#{/else}
+
+<div class="crudField crud_relation">
+	#{field 'object.ct5'}
+    	<label for="ct5">
+           &{'ct5'}
+       	</label>
+       <select name="selName5" id="selName5" >
+        	<option value="" >请选择...</option>
+	        #{list items:controllers.GameCarousels.findSimpleCarouselType(), as:'c'}
+	        		<option value="${c.type}" ${c.type == _caller?.selval? 'selected="true"'.raw() : ''}>${c}</option>
+	        #{/list}
+        </select>
+           <input type="button" value="查询" onclick="change1()"/>
+  	#{/field}
+</div>
+
+#{if _caller.l == null || _caller.l.size() == 0}
+没有任何数据返回
+#{/if}
+#{else}
+    	<label for="ct5">
+		           播放信息5
+       	</label>
+       <select name="ad_name5" id="ad_id5" >
+        	<option value="" >请选择...</option>
+	        #{list items:_caller.l, as:'c'}
+	        		<option value="${c.id}">${c}</option>
+	        #{/list}
+        </select>
+#{/else}
+
+<div class="crudField crud_relation">
+	#{field 'object.ct6'}
+    	<label for="ct6">
+           &{'ct6'}
+       	</label>
+       <select name="selName6" id="selName6" >
+        	<option value="" >请选择...</option>
+	        #{list items:controllers.GameCarousels.findSimpleCarouselType(), as:'c'}
+	        		<option value="${c.type}" ${c.type == _caller?.selval? 'selected="true"'.raw() : ''}>${c}</option>
+	        #{/list}
+        </select>
+           <input type="button" value="查询" onclick="change1()"/>
+  	#{/field}
+</div>
+
+#{if _caller.l == null || _caller.l.size() == 0}
+没有任何数据返回
+#{/if}
+#{else}
+    	<label for="ct6">
+		           播放信息6
+       	</label>
+       <select name="ad_name6" id="ad_id6" >
+        	<option value="" >请选择...</option>
+	        #{list items:_caller.l, as:'c'}
+	        		<option value="${c.id}">${c}</option>
+	        #{/list}
+        </select>
+#{/else}
+
+<div class="crudField crud_relation">
+	#{field 'object.ct7'}
+    	<label for="ct7">
+           &{'ct7'}
+       	</label>
+       <select name="selName7" id="selName7" >
+        	<option value="" >请选择...</option>
+	        #{list items:controllers.GameCarousels.findSimpleCarouselType(), as:'c'}
+	        		<option value="${c.type}" ${c.type == _caller?.selval? 'selected="true"'.raw() : ''}>${c}</option>
+	        #{/list}
+        </select>
+           <input type="button" value="查询" onclick="change1()"/>
+  	#{/field}
+</div>
+
+#{if _caller.l == null || _caller.l.size() == 0}
+没有任何数据返回
+#{/if}
+#{else}
+    	<label for="ct7">
+		           播放信息7
+       	</label>
+       <select name="ad_name7" id="ad_id7" >
+        	<option value="" >请选择...</option>
+	        #{list items:_caller.l, as:'c'}
+	        		<option value="${c.id}">${c}</option>
+	        #{/list}
+        </select>
+#{/else}
+
+<div class="crudField crud_relation">
+	#{field 'object.ct8'}
+    	<label for="ct8">
+           &{'ct8'}
+       	</label>
+       <select name="selName8" id="selName8" >
+        	<option value="" >请选择...</option>
+	        #{list items:controllers.GameCarousels.findSimpleCarouselType(), as:'c'}
+	        		<option value="${c.type}" ${c.type == _caller?.selval? 'selected="true"'.raw() : ''}>${c}</option>
+	        #{/list}
+        </select>
+           <input type="button" value="查询" onclick="change1()"/>
+  	#{/field}
+</div>
+
+#{if _caller.l == null || _caller.l.size() == 0}
+没有任何数据返回
+#{/if}
+#{else}
+    	<label for="ct8">
+		           播放信息8
+       	</label>
+       <select name="ad_name8" id="ad_id8" >
+        	<option value="" >请选择...</option>
+	        #{list items:_caller.l, as:'c'}
+	        		<option value="${c.id}">${c}</option>
+	        #{/list}
+        </select>
+#{/else}
+

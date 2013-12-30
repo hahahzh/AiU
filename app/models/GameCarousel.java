@@ -17,13 +17,57 @@ import play.db.jpa.Model;
 @Entity
 public class GameCarousel extends Model {
 
+	@Required
+	// 1 IOS 2 Android 3 WP
+	public int mtype;
+	
 	@Hidden
 	public Long ad_id;
 	
-	public int mtype;
-	
 	@ManyToOne(fetch=FetchType.EAGER,cascade=javax.persistence.CascadeType.REFRESH)
 	public CarouselType ct;
+	
+	@Hidden
+	public Long ad_id2;
+	
+	@ManyToOne(fetch=FetchType.EAGER,cascade=javax.persistence.CascadeType.REFRESH)
+	public CarouselType ct2;
+	
+	@Hidden
+	public Long ad_id3;
+	
+	@ManyToOne(fetch=FetchType.EAGER,cascade=javax.persistence.CascadeType.REFRESH)
+	public CarouselType ct3;
+	
+	@Hidden
+	public Long ad_id4;
+	
+	@ManyToOne(fetch=FetchType.EAGER,cascade=javax.persistence.CascadeType.REFRESH)
+	public CarouselType ct4;
+	
+	@Hidden
+	public Long ad_id5;
+	
+	@ManyToOne(fetch=FetchType.EAGER,cascade=javax.persistence.CascadeType.REFRESH)
+	public CarouselType ct5;
+	
+	@Hidden
+	public Long ad_id6;
+	
+	@ManyToOne(fetch=FetchType.EAGER,cascade=javax.persistence.CascadeType.REFRESH)
+	public CarouselType ct6;
+	
+	@Hidden
+	public Long ad_id7;
+	
+	@ManyToOne(fetch=FetchType.EAGER,cascade=javax.persistence.CascadeType.REFRESH)
+	public CarouselType ct7;
+	
+	@Hidden
+	public Long ad_id8;
+	
+	@ManyToOne(fetch=FetchType.EAGER,cascade=javax.persistence.CascadeType.REFRESH)
+	public CarouselType ct8;
 	
 	@Required
 	@OneToOne(fetch=FetchType.EAGER,cascade=javax.persistence.CascadeType.REFRESH)
