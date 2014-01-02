@@ -28,6 +28,7 @@ error_exists_ss=已被订阅
 error_exists_pay=不能重复领取礼包
 error_checkdigit=校验码过期
 error_over_pay=礼包已发完
+error_permission_denied=游客没有权限使用该操作，请以用户身份登录
 
 register_ok=注册成功.
 login_ok=登录成功.

@@ -57,6 +57,9 @@ public class AiU extends Controller {
 	public static final String SUCCESS = "1";
 	public static final String FAIL = "0";
 	
+	public static final String ONE = "1";
+	public static final String TWO = "2";
+	
 	public static final int upgrade_flag = 1;// 不是最新版本.
 	public static final int error_parameter_required = 1;// 参数验证错误.
 	public static final int error_username_already_used = 2;// 用户名已被使用.
@@ -802,6 +805,10 @@ public class AiU extends Controller {
 		if(s == null){
 			renderFail("error_session_expired");
 		}
+		// 参数验证
+		if (z.equals(ONE) || z.equals(TWO)) {
+			renderFail("error_permission_denied");
+		}
 		Customer c = s.customer;
 
 		CPkey oldcpk= CPkey.find("c_id=? and p_id=? order by id desc", c.id, id).first();
@@ -1065,6 +1072,11 @@ public class AiU extends Controller {
 		// 参数验证
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
+		}
+		
+		// 参数验证
+		if (z.equals(ONE) || z.equals(TWO)) {
+			renderFail("error_permission_denied");
 		}
 		
 		Session s = sessionCache.get();
