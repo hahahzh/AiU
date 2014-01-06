@@ -20,7 +20,11 @@ import play.db.jpa.Blob;
 @Table(name="games")
 @Entity
 public class Game extends ThirdModel {
+	
 	public Blob icon;
+	
+	public Blob rankingicon;
+	
 	@Required
 	public Integer type; // 下载类型
 	

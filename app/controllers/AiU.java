@@ -911,7 +911,7 @@ public class AiU extends Controller {
 			JSONObject subad = initResultJSON();
 			subad.put("id", data.id);
 			subad.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=models.Game&z=" + z);
-			subad.put("pic", "/c/download?id=" + data.id + "&fileID=picture1&entity=models.Game&z=" + z);
+			subad.put("pic", "/c/download?id=" + data.id + "&fileID=rankingicon&entity=models.Game&z=" + z);
 			subad.put("url", "/c/gameinfo?id="+data.id+"&z="+z);
 			subad.put("title", data.title);
 			subad.put("star", data.star);
@@ -959,9 +959,11 @@ public class AiU extends Controller {
 		JSONObject game = initResultJSON();
 		Game data = Game.findById(id);
 		game.put("id", data.id);
+		Pack p = Pack.find("byGame", data).first();
+		if(p != null && p.id != null){
+			game.put("p_id", p.id);
+		}
 		game.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=" + data.getClass().getName() + "&z=" + z);
-		//TODO
-//			subad.put("url", data.ad_game.);
 		game.put("title", data.title);
 		game.put("res", data.res);
 		game.put("belong", data.gtype.gametype_name);
