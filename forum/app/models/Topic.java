@@ -24,7 +24,7 @@ public class Topic extends Model {
     
     // ~~~~~~~~~~~~ 
     
-    public Topic(Forum forum, Long by, String subject, String content) {
+    public Topic(Forum forum, User by, String subject, String content) {
         this.forum = forum;
         this.subject = subject;
         create();
@@ -32,7 +32,7 @@ public class Topic extends Model {
     }
     
     // ~~~~~~~~~~~~ 
-    public Post reply(Long by, String content) {
+    public Post reply(User by, String content) {
         return new Post(this, by, content);
     }
     

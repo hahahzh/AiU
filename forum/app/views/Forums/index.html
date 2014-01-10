@@ -26,7 +26,7 @@
 			<td class="infos">
 				#{if forum.lastPost}
 					${forum.lastPost.postedAt.since()} <br /> 
-					by <strong>${forum.lastPost.postedBy.name}</strong> 
+					by <strong>${forum.lastPost.postedBy.nickname}</strong> 
 					(<a href="@{Topics.show(forum.id, forum.lastPost.topic.id, forum.lastPost.topic.postsCount.page(pageSize))}">查看</a>)
 				#{/if}
 				#{else}

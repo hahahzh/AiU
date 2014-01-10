@@ -13,7 +13,7 @@ public class Users extends Application {
     }
 
     public static void show(Long id) {
-        User user = User.findById(id);
+        User user = User.findById((long)id);
         notFoundIfNull(user);
         render(user);
     }

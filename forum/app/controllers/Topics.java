@@ -31,7 +31,7 @@ public class Topics extends Application {
         }
         Forum forum = Forum.findById(forumId);
         notFoundIfNull(forum);
-        Topic newTopic = forum.newTopic(connectedUser().id, subject, content);
+        Topic newTopic = forum.newTopic(connectedUser(), subject, content);
         show(forumId, newTopic.id, null);
     }
 
@@ -46,7 +46,7 @@ public class Topics extends Application {
     public static void createReply(Long forumId, Long topicId, String content) {
         Topic topic = Topic.findById(topicId);
         notFoundIfNull(topic);
-        topic.reply(connectedUser().id, content);
+        topic.reply(connectedUser(), content);
         show(forumId, topicId, null);
     }
 

@@ -1,7 +1,7 @@
 <div class="post">
 	<div class="infos">
 		${_arg.postedAt.format('MM/dd, yyyy hh:mma')}
-		<a href="@{Users.show(_arg.postedBy.id)}">${_arg.postedBy.name}</a>
+		<a href="@{Users.show(_arg.postedBy.id)}">${_arg.postedBy.nickname}</a>
 		<p class="light">
 			#{pluralize size:_arg.postedBy.postsCount, word:'帖子' /}
 		</p>
