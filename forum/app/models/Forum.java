@@ -27,7 +27,7 @@ public class Forum extends Model {
     
     // ~~~~~~~~~~~~ 
     
-    public Topic newTopic(Long by, String subject, String content) {
+    public Topic newTopic(User by, String subject, String content) {
         Topic t = new Topic(this, by, subject, content);
         this.refresh();
         return t;

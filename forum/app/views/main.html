@@ -14,7 +14,7 @@
 			<div id="header">
 				#{if connected}
 					<p>
-						欢迎 <a class="connectedUser" href="@{Users.show(connected.id)}">${connected.name}</a>
+						欢迎 <a class="connectedUser" href="@{Users.show(connected.id)}">${connected.nickname}</a>
 						(<a href="@{Application.logout}">退出</a>)
 					</p>
 				#{/if}

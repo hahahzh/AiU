@@ -21,14 +21,14 @@ public class Post extends Model {
     
     @ForeignKey(name = "FK_postedBy")
     @JoinTable(name = "customer", inverseJoinColumns = @JoinColumn(name = "id"))
-    public long postedBy;
+    public User postedBy;
     
     @ManyToOne
     public Topic topic;
     
     // ~~~~~~~~~~~~ 
     
-    public Post(Topic topic, Long postedBy, String content) {
+    public Post(Topic topic, User postedBy, String content) {
         this.topic = topic;
         this.postedBy = postedBy;
         this.content = content;

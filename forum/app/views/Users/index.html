@@ -17,7 +17,7 @@
 	#{list items:users, as:'user'}
 		<tr>
 			<td class="main">
-				<a href="@{Users.show(user.id)}">${user.name}</a>
+				<a href="@{Users.show(user.id)}">${user.nickname}</a>
 			</td>
 			<td class="infos">
 				${user.postsCount}

@@ -76,7 +76,7 @@ public class Application extends Controller {
     	User u = new User(ss[0].toString(),ss[2].toString(),ss[1].toString());
     	u.id = Long.parseLong(ss[3].toString());
         connect(u);
-        flash.success("Welcome back %s !", u.name);
+        flash.success("Welcome back %s !", u.nickname);
         Users.show(u.id);
     }
 
@@ -92,10 +92,6 @@ public class Application extends Controller {
 
     static User connectedUser() {
         String userId = session.get("logged");
-        if(userId != null){
-        	Object[] ss = (Object[])JPA.em().createNativeQuery("select m_number, nickname, psd, id from customer where id="+ userId).getSingleResult();
-        	return new User(Long.parseLong(userId), ss[0].toString(),ss[2].toString(),ss[1].toString());
-        }
-        return null;
+        return userId == null ? null : (User) User.findById(Long.parseLong(userId));
     }
 }
