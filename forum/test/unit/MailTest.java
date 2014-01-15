@@ -15,6 +15,6 @@ public class MailTest extends UnitTest {
         Notifier.welcome(toto);
         String email = Mail.Mock.getLastMessageReceivedBy("toto@sampleforum.com");
         assertTrue(email.contains("Subject: Welcome Toto"));
-        assertTrue(email.contains("/signup/" + toto.email));
+        assertTrue(email.contains("/signup/" + toto.m_number));
     }
 }

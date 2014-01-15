@@ -8,7 +8,7 @@ import play.db.jpa.*;
 import play.data.validation.*;
 
 @Entity
-@Table(name = "forum_topic")
+@Table(name = "topic")
 public class Topic extends Model {
 
     @Required
@@ -47,9 +47,7 @@ public class Topic extends Model {
     }
 
     public Long getVoicesCount() {
-    	List l = JPA.em().createNativeQuery("select count(distinct 1) from customer u, forum_topic t, forum_post p where p.postedBy_id = u.id and p.topic_id = t.id").getResultList();
-    	if(l.size() < 0)return 0L;
-        return Long.parseLong(l.get(0).toString());
+    	return User.count("select count(distinct u) from User u, Topic t, Post p where p.postedBy = u and p.topic = t and t = ?1", this);
     }
 
     public Post getLastPost() {

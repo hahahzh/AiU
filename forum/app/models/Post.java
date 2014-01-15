@@ -11,7 +11,7 @@ import play.data.binding.*;
 import play.db.jpa.*;
 
 @Entity
-@Table(name = "forum_post")
+@Table(name = "post")
 public class Post extends Model {
 
     public String content;
@@ -19,8 +19,7 @@ public class Post extends Model {
     @As("yyyy-MM-dd")
     public Date postedAt;
     
-    @ForeignKey(name = "FK_postedBy")
-    @JoinTable(name = "customer", inverseJoinColumns = @JoinColumn(name = "id"))
+    @OneToOne
     public User postedBy;
     
     @ManyToOne

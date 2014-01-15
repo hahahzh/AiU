@@ -41,14 +41,14 @@ public class Application extends Controller {
         render();
     }
 
-    public static void register(@Required @Email String email, @Required @MinSize(5) String password, @Equals("password") String password2, @Required String name) {
+    public static void register(@Required @Email String m, @Required @MinSize(5) String password, @Equals("password") String password2, @Required String name) {
         if (validation.hasErrors()) {
             validation.keep();
             params.flash();
             flash.error("Please correct these errors !");
             signup();
         }
-        User user = new User(email, password, name);
+        User user = new User(m, password, name);
         try {
             if (Notifier.welcome(user)) {
                 flash.success("Your account is created. Please check your emails ...");
@@ -66,18 +66,17 @@ public class Application extends Controller {
     }
 
     public static void authenticate(String m, String password) {
-    	List l = JPA.em().createNativeQuery("select m_number, nickname, psd, id from customer where m_number='"+ m +"' and psd='"+password+"'").getResultList();
-    	if(l.size() < 1){
-          flash.error("错误的用户名或密码");
-          flash.put("m", m);
-          login();
-    	}
-    	Object[] ss = (Object[])l.get(0);
-    	User u = new User(ss[0].toString(),ss[2].toString(),ss[1].toString());
-    	u.id = Long.parseLong(ss[3].toString());
-        connect(u);
-        flash.success("Welcome back %s !", u.nickname);
-        Users.show(u.id);
+    	
+        
+        User user = User.findByMobile(m);
+        if (user == null || !user.checkPassword(password)) {
+            flash.error("Bad mobile or bad password");
+            flash.put("mobile", m);
+            login();
+        }
+        connect(user);
+        flash.success("Welcome back %s !", user.nickname);
+        Users.show(user.id);
     }
 
     public static void logout() {

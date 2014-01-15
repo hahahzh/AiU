@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<testsuite failures="0" time="0.339" errors="0" skipped="0" tests="3" name="functional.SecurityTest">
-  <testcase classname="functional.SecurityTest" name="forumCreationIsRestricted" time="0.196">
+<testsuite failures="0" time="0.612" errors="0" skipped="0" tests="3" name="functional.SecurityTest">
+  <testcase classname="functional.SecurityTest" name="forumCreationIsRestricted" time="0.157">
       </testcase>
-  <testcase classname="functional.SecurityTest" name="forumDeletionIsRestricted" time="0.039">
+  <testcase classname="functional.SecurityTest" name="forumDeletionIsRestricted" time="0.041">
       </testcase>
-  <testcase classname="functional.SecurityTest" name="indexIsFree" time="0.104">
+  <testcase classname="functional.SecurityTest" name="indexIsFree" time="0.414">
       </testcase>
 </testsuite>

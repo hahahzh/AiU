@@ -107,18 +107,17 @@ public class User extends Model {
     }
 
     public Long getPostsCount() {
-        return Post.count("postedBy_id=?", this.id);
+        return Post.count("postedBy = ?", this);
     }
 
     public Long getTopicsCount() {
-        //return Post.count("select count(distinct t) from Topic t, Post p, User u where p.postedBy_id = ? and p.topic_id = t.id", this.id);
-    	return Post.count("select count(distinct forum_topic.id) from forum_topic , forum_post where forum_post.postedBy_id = ? and forum_post.topic_id = forum_topic.id", this.id);
+        return Post.count("select count(distinct t) from Topic t, Post p, User u where p.postedBy = ?1 and p.topic = t", this);
     }
     
     // ~~~~~~~~~~~~ 
     
-    public static User findByEmail(String email) {
-        return find("email", email).first();
+    public static User findByMobile(String m) {
+        return find("m_number", m).first();
     }
 
     public static User findByRegistrationUUID(String uuid) {
@@ -129,8 +128,8 @@ public class User extends Model {
         return User.all().fetch(page, pageSize);
     }
 
-    public static boolean isEmailAvailable(String email) {
-        return findByEmail(email) == null;
+    public static boolean isEmailAvailable(String m) {
+        return findByMobile(m) == null;
     }
     
 }
