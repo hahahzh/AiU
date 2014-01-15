@@ -43,6 +43,7 @@ import utils.Coder;
 import utils.DateUtil;
 import utils.Demo_Mt;
 import utils.JSONUtil;
+import utils.SendSMS;
 import controllers.CRUD.ObjectType;
 
 /**
@@ -148,8 +149,11 @@ public class AiU extends Controller {
 		cd._save();
 		
 		try {
-			Demo_Mt.sendSMS(m, "矮油互动娱乐欢迎您！验证码:"+n);
-		} catch (UnsupportedEncodingException e) {
+			String s = SendSMS.send(m, "矮油互动娱乐欢迎您！验证码:"+n);
+			if(!s.contains("success")){
+				renderText("failed");
+			}
+		} catch (Exception e) {
 			cd._delete();
 			play.Logger.error(e.getMessage());
 			renderText("failed");
