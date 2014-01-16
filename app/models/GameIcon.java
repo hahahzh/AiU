@@ -49,6 +49,8 @@ public class GameIcon extends Model {
 	public Blob picture6;
 
 	//public String txt6;
+	
+	public Blob backgroundpicture;
 
 	public String toString() {
 		return game.title;

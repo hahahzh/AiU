@@ -5,8 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import org.h2.constant.SysProperties;
+import java.net.URLEncoder;
 
 import play.Play;
 
@@ -79,7 +78,8 @@ public class SendSMS {
 		// 鍚慡tringBuffer杩藉姞鎵嬫満鍙风爜
 		sb.append("&mobile="+m);//,18501667323,15021091765,13564635042");
 		// 鍚慡tringBuffer杩藉姞娑堟伅鍐呭杞琔RL鏍囧噯鐮�
-		sb.append("&content="+new String(content.getBytes("UTF-8"), "GBK"));
+		//sb.append("&content="+URLEncoder.encode(new String(content.getBytes("UTF-8"), "GBK")));
+		sb.append("&content="+URLEncoder.encode(content));
 		// 鍒涘缓url瀵硅薄
 		URL url = new URL(sb.toString());
 		// 鎵撳紑url杩炴帴

@@ -146,10 +146,11 @@ public class AiU extends Controller {
 		CheckDigit cd = new CheckDigit();
 		cd.d = n;
 		cd.updatetime = new Date().getTime();
+		cd.m = m;
 		cd._save();
 		
 		try {
-			String s = SendSMS.send(m, "矮油互动娱乐欢迎您！验证码:"+n);
+			String s = SendSMS.send(m, ""+n);
 			if(!s.contains("success")){
 				renderText("failed");
 			}
@@ -176,6 +177,9 @@ public class AiU extends Controller {
 			int i = Integer.parseInt(arr[7]);
 			CheckDigit c = CheckDigit.find("d=?", i).first();
 			if(c == null){
+				renderFail("error_checkdigit");
+			}
+			if(!c.m.equals(arr[6])){
 				renderFail("error_checkdigit");
 			}
 			if(new Date().getTime() - c.updatetime > 1800000){
@@ -223,6 +227,57 @@ public class AiU extends Controller {
 		
 	}
 
+	// 注册
+	public static void register2(@Required String z) {
+		// 参数验证
+		if (Validation.hasErrors()) {
+			renderFail("error_parameter_required");
+		}
+
+		try {
+			byte[] b = Coder.decryptBASE64(z);
+			String src = new String(b);
+			String[] arr = src.split("\\|");
+			
+			Customer m = Customer.find("byM_number", arr[6]).first();
+			if (m == null) {
+				// 用户名可以使用
+				Customer newUser = new Customer();
+				newUser.cid = arr[1];
+				newUser.mac = arr[3];
+				newUser.os = Integer.parseInt(arr[4]);
+				newUser.type = arr[5];
+				newUser.m_number = arr[6];
+				newUser.nickname = arr[8];
+				newUser.psd = arr[9];
+				newUser.exp = 0L;
+				newUser.lv = (LevelType)LevelType.findAll().get(0);
+				newUser.save();
+				
+				Session s = new Session();
+				s.customer = newUser;
+				s.data = new Date().getTime();
+				s.sessionID = UUID.randomUUID().toString();
+				s.save();
+				
+				JSONObject results = initResultJSON();				
+				results.put("uid", newUser.getId());
+				results.put("phone", newUser.m_number);
+				results.put("exp", newUser.exp);
+				results.put("lv", newUser.lv.level_name);
+				results.put("name", newUser.nickname);
+				results.put("session", s.sessionID);
+				renderSuccess(results);
+			} else {
+				// 用户名已被使用
+				renderFail("error_username_already_used");
+			}
+		} catch (Exception e) {
+			renderFail("error_unknown");
+		}
+		
+	}
+		
 	/**
 	 * 用户登录
 	 * 
@@ -1286,6 +1341,9 @@ public class AiU extends Controller {
 		
 		JSONObject gameicon = initResultJSON();
 		GameIcon data = GameIcon.find("game_id",id).first();
+		if(data == null){
+			renderFail("error_game_deleted");
+		}
 		gameicon.put("id", data.id);
 		JSONArray gamearray = initResultJSONArray();
 		if(data.picture1.exists()){
@@ -1306,7 +1364,11 @@ public class AiU extends Controller {
 		if(data.picture6.exists()){
 			gamearray.add("/c/download?id=" + data.id + "&fileID=picture6&entity=" + data.getClass().getName() + "&z=" + z);
 		}
+		if(data.backgroundpicture.exists()){
+			gamearray.add("/c/download?id=" + data.id + "&fileID=backgroundpicture&entity=" + data.getClass().getName() + "&z=" + z);
+		}
 		gameicon.put("icons", gamearray);
+
 		results.put("gameicon", gameicon);
 		renderSuccess(results);
 	}

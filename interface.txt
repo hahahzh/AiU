@@ -222,7 +222,7 @@ http://139.159.32.29:9000/c/mypackage?z=f2e8d93c-c205-468a-8c6d-4f0df01302c3
 http://139.159.32.29:9000/c/gameicon?id=3&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3
 id：游戏id
 返回
-{"state":"1","results":{"gameicon":{"id":1,"icons":["/c/download?id=1&fileID=picture1&entity=models.GameIcon&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","/c/download?id=1&fileID=picture2&entity=models.GameIcon&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","/c/download?id=1&fileID=picture3&entity=models.GameIcon&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","/c/download?id=1&fileID=picture4&entity=models.GameIcon&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","/c/download?id=1&fileID=picture5&entity=models.GameIcon&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","/c/download?id=1&fileID=picture6&entity=models.GameIcon&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3"]}}}
+{"state":"1","results":{"gameicon":{"id":1,"icons":["/c/download?id=1&fileID=picture1&entity=models.GameIcon&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","/c/download?id=1&fileID=picture2&entity=models.GameIcon&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","/c/download?id=1&fileID=picture3&entity=models.GameIcon&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","/c/download?id=1&fileID=picture4&entity=models.GameIcon&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","/c/download?id=1&fileID=picture5&entity=models.GameIcon&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","/c/download?id=1&fileID=picture6&entity=models.GameIcon&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","/c/download?id=1&fileID=backgroundpicture&entity=models.GameIcon&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3"]}}}
 
 
 29 得到游戏类型列表
