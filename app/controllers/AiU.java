@@ -26,6 +26,7 @@ import models.New;
 import models.NewType;
 import models.Pack;
 import models.PackPKey;
+import models.PlusGame;
 import models.PublicChannel;
 import models.Session;
 import net.sf.json.JSONArray;
@@ -47,7 +48,7 @@ import utils.SendSMS;
 import controllers.CRUD.ObjectType;
 
 /**
- * 服务器主接口
+ * ......
  * 
  * @author hanzhao
  * 
@@ -61,37 +62,37 @@ public class AiU extends Controller {
 	public static final String ONE = "1";
 	public static final String TWO = "2";
 	
-	public static final int upgrade_flag = 1;// 不是最新版本.
-	public static final int error_parameter_required = 1;// 参数验证错误.
-	public static final int error_username_already_used = 2;// 用户名已被使用.
-	public static final int error_username_not_exist = 3;// 用户名不存在.
-	public static final int error_userid_not_exist = 4;// 用户id不存在.
-	public static final int error_not_owner = 5;// &{%s} 非当前用户的对象.
-	public static final int error_unknown = 6;// 未知错误,请稍后再试.
-	public static final int error_locator_not_exist = 7;// 定位器不存在.
-	public static final int error_both_email_phonenumber_empty = 8;// 邮箱和电话号码不能同时为空.
-	public static final int error_username_or_password_not_match = 9;// 用户名或者密码错误.
-	public static final int error_session_expired = 10;// 会话已过期,请重新登录.
-	public static final int error_mail_resetpassword = 11;// 重置密码邮件发送失败,请检查您的邮件地址
+	public static final int upgrade_flag = 1;// .......
+	public static final int error_parameter_required = 1;// .......
+	public static final int error_username_already_used = 2;// ........
+	public static final int error_username_not_exist = 3;// .......
+	public static final int error_userid_not_exist = 4;// ..id....
+	public static final int error_not_owner = 5;// &{%s} .........
+	public static final int error_unknown = 6;// ....,......
+	public static final int error_locator_not_exist = 7;// .......
+	public static final int error_both_email_phonenumber_empty = 8;// ..............
+	public static final int error_username_or_password_not_match = 9;// ..........
+	public static final int error_session_expired = 10;// .....,......
+	public static final int error_mail_resetpassword = 11;// ..........,.........
 															// &{%s} .
-	public static final int error_locator_bind_full = 12;// 定位器 &{%s} 已经被两位家长绑定.
-	public static final int error_locator_already_bind = 13;// 定位器 &{%s} 已经被您绑定.
-	public static final int error_unknown_waring_format = 14;// 无法识别的定位器警告格式.
-	public static final int error_unknown_command = 15;// 未知的指令 &{%s}.
-	public static final int error_locator_not_confirmed = 16;// 已经添加了定位器操作,但是定位器还没有反馈.
-	public static final int error_dateformat = 17;// 错误的日期格式
-	public static final int error_locator_max = 18;// 超过绑定上限
-	public static final int error_download = 19;// 下载失败
+	public static final int error_locator_bind_full = 12;// ... &{%s} ..........
+	public static final int error_locator_already_bind = 13;// ... &{%s} .......
+	public static final int error_unknown_waring_format = 14;// .............
+	public static final int error_unknown_command = 15;// ..... &{%s}.
+	public static final int error_locator_not_confirmed = 16;// ..........,...........
+	public static final int error_dateformat = 17;// .......
+	public static final int error_locator_max = 18;// ......
+	public static final int error_download = 19;// ....
 	public static final int error_send_mail_fail = 20;
-	public static final int error_already_exists = 21;// 已被其他账户绑定
+	public static final int error_already_exists = 21;// ........
 	/**
-	 * 在一个请求内共享用户对象的缓存
+	 * ...............
 	 */
 	private static ThreadLocal<Session> sessionCache = new ThreadLocal<Session>();
 	
 //
 //	/**
-//	 * 用户校验
+//	 * ....
 //	 * 
 //	 * @param username
 //	 * @param password
@@ -100,7 +101,7 @@ public class AiU extends Controller {
 //	public static void validateMember(@Required String userName,
 //			@Required String password) {
 //		Document doc = initResultJSON();
-//		// 参数验证
+//		// ....
 //		if (Validation.hasErrors()) {
 //			renderFail("error_parameter_required", doc,
 //					error_parameter_required);
@@ -116,11 +117,11 @@ public class AiU extends Controller {
 //	}
 //
 	/**
-	 * 会话校验
+	 * ....
 	 * 
 	 * @param sessionID
 	 */
-	@Before(unless={"startPage", "checkDigit", "register", "login", "sendResetPasswordMail", "update"},priority=1)
+	@Before(unless={"startPage", "checkDigit", "register", "register2", "login", "sendResetPasswordMail", "update"},priority=1)
 	public static void validateSessionID(@Required String z) {
 		
 		Session s = Session.find("bySessionID",z).first();
@@ -134,7 +135,7 @@ public class AiU extends Controller {
 	}
 	
 	public static void checkDigit(@Required String m) {
-		// 参数验证
+		// ....
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
 		}
@@ -162,9 +163,9 @@ public class AiU extends Controller {
 		renderText("OK");
 	}
 	
-	// 注册
+	// ..
 	public static void register(@Required String z) {
-		// 参数验证
+		// ....
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
 		}
@@ -190,7 +191,7 @@ public class AiU extends Controller {
 			
 			Customer m = Customer.find("byM_number", arr[6]).first();
 			if (m == null) {
-				// 用户名可以使用
+				// .......
 				Customer newUser = new Customer();
 				newUser.cid = arr[1];
 				newUser.mac = arr[3];
@@ -218,7 +219,7 @@ public class AiU extends Controller {
 				results.put("session", s.sessionID);
 				renderSuccess(results);
 			} else {
-				// 用户名已被使用
+				// .......
 				renderFail("error_username_already_used");
 			}
 		} catch (Exception e) {
@@ -227,9 +228,9 @@ public class AiU extends Controller {
 		
 	}
 
-	// 注册
+	// ..
 	public static void register2(@Required String z) {
-		// 参数验证
+		// ....
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
 		}
@@ -239,9 +240,9 @@ public class AiU extends Controller {
 			String src = new String(b);
 			String[] arr = src.split("\\|");
 			
-			Customer m = Customer.find("byM_number", arr[6]).first();
+			Customer m = Customer.find("byMac", arr[3]).first();
 			if (m == null) {
-				// 用户名可以使用
+				// .......
 				Customer newUser = new Customer();
 				newUser.cid = arr[1];
 				newUser.mac = arr[3];
@@ -269,7 +270,7 @@ public class AiU extends Controller {
 				results.put("session", s.sessionID);
 				renderSuccess(results);
 			} else {
-				// 用户名已被使用
+				// .......
 				renderFail("error_username_already_used");
 			}
 		} catch (Exception e) {
@@ -279,19 +280,19 @@ public class AiU extends Controller {
 	}
 		
 	/**
-	 * 用户登录
+	 * ....
 	 * 
 	 * @param username
 	 * @param password
 	 * @param type
-	 *            客户端类型,在登录时确定,iphone客户端以后会有push动作
+	 *            .....,......,iphone.......push..
 	 * @param serialNumber
-	 *            iphone特有的手机序号,push相关
+	 *            iphone.......,push..
 	 */
 	public static void login(@Required String phone,
 			@Required String psd, @Required Integer type,
-			String serialNumber, String ip, String imei) {
-		// 参数验证
+			String serialNumber, String ip, String imei, String mac) {
+		// ....
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
 		}
@@ -299,9 +300,12 @@ public class AiU extends Controller {
 		if (type != null && type == 1 && serialNumber.isEmpty()) {
 			renderFail("error_parameter_required");
 		}
-		
-		
-		Customer customer = Customer.find("byM_number", phone).first();
+		Customer customer = null;
+		if(mac != null && !mac.isEmpty()){
+			customer = Customer.find("byMac", mac).first();
+		}else{
+			customer = Customer.find("byM_number", phone).first();
+		}
 		
 		if(customer == null || !customer.psd.equals(psd)){
 			renderFail("error_username_or_password_not_match");
@@ -314,8 +318,6 @@ public class AiU extends Controller {
 		if(s == null){
 			s = new Session();
 			s.customer = customer;
-		}
-		if(phone.equals("10000000000") && phone.equals("20000000000")){
 			s.sessionID = UUID.randomUUID().toString();
 			s.data = new Date().getTime();
 			s.save();
@@ -341,7 +343,7 @@ public class AiU extends Controller {
 	}
 	
 	public static void indexPage(@Required String z) {
-		// 参数验证
+		// ....
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
 		}
@@ -365,7 +367,7 @@ public class AiU extends Controller {
 			JSONObject subad = initResultJSON();
 			subad.put("id", data.id);
 	        
-	  	  if("每日一游&玩嗨周五".equals(data.ct.type)){
+	  	  if("....&....".equals(data.ct.type)){
 	  		EveryGame l = EveryGame.findById(data.ad_id);
 	  		subad.put("icon", "/c/download?id=" + l.id + "&fileID=picture&entity=" + l.getClass().getName() + "&z=" + z);
 			subad.put("url", "/c/invite?num=5&page=1&z="+z);
@@ -374,7 +376,7 @@ public class AiU extends Controller {
 			subad.put("data", l.data+"");
 			subad.put("t_id", l.game.id);
 			subad.put("t_type", "eg");
-	  	  } else if("游戏".equals(data.ct.type)){
+	  	  } else if("..".equals(data.ct.type)){
 	  		Game l = Game.findById(data.ad_id);
 		  	subad.put("icon", "/c/download?id=" + l.id + "&fileID=picture1&entity=" + l.getClass().getName() + "&z=" + z);
 			subad.put("url", "/c/gameinfo?id="+l.id+"&z="+z);
@@ -383,14 +385,14 @@ public class AiU extends Controller {
 			subad.put("data", l.data+"");
 			subad.put("t_id", l.id);
 			subad.put("t_type", "g");
-	  	  }else if("新闻".equals(data.ct.type)){
+	  	  }else if("..".equals(data.ct.type)){
 	  		New l = New.findById(data.ad_id);
 		  	subad.put("icon", "/c/download?id=" + l.id + "&fileID=picture1&entity=" + l.getClass().getName() + "&z=" + z);
 			subad.put("url", "/c/newinfo?id="+l.id+"&z="+z);
 			subad.put("data", l.data+"");
 			subad.put("t_id", l.id);
 			subad.put("t_type", "n");
-	  	  }else if("礼包".equals(data.ct.type)){
+	  	  }else if("..".equals(data.ct.type)){
 	  		Pack l = Pack.findById(data.ad_id);
 		  	subad.put("icon", "/c/download?id=" + l.id + "&fileID=icon&entity=" + l.getClass().getName() + "&z=" + z);
 			subad.put("url", "c/package?num=5&page=1&z="+z);
@@ -403,7 +405,7 @@ public class AiU extends Controller {
 		}
 		results.put("adlist", adlistArr);
 
-		//公共频道
+		//....
 		JSONArray pubchannel = initResultJSONArray();
 		JSONObject subpubc = initResultJSON();
 		List<PublicChannel> publicChannel = PublicChannel.find("order by id desc").fetch(0, 6);
@@ -417,12 +419,13 @@ public class AiU extends Controller {
 		}
 		results.put("pubchannel", pubchannel);
 		
-		//个人频道
+		//....
 		JSONArray prechannel = initResultJSONArray();
 		JSONObject subprec = initResultJSON();
 		List<Game> l = customer.addgame;
 		for(Game g : l){
 			subprec.put("id", g.id+"");
+			subprec.put("title", g.title);
 			//TODO
 //			subad.put("url", data.ad_game.);
 			subprec.put("icon", "/c/download?id=" + g.id + "&fileID=icon&entity=models.Game&z=" + z);
@@ -437,7 +440,7 @@ public class AiU extends Controller {
 	}
 	
 	public static void getNews(int num, long time, int page, Long type, Long gid, @Required String z) {
-		// 参数验证
+		// ....
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
 		}
@@ -488,7 +491,7 @@ public class AiU extends Controller {
 	}
 	
 	public static void getNewsType(@Required String z){
-		// 参数验证
+		// ....
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
 		}
@@ -511,7 +514,7 @@ public class AiU extends Controller {
 	}
 	
 	public static void getNewInfo(@Required Long id, @Required String z) {
-		// 参数验证
+		// ....
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
 		}
@@ -610,9 +613,9 @@ public class AiU extends Controller {
 		renderSuccess(results);
 	}
 	
-	//每日一游
+	//....
 	public static void invite(int num, long time, int page, @Required String z) {
-		// 参数验证
+		// ....
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
 		}
@@ -653,9 +656,9 @@ public class AiU extends Controller {
 		renderSuccess(results);
 	}
 	
-	//游戏轮播位
+	//.....
 	public static void gameCarosel(@Required Long id, @Required String z) {
-		// 参数验证
+		// ....
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
 		}
@@ -698,6 +701,7 @@ public class AiU extends Controller {
 		if(data.ct8 != null && data.ad_id8 != null){
 			adlistArr.add(setGameCarosel(data.ct8.type,data.ad_id8, z));
 		}
+results.put("downloadurl", data.game.downloadurl);
 		results.put("adlist", adlistArr);
 
 		renderSuccess(results);
@@ -705,14 +709,14 @@ public class AiU extends Controller {
 	
 	private static JSONObject setGameCarosel(String type, Long ad_id, String z){
 		JSONObject subad = new JSONObject();
-	  	  if("新闻".equals(type)){
+	  	  if("..".equals(type)){
 	  		New l = New.findById(ad_id);
 		  	subad.put("icon", "/c/download?id=" + l.id + "&fileID=picture1&entity=" + l.getClass().getName() + "&z=" + z);
 			subad.put("url", "/c/newinfo?id="+l.id+"&z="+z);
 			subad.put("data", l.data+"");
 			subad.put("t_id", l.id);
 			subad.put("t_type", "n");
-	  	  }else if("礼包".equals(type)){
+	  	  }else if("..".equals(type)){
 	  		Pack l = Pack.findById(ad_id);
 		  	subad.put("icon", "/c/download?id=" + l.id + "&fileID=icon&entity=" + l.getClass().getName() + "&z=" + z);
 			subad.put("url", "c/package?num=5&page=1&z="+z);
@@ -724,7 +728,7 @@ public class AiU extends Controller {
 	}
 	
 	public static void getPackage(int num, long time, int page, String skey, Long gid, @Required String z) throws ParseException {
-		// 参数验证
+		// ....
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
 		}
@@ -742,7 +746,7 @@ public class AiU extends Controller {
 		user.put("lv", c.lv.level_name);
 		results.put("user", user);
 		
-		//TODO 搜索关键字
+		//TODO .....
 		JSONArray packagelist = initResultJSONArray();
 		String sTmp = "";
 		if(skey != null && !skey.isEmpty()){
@@ -757,6 +761,9 @@ public class AiU extends Controller {
 			subad.put("id", data.id);
 			subad.put("game_id", data.game.id);
 			subad.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=" + data.getClass().getName() + "&z=" + z);
+			if(data.pack_pic.exists()){
+				subad.put("pic", "/c/download?id=" + data.id + "&fileID=pack_pic&entity=" + data.getClass().getName() + "&z=" + z);
+			}
 			//TODO
 //			subad.put("url", data.ad_game.);
 			subad.put("title", data.title);
@@ -782,6 +789,9 @@ public class AiU extends Controller {
 			subad.put("id", data.id);
 			subad.put("game_id", data.game.id);
 			subad.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=" + data.getClass().getName() + "&z=" + z);
+			if(data.pack_pic.exists()){
+				subad.put("pic", "/c/download?id=" + data.id + "&fileID=pack_pic&entity=" + data.getClass().getName() + "&z=" + z);
+			}
 			//TODO
 //			subad.put("url", data.ad_game.);
 			subad.put("title", data.title);
@@ -808,7 +818,7 @@ public class AiU extends Controller {
 	}
 	
 	public static void packageInfo(@Required Long id, @Required String z) throws ParseException {
-		// 参数验证
+		// ....
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
 		}
@@ -855,7 +865,7 @@ public class AiU extends Controller {
 	}
 	
 	public static void packagePay(@Required Long id, @Required String z) {
-		// 参数验证
+		// ....
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
 		}
@@ -864,7 +874,7 @@ public class AiU extends Controller {
 		if(s == null){
 			renderFail("error_session_expired");
 		}
-		// 参数验证
+		// ....
 		if (z.equals(ONE) || z.equals(TWO)) {
 			renderFail("error_permission_denied");
 		}
@@ -904,9 +914,9 @@ public class AiU extends Controller {
 		renderSuccess(results);
 	}
 	
-	//玩嗨周五
+	//....
 	public static void gameplay(int num, long time, int page, @Required String z) {
-		// 参数验证
+		// ....
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
 		}
@@ -944,9 +954,9 @@ public class AiU extends Controller {
 		renderSuccess(results);
 	}
 	
-	//精品推荐 游戏列表
+	//.... ....
 	public static void gameinvite(int num, long time, int page, @Required String z) {
-		// 参数验证
+		// ....
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
 		}
@@ -997,7 +1007,7 @@ public class AiU extends Controller {
 	}
 	
 	public static void getGameinfo(@Required Long id, @Required String z) {
-		// 参数验证
+		// ....
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
 		}
@@ -1068,6 +1078,7 @@ public class AiU extends Controller {
 		game.put("version", data.version);
 		game.put("comment", GameMessage.count("byGame", data)+"");
 		game.put("subscription", "/c/subscription?id="+data.id+"&z="+z);
+		game.put("downloadurl", data.downloadurl);
 //		game.put("downloadcount", ((GameDownloadCount)GameDownloadCount.find("byGame", data).first()).gcount+"");
 		results.put("game", game);
 		
@@ -1076,9 +1087,9 @@ public class AiU extends Controller {
 		renderSuccess(results);
 	}
 	
-	//订阅
+	//..
 	public static void subscription(@Required long id, @Required String z) {
-		// 参数验证
+		// ....
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
 		}
@@ -1101,15 +1112,14 @@ public class AiU extends Controller {
 			}
 		}
 		customer.addgame.add(g);
-		
 		customer.save();
 		renderSuccess(initResultJSON());
 
 	}
 	
-	//退订
+	//..
 	public static void unsubscription(@Required long id, @Required String z) {
-		// 参数验证
+		// ....
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
 		}
@@ -1130,12 +1140,12 @@ public class AiU extends Controller {
 	}
 	
 	public static void addComment(Long id, @Required String type, @Required String msg, @Required String z) {
-		// 参数验证
+		// ....
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
 		}
 		
-		// 参数验证
+		// ....
 		if (z.equals(ONE) || z.equals(TWO)) {
 			renderFail("error_permission_denied");
 		}
@@ -1161,7 +1171,7 @@ public class AiU extends Controller {
 	}
 	
 	public static void getComment(@Required Long id, @Required String type, int num, long time, int page, @Required String z) {
-		// 参数验证
+		// ....
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
 		}
@@ -1209,7 +1219,7 @@ public class AiU extends Controller {
 	
 	//+
 	public static void plus(@Required String key, Long gtype, @Required String z){
-		// 参数验证
+		// ....
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
 		}
@@ -1226,8 +1236,21 @@ public class AiU extends Controller {
 		user.put("lv", c.lv.level_name);
 		results.put("user", user);
 		
-		JSONArray gamelist = initResultJSONArray();
+		JSONArray advertisementlist = initResultJSONArray();
+		List<PlusGame> ll = PlusGame.findAll();
+		int i=0;
+		for(PlusGame pg : ll){
+			JSONObject subad = initResultJSON();
+			subad.put("id", pg.game.id);
+			subad.put("title", pg.game.title);
+			subad.put("icon", "/c/download?id=" + pg.game.id + "&fileID=icon&entity=models.Game&z=" + z);
+			advertisementlist.add(subad);
+			i++;
+			if(i == 2)break;
+		}
+		results.put("advertisementlist", advertisementlist);
 		
+		JSONArray gamelist = initResultJSONArray();
 		key = "title like '%"+key.trim()+"%' order by id desc";
 		if(gtype != null){
 			key = "gtype_id = "+ gtype + " and " + key;
@@ -1249,7 +1272,7 @@ public class AiU extends Controller {
 	}
 	
 	public static void getGameType(@Required String z){
-		// 参数验证
+		// ....
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
 		}
@@ -1271,7 +1294,7 @@ public class AiU extends Controller {
 		renderSuccess(results);
 	}
 	
-	//启动页
+	//...
 	public static void startPage(){
 
 		JSONObject results = initResultJSON();
@@ -1284,9 +1307,9 @@ public class AiU extends Controller {
 		renderSuccess(results);
 	}
 	
-	//统计游戏下载次数
+	//........
 	public static void gameDownloadCount(@Required Long id, @Required String z){
-		// 参数验证
+		// ....
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
 		}
@@ -1300,9 +1323,9 @@ public class AiU extends Controller {
 		renderText("OK");
 	}
 	
-	// 得到已领取的礼包
+	// ........
 	public static void getMyPackage(@Required String z){
-		// 参数验证
+		// ....
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
 		}
@@ -1325,9 +1348,9 @@ public class AiU extends Controller {
 		renderSuccess(results);
 	}
 	
-	// 游戏标题图标
+	// ......
 	public static void getGameIcon(@Required Long id, @Required String z) {
-		// 参数验证
+		// ....
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
 		}
@@ -1340,33 +1363,55 @@ public class AiU extends Controller {
 		JSONObject results = initResultJSON();
 		
 		JSONObject gameicon = initResultJSON();
-		GameIcon data = GameIcon.find("game_id",id).first();
-		if(data == null){
-			renderFail("error_game_deleted");
-		}
-		gameicon.put("id", data.id);
+		GameIcon data = GameIcon.find("game_id=?",id).first();
 		JSONArray gamearray = initResultJSONArray();
-		if(data.picture1.exists()){
-			gamearray.add("/c/download?id=" + data.id + "&fileID=picture1&entity=" + data.getClass().getName() + "&z=" + z);
+		if(data == null){
+			gamearray.add("/public/images/defaulticon1.png");
+			gamearray.add("/public/images/defaulticon2.png");
+			gamearray.add("/public/images/defaulticon3.png");
+			gamearray.add("/public/images/defaulticon4.png");
+			gamearray.add("/public/images/defaulticon5.png");
+			gamearray.add("/public/images/defaulticon6.png");
+			gamearray.add("/public/images/gamebackgroundimg.png");
+		}else{
+			gameicon.put("id", data.id);
+			if(data.picture1.exists()){
+				gamearray.add("/c/download?id=" + data.id + "&fileID=picture1&entity=" + data.getClass().getName() + "&z=" + z);
+			}else{
+				gamearray.add("/public/images/defaulticon1.png");
+			}
+			if(data.picture2.exists()){
+				gamearray.add("/c/download?id=" + data.id + "&fileID=picture2&entity=" + data.getClass().getName() + "&z=" + z);
+			}else{
+				gamearray.add("/public/images/defaulticon2.png");
+			}
+			if(data.picture3.exists()){
+				gamearray.add("/c/download?id=" + data.id + "&fileID=picture3&entity=" + data.getClass().getName() + "&z=" + z);
+			}else{
+				gamearray.add("/public/images/defaulticon3.png");
+			}
+			if(data.picture4.exists()){
+				gamearray.add("/c/download?id=" + data.id + "&fileID=picture4&entity=" + data.getClass().getName() + "&z=" + z);
+			}else{
+				gamearray.add("/public/images/defaulticon4.png");
+			}
+			if(data.picture5.exists()){
+				gamearray.add("/c/download?id=" + data.id + "&fileID=picture5&entity=" + data.getClass().getName() + "&z=" + z);
+			}else{
+				gamearray.add("/public/images/defaulticon5.png");
+			}
+			if(data.picture6.exists()){
+				gamearray.add("/c/download?id=" + data.id + "&fileID=picture6&entity=" + data.getClass().getName() + "&z=" + z);
+			}else{
+				gamearray.add("/public/images/defaulticon6.png");
+			}
+			if(data.backgroundpicture.exists()){
+				gamearray.add("/c/download?id=" + data.id + "&fileID=backgroundpicture&entity=" + data.getClass().getName() + "&z=" + z);
+			}else{
+				gamearray.add("/public/images/gamebackgroundimg.png");
+			}
 		}
-		if(data.picture2.exists()){
-			gamearray.add("/c/download?id=" + data.id + "&fileID=picture2&entity=" + data.getClass().getName() + "&z=" + z);
-		}
-		if(data.picture3.exists()){
-			gamearray.add("/c/download?id=" + data.id + "&fileID=picture3&entity=" + data.getClass().getName() + "&z=" + z);
-		}
-		if(data.picture4.exists()){
-			gamearray.add("/c/download?id=" + data.id + "&fileID=picture4&entity=" + data.getClass().getName() + "&z=" + z);
-		}
-		if(data.picture5.exists()){
-			gamearray.add("/c/download?id=" + data.id + "&fileID=picture5&entity=" + data.getClass().getName() + "&z=" + z);
-		}
-		if(data.picture6.exists()){
-			gamearray.add("/c/download?id=" + data.id + "&fileID=picture6&entity=" + data.getClass().getName() + "&z=" + z);
-		}
-		if(data.backgroundpicture.exists()){
-			gamearray.add("/c/download?id=" + data.id + "&fileID=backgroundpicture&entity=" + data.getClass().getName() + "&z=" + z);
-		}
+		
 		gameicon.put("icons", gamearray);
 
 		results.put("gameicon", gameicon);
@@ -1375,14 +1420,14 @@ public class AiU extends Controller {
 	
 //	searchGame
 	/**
-	 * 登出接口
+	 * ....
 	 * 
 	 * @param username
 	 * @param password
 	 * @param sessionID
 	 */
 	public static void logout(@Required String z) {
-		// 参数验证
+		// ....
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
 		}
@@ -1394,7 +1439,7 @@ public class AiU extends Controller {
 	}
 
 //	/**
-//	 * 发送重置密码邮件到指定邮箱
+//	 * .............
 //	 * 
 //	 * @param username
 //	 * @param password
@@ -1405,13 +1450,13 @@ public class AiU extends Controller {
 //	public static void sendResetPasswordMail(@Required String userName)
 //			throws UnsupportedEncodingException {
 //		Document doc = initResultJSON();
-//		// 参数验证
+//		// ....
 //		if (Validation.hasErrors()) {
 //			renderFail("error_parameter_required", doc,
 //					error_parameter_required);
 //		}
 //
-//		// 找到指定的用户
+//		// .......
 //		Member member = Member.find("byUsername", userName).first();
 //		if (member == null) {
 //			renderFail("error_username_not_exist", doc,
@@ -1421,7 +1466,7 @@ public class AiU extends Controller {
 //		if(member.updateTime != null && (new Date().getDate() != member.updateTime.getDate())){
 //			member.sendPasswordCount = 1;
 //		}
-//		// 客户端每天最多能找回10次
+//		// ..........10.
 //		if(member.sendPasswordCount > 10){
 //			renderFail("error_send_mail_fail",doc,error_send_mail_fail);
 //		}
@@ -1436,7 +1481,7 @@ public class AiU extends Controller {
 //				member.username, member.username, member.password,
 //				DateUtil.toDate(new Date())));
 //
-//		// 设置自定义发件人昵称
+//		// ..........
 //		String nick = Messages.get("mail_show_name");
 //		try {
 //			nick = javax.mail.internet.MimeUtility.encodeText(nick);
@@ -1459,7 +1504,7 @@ public class AiU extends Controller {
 	public static void updateMemberInfo(Integer os, String type, String m_number, String nickname,
 			String psd, String gender, Blob portrait, @Required String z) {
 
-		// 参数验证
+		// ....
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
 		}
@@ -1495,12 +1540,12 @@ public class AiU extends Controller {
 
 //
 //	/**
-//	 * 添加定位器操作
+//	 * .......
 //	 * 
 //	 * @param userName
-//	 *            用户名
+//	 *            ...
 //	 * @param password
-//	 *            密码
+//	 *            ..
 //	 * @param name
 //	 * @param phoneNumber
 //	 * @param serialNumber
@@ -1509,7 +1554,7 @@ public class AiU extends Controller {
 //			@Required String password, String name,
 //			@Required String phoneNumber, @Required String serialNumber) {
 //		Document doc = initResultJSON();
-//		// 参数验证
+//		// ....
 //		if (Validation.hasErrors()) {
 //			renderFail("error_parameter_required", doc,
 //					error_parameter_required);
@@ -1520,21 +1565,21 @@ public class AiU extends Controller {
 //		int tmpMax = Integer.parseInt(Play.configuration
 //				.getProperty("locator.max"));
 //		if (tmpMax == 0) {
-//			tmpMax = 5;// 默认最大定位器数
+//			tmpMax = 5;// ........
 //		}
 //		if (count > tmpMax) {
 //			renderFail("error_locator_max", doc, error_parameter_required);
 //		}
-//		// 查找或者创建定位器
+//		// .........
 //		Locator locator = Locator.find("bySerialNumber", serialNumber).first();
 //		if (locator == null) {
 //			locator = new Locator();
-//			// 设置序列号
+//			// .....
 //			locator.serialNumber = serialNumber;
 //			locator.confirmed = false;
-//			// 默认设置的警告初始值
+//			// ..........
 //			locator.warning = 0;
-//			// 默认频率180S
+//			// ....180S
 //			locator.mode = "3";
 //		}
 //
@@ -1548,7 +1593,7 @@ public class AiU extends Controller {
 //			locator.guardian1 = member;
 //			locator.bindDate = new Date();
 //			locator.save();
-//			// 组装结果XML
+//			// ....XML
 //			Element addLocatorRsp = doc.createElement("addLocatorRsp");
 //			Element locatorId = doc.createElement("locatorId");
 //			locatorId.setTextContent("" + locator.id);
@@ -1568,7 +1613,7 @@ public class AiU extends Controller {
 //				renderFail("error_locator_already_bind", doc,
 //						error_locator_already_bind);
 //			} else {
-//				// 当前用户的定位器,未确认的可以修改内容,保存修改
+//				// ........,..........,....
 //				locator.bindDate = new Date();
 //				locator.save();
 //				renderFail("error_locator_not_confirmed", doc,
@@ -1576,7 +1621,7 @@ public class AiU extends Controller {
 //			}
 //		}
 //		try {
-//			// 十分钟后被其他帐号重新绑定
+//			// .............
 //			if (DateUtil.intervalOfHour(locator.bindDate, new Date()) > 0.17
 //					&& !locator.confirmed) {
 //				Logger.debug("[addLocator] other one Locator,name = " + name
@@ -1585,7 +1630,7 @@ public class AiU extends Controller {
 //				locator.guardian1 = member;
 //				locator.bindDate = new Date();
 //				locator.save();
-//				// 组装结果XML
+//				// ....XML
 //				Element addLocatorRsp = doc.createElement("addLocatorRsp");
 //				Element locatorId = doc.createElement("locatorId");
 //				locatorId.setTextContent("" + locator.id);
@@ -1601,7 +1646,7 @@ public class AiU extends Controller {
 //	}
 //
 //	/**
-//	 * 修改定位器信息
+//	 * .......
 //	 * 
 //	 * @param userName
 //	 * @param password
@@ -1621,7 +1666,7 @@ public class AiU extends Controller {
 //			String emergencyContact2, String mode, Integer warning,
 //			Blob locatorSticker) {
 //		Document doc = initResultJSON();
-//		// 参数验证
+//		// ....
 //		if (Validation.hasErrors()) {
 //			renderFail("error_parameter_required", doc,
 //					error_parameter_required);
@@ -1671,19 +1716,19 @@ public class AiU extends Controller {
 //	}
 //
 //	/**
-//	 * 解除定位器的绑定
+//	 * ........
 //	 * 
 //	 * @param userName
-//	 *            用户名
+//	 *            ...
 //	 * @param password
-//	 *            密码
+//	 *            ..
 //	 * @param locatorId
-//	 *            定位器id
+//	 *            ...id
 //	 */
 //	public static void deleteLocator(@Required String userName,
 //			@Required String password, @Required Long locatorId) {
 //		Document doc = initResultJSON();
-//		// 参数验证
+//		// ....
 //		if (Validation.hasErrors()) {
 //			renderFail("error_parameter_required", doc,
 //					error_parameter_required);
@@ -1695,7 +1740,7 @@ public class AiU extends Controller {
 //		if (locator != null) {
 //			if (locator.guardian1 != null
 //					&& locator.guardian1.id.equals(member.id)) {
-//				// 属于当前用户的定位器
+//				// ..........
 //				locator.delete();
 //				play.Logger
 //						.debug("[GPS] delete locator,clear cache. serialNumber = "
@@ -1703,16 +1748,16 @@ public class AiU extends Controller {
 //			}
 //			// else
 //			// if(locator.guardian2!=null&&locator.guardian2.id.equals(member.id)){
-//			// //属于当前用户的定位器
+//			// //..........
 //			// locator.guardian2 = null;
 //			// }
 //			else {
-//				// 不是当前用户的定位器
+//				// ..........
 //				// renderFail("error_not_owner", doc,error_not_owner,
 //				// locator.name);
 //				renderFail("error_not_owner", doc, error_not_owner);
 //			}
-//			// 暂时不删除locator,否则将丢失所有和定位器相关联的数据
+//			// .....locator,.................
 //			// if(locator.guardian1 == null &&locator.guardian2 == null){
 //			// locator.delete();
 //			// }else{
@@ -1727,17 +1772,17 @@ public class AiU extends Controller {
 //	}
 //
 //	/**
-//	 * 获取用户绑定的定位器列表
+//	 * ............
 //	 * 
 //	 * @param userName
-//	 *            用户名
+//	 *            ...
 //	 * @param password
-//	 *            密码
+//	 *            ..
 //	 */
 //	public static void getLocatorList(@Required String userName,
 //			@Required String password) {
 //		Document doc = initResultJSON();
-//		// 参数验证
+//		// ....
 //		if (Validation.hasErrors()) {
 //			renderFail("error_parameter_required", doc,
 //					error_parameter_required);
@@ -1808,9 +1853,9 @@ public class AiU extends Controller {
 //				locator.appendChild(status);
 //				status.setTextContent(l.confirmed ? "0" : "1");
 //
-//				// 如果开启了电子围栏,则显示数据
+//				// .........,.....
 //				if (l.electronicFence != null) {// && l.electronicFence.on){
-//												// 二期修改2011/12/07
+//												// ....2011/12/07
 //					Element startLat = doc.createElement("startLat");
 //					locator.appendChild(startLat);
 //					startLat.setTextContent("" + l.electronicFence.latitude1);
@@ -1831,9 +1876,9 @@ public class AiU extends Controller {
 //					fenceTime.setTextContent("" + l.electronicFence.dateTime);
 //
 //				}
-//				// 如果开启了移动报警,则显示数据
+//				// .........,.....
 //				if (l.moveAlarm != null) {// && l.moveAlarm.switch_on){
-//											// 二期修改2011/12/07
+//											// ....2011/12/07
 //					Element originLat = doc.createElement("originLat");
 //					locator.appendChild(originLat);
 //					originLat.setTextContent("" + l.moveAlarm.latitude);
@@ -1870,31 +1915,31 @@ public class AiU extends Controller {
 //	}
 //
 //	/**
-//	 * 设置定位器
+//	 * .....
 //	 * 
 //	 * @param userName
-//	 *            用户名
+//	 *            ...
 //	 * @param password
-//	 *            密码
+//	 *            ..
 //	 * @param locatorId
-//	 *            定位器id
+//	 *            ...id
 //	 * @param name
-//	 *            姓名
+//	 *            ..
 //	 * @param emergencyContact1
-//	 *            紧急联系人1
+//	 *            .....1
 //	 * @param emergencyContact2
-//	 *            紧急联系人2
+//	 *            .....2
 //	 * @param guardian
-//	 *            家长号码
+//	 *            ....
 //	 * @param warning
-//	 *            警告设置
+//	 *            ....
 //	 */
 //	public static void setLocator(@Required String userName,
 //			@Required String password, @Required Long locatorId, String name,
 //			String emergencyContact1, String emergencyContact2,
 //			String guardian1, String guardian2, String warning) {
 //		Document doc = initResultJSON();
-//		// 参数验证
+//		// ....
 //		if (Validation.hasErrors()) {
 //			renderFail("error_parameter_required", doc,
 //					error_parameter_required);
@@ -1904,7 +1949,7 @@ public class AiU extends Controller {
 //
 //		Locator locator = Locator.findById(locatorId);
 //		validateLocator(locator, member, doc);
-//		// 是当前用户绑定的定位器
+//		// ...........
 //		if (name != null)
 //			locator.name = name;
 //		if (emergencyContact1 != null)
@@ -1927,7 +1972,7 @@ public class AiU extends Controller {
 //		}
 //		locator.save();
 //
-//		// 显示最新的设置反馈
+//		// .........
 //		// S25ConfirmMessage message = S25ConfirmMessage.find("byLocator",
 //		// locator).first();
 //		// if(message!=null){
@@ -1955,7 +2000,7 @@ public class AiU extends Controller {
 //	}
 //
 //	/**
-//	 * 获取定位信息
+//	 * ......
 //	 * 
 //	 * @param userName
 //	 * @param password
@@ -1972,7 +2017,7 @@ public class AiU extends Controller {
 //			String startTime, String endTime, boolean keepReadState,Integer page,Integer num) {
 //		long start = System.currentTimeMillis();int count=0;
 //		Document doc = initResultJSON();
-//		// 参数验证
+//		// ....
 //		if (Validation.hasErrors()) {
 //			renderFail("error_parameter_required", doc,
 //					error_parameter_required);
@@ -1981,7 +2026,7 @@ public class AiU extends Controller {
 //			mode = -1;
 //		}
 //
-//		//分页器
+//		//...
 //		int begin = 0;
 //		if(num == null){
 //			num = 100;
@@ -1995,7 +2040,7 @@ public class AiU extends Controller {
 //		Locator locator = Locator.findById(locatorId);
 //		validateLocator(locator, member, doc);
 //		
-//		// 是当前用户绑定的定位器
+//		// ...........
 //		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //
 //		String startTimeDate = null;
@@ -2200,7 +2245,7 @@ public class AiU extends Controller {
 //						eleMove_alarm.setTextContent("0");
 //						m_location.appendChild(eleMove_alarm);
 //					}
-//					// TODO 测试用原始GPS
+//					// TODO .....GPS
 //					Element eleLatitudeForTest = doc.createElement("latitudeForTest");
 //					eleLatitudeForTest.setTextContent("" + latitudeForTest);
 //					m_location.appendChild(eleLatitudeForTest);
@@ -2209,7 +2254,7 @@ public class AiU extends Controller {
 //					eleLongitudeForTest.setTextContent("" + longitudeForTest);
 //					m_location.appendChild(eleLongitudeForTest);
 //					count++;
-//					// 设置为已读
+//					// .....
 //					if (!keepReadState && !readed) {
 //						pst.setLong(1, id);
 //						pst.addBatch();
@@ -2230,14 +2275,14 @@ public class AiU extends Controller {
 //	}
 //
 //	/**
-//	 * 连续定位
+//	 * ....
 //	 * 
 //	 * @param userName
-//	 *            用户名
+//	 *            ...
 //	 * @param password
-//	 *            密码
+//	 *            ..
 //	 * @param locatorId
-//	 *            定位器id
+//	 *            ...id
 //	 * @param interval
 //	 * @param count
 //	 */
@@ -2245,7 +2290,7 @@ public class AiU extends Controller {
 //			@Required String password, @Required Long locatorId,
 //			Integer interval, Integer count) {
 //		Document doc = initResultJSON();
-//		// 参数验证
+//		// ....
 //		if (Validation.hasErrors()) {
 //			renderFail("error_parameter_required", doc,
 //					error_parameter_required);
@@ -2265,7 +2310,7 @@ public class AiU extends Controller {
 //	}
 //
 //	/**
-//	 * 存点参数间隔指令（setInterval）
+//	 * .........setInterval.
 //	 * 
 //	 * @param userName
 //	 * @param password
@@ -2277,7 +2322,7 @@ public class AiU extends Controller {
 //			@Required String password, @Required Long locatorId,
 //			Integer interval, Integer count) {
 //		Document doc = initResultJSON();
-//		// 参数验证
+//		// ....
 //		if (Validation.hasErrors()) {
 //			renderFail("error_parameter_required", doc,
 //					error_parameter_required);
@@ -2295,7 +2340,7 @@ public class AiU extends Controller {
 //		Locator locator = Locator.findById(locatorId);
 //		validateLocator(locator, member, doc);
 //
-//		// 显示最新的设置反馈
+//		// .........
 //		// G1ConfirmMessage message = G1ConfirmMessage.find("byLocator",
 //		// locator).first();
 //		// if(message!=null){
@@ -2318,7 +2363,7 @@ public class AiU extends Controller {
 //	}
 //
 //	/**
-//	 * 远程关机
+//	 * ....
 //	 * 
 //	 * @param userName
 //	 * @param password
@@ -2328,7 +2373,7 @@ public class AiU extends Controller {
 //	public static void powerOff(@Required String userName,
 //			@Required String password, @Required Long locatorId) {
 //		Document doc = initResultJSON();
-//		// 参数验证
+//		// ....
 //		if (Validation.hasErrors()) {
 //			renderFail("error_parameter_required", doc,
 //					error_parameter_required);
@@ -2338,7 +2383,7 @@ public class AiU extends Controller {
 //		Locator locator = Locator.findById(locatorId);
 //		validateLocator(locator, member, doc);
 //
-//		// 显示最新的设置反馈
+//		// .........
 //		S1ConfirmMessage message = S1ConfirmMessage.find("byLocator", locator)
 //				.first();
 //		if (message != null) {
@@ -2356,7 +2401,7 @@ public class AiU extends Controller {
 //	}
 //
 //	/**
-//	 * 远程监听（listen）
+//	 * .....listen.
 //	 * 
 //	 * @param userName
 //	 * @param password
@@ -2365,7 +2410,7 @@ public class AiU extends Controller {
 //	public static void listen(@Required String userName,
 //			@Required String password, @Required Long locatorId) {
 //		Document doc = initResultJSON();
-//		// 参数验证
+//		// ....
 //		if (Validation.hasErrors()) {
 //			renderFail("error_parameter_required", doc,
 //					error_parameter_required);
@@ -2379,19 +2424,19 @@ public class AiU extends Controller {
 //	}
 //
 //	/**
-//	 * 获取反馈信息
+//	 * ......
 //	 * 
 //	 * @param userName
 //	 * @param password
 //	 * @param locatorId
 //	 * @param command
-//	 *            例如S1,D1
+//	 *            ..S1,D1
 //	 */
 //	public static void getResponse(@Required String userName,
 //			@Required String password, @Required Long locatorId,
 //			@Required String command) {
 //		Document doc = initResultJSON();
-//		// 参数验证
+//		// ....
 //		if (Validation.hasErrors()) {
 //			renderFail("error_parameter_required", doc,
 //					error_parameter_required);
@@ -2438,7 +2483,7 @@ public class AiU extends Controller {
 //	}
 //
 //	/**
-//	 * 获取用户信息
+//	 * ......
 //	 * 
 //	 * @param userName
 //	 * @param password
@@ -2446,7 +2491,7 @@ public class AiU extends Controller {
 //	public static void getUserInfo(@Required String userName,
 //			@Required String password) {
 //		Document doc = initResultJSON();
-//		// 参数验证
+//		// ....
 //		if (Validation.hasErrors()) {
 //			renderFail("error_parameter_required", doc,
 //					error_parameter_required);
@@ -2491,22 +2536,22 @@ public class AiU extends Controller {
 //	}
 //
 //	/**
-//	 * 修改用户信息
+//	 * ......
 //	 * 
 //	 * @param userName
 //	 * @param password
 //	 * @param newPassword
-//	 *            新密码
+//	 *            ...
 //	 * @param phoneNumber
 //	 * @param email
 //	 * @param clientSticker
-//	 *            客户头像
+//	 *            ....
 //	 */
 //	public static void modifyUserInfo(@Required String userName,
 //			@Required String password, String newPassword, String phoneNumber,
 //			String email, String gender, String birthday, Blob clientSticker) {
 //		Document doc = initResultJSON();
-//		// 参数验证
+//		// ....
 //		if (Validation.hasErrors()) {
 //			renderFail("error_parameter_required", doc,
 //					error_parameter_required);
@@ -2551,7 +2596,7 @@ public class AiU extends Controller {
 //	}
 //
 //	/**
-//	 * HTTP模拟定位器
+//	 * HTTP.....
 //	 * 
 //	 * @param userName
 //	 * @param password
@@ -2564,7 +2609,7 @@ public class AiU extends Controller {
 //			@Required Double latitude, @Required Double longitude, String host,
 //			String receivedTime) {
 //		Document doc = initResultJSON();
-//		// 参数验证
+//		// ....
 //		if (Validation.hasErrors()) {
 //			renderFail("error_parameter_required", doc,
 //					error_parameter_required);
@@ -2586,7 +2631,7 @@ public class AiU extends Controller {
 //	}
 //
 //	/**
-//	 * 电子围栏设置
+//	 * ......
 //	 * 
 //	 * @param userName
 //	 * @param password
@@ -2603,7 +2648,7 @@ public class AiU extends Controller {
 //			@Required Boolean on, Boolean in, Double latitude1,
 //			Double longitude1, Double latitude2, Double longitude2) {
 //		Document doc = initResultJSON();
-//		// 参数验证
+//		// ....
 //		if (Validation.hasErrors()) {
 //			renderFail("error_parameter_required", doc,
 //					error_parameter_required);
@@ -2620,7 +2665,7 @@ public class AiU extends Controller {
 //		ef.dateTime = new Date();
 //		ef.on = on;
 //		if (on) {
-//			// 设置标志位
+//			// .....
 //			locator.warning = locator.warning | 2;
 //			if (in != null) {
 //				ef.in = in;
@@ -2639,7 +2684,7 @@ public class AiU extends Controller {
 //			}
 //
 //		} else {
-//			// 设置标志位
+//			// .....
 //			locator.warning = locator.warning & 0xFFFFFFFD;
 //		}
 //		ef.save();
@@ -2650,7 +2695,7 @@ public class AiU extends Controller {
 //	}
 //
 //	/**
-//	 * 移位报警设置
+//	 * ......
 //	 * 
 //	 * @param userName
 //	 * @param password
@@ -2665,7 +2710,7 @@ public class AiU extends Controller {
 //			@Required Boolean on, Double latitude, Double longitude,
 //			Double radius) {
 //		Document doc = initResultJSON();
-//		// 参数验证
+//		// ....
 //		if (Validation.hasErrors()) {
 //			renderFail("error_parameter_required", doc,
 //					error_parameter_required);
@@ -2681,9 +2726,9 @@ public class AiU extends Controller {
 //		}
 //		ma.switch_on = on;
 //		if (on) {
-//			// 设置标志位
+//			// .....
 //			locator.warning = locator.warning | 1;
-//			// 开启移位报警参数
+//			// ........
 //			if (latitude != null) {
 //				ma.latitude = latitude;
 //			}
@@ -2694,7 +2739,7 @@ public class AiU extends Controller {
 //				ma.radius = radius;
 //			}
 //		} else {
-//			// 设置标志位
+//			// .....
 //			locator.warning = locator.warning & 0xFFFFFFFE;
 //		}
 //		ma.dateTime = new Date();
@@ -2707,7 +2752,7 @@ public class AiU extends Controller {
 //
 	public static void clearCache(@Required String z) {
 		JSONObject results = initResultJSON();
-		// 参数验证
+		// ....
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
 		}
@@ -2718,18 +2763,18 @@ public class AiU extends Controller {
 	}
 
 	/**
-	 * 通用下载接口
+	 * ......
 	 * 
 	 * @param username
-	 *            用户名
+	 *            ...
 	 * @param password
-	 *            密码
+	 *            ..
 	 * @param sessionID
-	 *            会话
+	 *            ..
 	 * @param fileID
-	 *            附件uuid
+	 *            ..uuid
 	 * @param fileName
-	 *            附件名称
+	 *            ....
 	 */
 	public static void download(@Required String id, @Required String fileID, @Required String entity, @Required String z) {
 
@@ -2771,7 +2816,7 @@ public class AiU extends Controller {
 	}
 
 	/**
-	 * 检查客户端版本
+	 * .......
 	 * 
 	 * @param version
 	 * @param type
@@ -2790,7 +2835,7 @@ public class AiU extends Controller {
 			results.put("update", cv.update_aiu);
 			renderSuccess(results);
 		} else {
-			// 已是最新版本
+			// ......
 			renderFail("");
 			
 		}

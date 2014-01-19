@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -18,7 +19,6 @@ import play.data.validation.MinSize;
 import play.data.validation.Password;
 import play.data.validation.Phone;
 import play.data.validation.Required;
-import play.data.validation.Unique;
 import play.db.jpa.Blob;
 import play.db.jpa.Model;
 import controllers.CRUD.Hidden;
@@ -41,7 +41,6 @@ public class Customer extends Model {
 
 	@Required
 	@Phone
-	@Unique
 	@Index(name = "idx_m_number")
 	public String m_number;
 
@@ -73,7 +72,7 @@ public class Customer extends Model {
 	
 	public String serialNumber;
 	
-	@OneToMany(fetch=FetchType.LAZY,cascade = { CascadeType.REMOVE})
+	@ManyToMany(cascade={CascadeType.ALL})
 	public List<Game> addgame;
 	
 	public String toString() {
