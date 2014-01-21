@@ -74,6 +74,6 @@ public class GameCarousel extends Model {
 	public Game game;
 
 	public String toString(){
-		return game.title;
+		if(this.mtype == 1) return game.title+" Android版"; else return game.title+" IOS版";
 	}
 }

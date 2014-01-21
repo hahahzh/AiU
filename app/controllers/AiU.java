@@ -1,11 +1,12 @@
 package controllers;
 
-import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+
+import job.RecordJob;
 
 import models.CPkey;
 import models.Carousel;
@@ -42,7 +43,6 @@ import play.mvc.Before;
 import play.mvc.Controller;
 import utils.Coder;
 import utils.DateUtil;
-import utils.Demo_Mt;
 import utils.JSONUtil;
 import utils.SendSMS;
 import controllers.CRUD.ObjectType;
@@ -128,8 +128,9 @@ public class AiU extends Controller {
 		sessionCache.set(s);
 		if (s == null) {
 			renderFail("error_session_expired");
-			if(new Date().getTime() - s.data > 1800000){
-				
+			if(new Date().getTime() - s.data > 86400000){
+				s.delete();
+				renderFail("error_session_expired");
 			}
 		}
 	}
@@ -217,6 +218,7 @@ public class AiU extends Controller {
 				results.put("lv", newUser.lv.level_name);
 				results.put("name", newUser.nickname);
 				results.put("session", s.sessionID);
+				RecordJob.logRecord.offer(arr[6]+","+"null"+","+"null"+","+arr[3]+","+"reg");
 				renderSuccess(results);
 			} else {
 				// .......
@@ -268,6 +270,7 @@ public class AiU extends Controller {
 				results.put("lv", newUser.lv.level_name);
 				results.put("name", newUser.nickname);
 				results.put("session", s.sessionID);
+				RecordJob.logRecord.offer(arr[6]+","+"null"+","+"null"+","+arr[3]+","+"reg2");
 				renderSuccess(results);
 			} else {
 				// .......
@@ -297,7 +300,7 @@ public class AiU extends Controller {
 			renderFail("error_parameter_required");
 		}
 
-		if (type != null && type == 1 && serialNumber.isEmpty()) {
+		if (type != null && type == 1 && (serialNumber == null || serialNumber.isEmpty())) {
 			renderFail("error_parameter_required");
 		}
 		Customer customer = null;
@@ -330,15 +333,7 @@ public class AiU extends Controller {
 		results.put("lv", customer.lv.level_name);
 		results.put("name", customer.nickname);
 		results.put("session", s.sessionID);
-		
-		if((ip != null && !ip.isEmpty()) || (imei != null && imei.isEmpty())){
-			Log log = new Log();
-			log.customer_name = customer.m_number;
-			log.data = new Date();
-			log.ip = ip;
-			log.imei = imei;
-			log._save();
-		}
+		RecordJob.logRecord.offer(customer.m_number+","+imei+","+ip+","+mac+","+"login");
 		renderSuccess(results);
 	}
 	
@@ -709,14 +704,14 @@ results.put("downloadurl", data.game.downloadurl);
 	
 	private static JSONObject setGameCarosel(String type, Long ad_id, String z){
 		JSONObject subad = new JSONObject();
-	  	  if("..".equals(type)){
+	  	  if("新闻".equals(type)){
 	  		New l = New.findById(ad_id);
 		  	subad.put("icon", "/c/download?id=" + l.id + "&fileID=picture1&entity=" + l.getClass().getName() + "&z=" + z);
 			subad.put("url", "/c/newinfo?id="+l.id+"&z="+z);
 			subad.put("data", l.data+"");
 			subad.put("t_id", l.id);
 			subad.put("t_type", "n");
-	  	  }else if("..".equals(type)){
+	  	  }else if("礼包".equals(type)){
 	  		Pack l = Pack.findById(ad_id);
 		  	subad.put("icon", "/c/download?id=" + l.id + "&fileID=icon&entity=" + l.getClass().getName() + "&z=" + z);
 			subad.put("url", "c/package?num=5&page=1&z="+z);
@@ -1531,474 +1526,15 @@ results.put("downloadurl", data.game.downloadurl);
 			c.gender = Byte.valueOf(gender);
 		}
 		if(portrait != null){
-			c.portrait.getFile().delete();
+			if(c.portrait.exists()){
+				c.portrait.getFile().delete();
+			}
 			c.portrait = portrait;
 		}
 		c.save();
 		renderSuccess(initResultJSON());
 	}
 
-//
-//	/**
-//	 * .......
-//	 * 
-//	 * @param userName
-//	 *            ...
-//	 * @param password
-//	 *            ..
-//	 * @param name
-//	 * @param phoneNumber
-//	 * @param serialNumber
-//	 */
-//	public static void addLocator(@Required String userName,
-//			@Required String password, String name,
-//			@Required String phoneNumber, @Required String serialNumber) {
-//		Document doc = initResultJSON();
-//		// ....
-//		if (Validation.hasErrors()) {
-//			renderFail("error_parameter_required", doc,
-//					error_parameter_required);
-//		}
-//
-//		Member member = memberCache.get();
-//		long count = Locator.count("byGuardian1", member);
-//		int tmpMax = Integer.parseInt(Play.configuration
-//				.getProperty("locator.max"));
-//		if (tmpMax == 0) {
-//			tmpMax = 5;// ........
-//		}
-//		if (count > tmpMax) {
-//			renderFail("error_locator_max", doc, error_parameter_required);
-//		}
-//		// .........
-//		Locator locator = Locator.find("bySerialNumber", serialNumber).first();
-//		if (locator == null) {
-//			locator = new Locator();
-//			// .....
-//			locator.serialNumber = serialNumber;
-//			locator.confirmed = false;
-//			// ..........
-//			locator.warning = 0;
-//			// ....180S
-//			locator.mode = "3";
-//		}
-//
-//		locator.name = name;
-//		locator.phoneNumber = phoneNumber;
-//
-//		if (locator.guardian1 == null) {
-//			Logger.debug("[addLocator] new Locator,name = " + name
-//					+ ",phoneNumber = " + phoneNumber + ",serialNumber = "
-//					+ serialNumber);
-//			locator.guardian1 = member;
-//			locator.bindDate = new Date();
-//			locator.save();
-//			// ....XML
-//			Element addLocatorRsp = doc.createElement("addLocatorRsp");
-//			Element locatorId = doc.createElement("locatorId");
-//			locatorId.setTextContent("" + locator.id);
-//			doc.getDocumentElement().appendChild(addLocatorRsp);
-//			addLocatorRsp.appendChild(locatorId);
-//			renderSuccess("locator_bind_success", doc);
-//		} else if (locator.guardian1.id.equals(member.id)) {
-//			Logger.debug("[addLocator] readd Locator,name = " + name
-//					+ ",phoneNumber = " + phoneNumber + ",serialNumber = "
-//					+ serialNumber);
-//			Element addLocatorRsp = doc.createElement("addLocatorRsp");
-//			Element locatorId = doc.createElement("locatorId");
-//			locatorId.setTextContent("" + locator.id);
-//			doc.getDocumentElement().appendChild(addLocatorRsp);
-//			addLocatorRsp.appendChild(locatorId);
-//			if (locator.confirmed) {
-//				renderFail("error_locator_already_bind", doc,
-//						error_locator_already_bind);
-//			} else {
-//				// ........,..........,....
-//				locator.bindDate = new Date();
-//				locator.save();
-//				renderFail("error_locator_not_confirmed", doc,
-//						error_locator_not_confirmed);
-//			}
-//		}
-//		try {
-//			// .............
-//			if (DateUtil.intervalOfHour(locator.bindDate, new Date()) > 0.17
-//					&& !locator.confirmed) {
-//				Logger.debug("[addLocator] other one Locator,name = " + name
-//						+ ",phoneNumber = " + phoneNumber + ",serialNumber = "
-//						+ serialNumber);
-//				locator.guardian1 = member;
-//				locator.bindDate = new Date();
-//				locator.save();
-//				// ....XML
-//				Element addLocatorRsp = doc.createElement("addLocatorRsp");
-//				Element locatorId = doc.createElement("locatorId");
-//				locatorId.setTextContent("" + locator.id);
-//				doc.getDocumentElement().appendChild(addLocatorRsp);
-//				addLocatorRsp.appendChild(locatorId);
-//				renderSuccess("locator_bind_success", doc);
-//			} else {
-//				renderFail("error_already_exists", doc, error_already_exists);
-//			}
-//		} catch (ParseException e) {
-//			renderFail("error_locator_bind_full", doc, error_locator_bind_full);
-//		}
-//	}
-//
-//	/**
-//	 * .......
-//	 * 
-//	 * @param userName
-//	 * @param password
-//	 * @param locatorId
-//	 * @param name
-//	 * @param guardian1
-//	 * @param guardian2
-//	 * @param emergencyContact1
-//	 * @param emergencyContact2
-//	 * @param mode
-//	 * @param warning
-//	 * @param locatorSticker
-//	 */
-//	public static void modifyLocator(@Required String userName,
-//			@Required String password, @Required Long locatorId, String name,
-//			String guardian1, String guardian2, String emergencyContact1,
-//			String emergencyContact2, String mode, Integer warning,
-//			Blob locatorSticker) {
-//		Document doc = initResultJSON();
-//		// ....
-//		if (Validation.hasErrors()) {
-//			renderFail("error_parameter_required", doc,
-//					error_parameter_required);
-//		}
-//
-//		Member member = memberCache.get();
-//
-//		Locator locator = Locator.findById(locatorId);
-//		validateLocator(locator, member, doc);
-//
-//		if (name != null) {
-//			locator.name = name;
-//		}
-//
-//		if (guardian1 != null) {
-//			locator.guardian1Number = guardian1;
-//		}
-//
-//		if (guardian2 != null) {
-//			locator.guardian2Number = guardian2;
-//		}
-//
-//		if (emergencyContact1 != null) {
-//			locator.emergencyContact1 = emergencyContact1;
-//		}
-//
-//		if (emergencyContact2 != null) {
-//			locator.emergencyContact2 = emergencyContact2;
-//		}
-//
-//		if (mode != null) {
-//			locator.mode = mode;
-//		}
-//
-//		if (warning != null) {
-//			locator.warning = warning;
-//		}
-//
-//		if (locatorSticker != null) {
-//			locator.locatorSticker = locatorSticker;
-//		}
-//
-//		locator.save();
-//
-//		// renderSuccess("locator_modify_success",doc,locator.name);
-//		renderSuccess("locator_modify_success", doc);
-//	}
-//
-//	/**
-//	 * ........
-//	 * 
-//	 * @param userName
-//	 *            ...
-//	 * @param password
-//	 *            ..
-//	 * @param locatorId
-//	 *            ...id
-//	 */
-//	public static void deleteLocator(@Required String userName,
-//			@Required String password, @Required Long locatorId) {
-//		Document doc = initResultJSON();
-//		// ....
-//		if (Validation.hasErrors()) {
-//			renderFail("error_parameter_required", doc,
-//					error_parameter_required);
-//		}
-//
-//		Member member = memberCache.get();
-//
-//		Locator locator = Locator.findById(locatorId);
-//		if (locator != null) {
-//			if (locator.guardian1 != null
-//					&& locator.guardian1.id.equals(member.id)) {
-//				// ..........
-//				locator.delete();
-//				play.Logger
-//						.debug("[GPS] delete locator,clear cache. serialNumber = "
-//								+ locator.serialNumber);
-//			}
-//			// else
-//			// if(locator.guardian2!=null&&locator.guardian2.id.equals(member.id)){
-//			// //..........
-//			// locator.guardian2 = null;
-//			// }
-//			else {
-//				// ..........
-//				// renderFail("error_not_owner", doc,error_not_owner,
-//				// locator.name);
-//				renderFail("error_not_owner", doc, error_not_owner);
-//			}
-//			// .....locator,.................
-//			// if(locator.guardian1 == null &&locator.guardian2 == null){
-//			// locator.delete();
-//			// }else{
-//			// locator.save();
-//			// }
-//			// locator.save();
-//		} else {
-//			renderFail("error_locator_not_exist", doc, error_locator_not_exist);
-//		}
-//		// renderSuccess("locator_unbind_success", doc, locator.name);
-//		renderSuccess("locator_unbind_success", doc);
-//	}
-//
-//	/**
-//	 * ............
-//	 * 
-//	 * @param userName
-//	 *            ...
-//	 * @param password
-//	 *            ..
-//	 */
-//	public static void getLocatorList(@Required String userName,
-//			@Required String password) {
-//		Document doc = initResultJSON();
-//		// ....
-//		if (Validation.hasErrors()) {
-//			renderFail("error_parameter_required", doc,
-//					error_parameter_required);
-//		}
-//
-//		Member member = memberCache.get();
-//
-//		List<Locator> locators = Locator.find("guardian1 = ? or guardian2 = ?",
-//				member, member).fetch();
-//		if (!locators.isEmpty()) {
-//			Element getLocatorListRsp = doc.createElement("getLocatorListRsp");
-//			Element count = doc.createElement("count");
-//			doc.getDocumentElement().appendChild(getLocatorListRsp);
-//			getLocatorListRsp.appendChild(count);
-//			count.setTextContent("" + locators.size());
-//			for (Locator l : locators) {
-//				Element locator = doc.createElement("locator");
-//				getLocatorListRsp.appendChild(locator);
-//				Element locatorId = doc.createElement("locatorId");
-//				locatorId.setTextContent("" + l.id);
-//				locator.appendChild(locatorId);
-//				Element name = doc.createElement("name");
-//				name.setTextContent(l.name);
-//				locator.appendChild(name);
-//				Element phoneNumber = doc.createElement("phoneNumber");
-//				phoneNumber.setTextContent(l.phoneNumber);
-//				locator.appendChild(phoneNumber);
-//				Element serialNumber = doc.createElement("serialNumber");
-//				locator.appendChild(serialNumber);
-//				serialNumber.setTextContent(l.serialNumber);
-//				Element controlNumber = doc.createElement("controlNumber");
-//				locator.appendChild(controlNumber);
-//				controlNumber.setTextContent(l.controlNumber);
-//				if (l.emergencyContact1 != null
-//						&& !"".equals(l.emergencyContact1.trim())) {
-//					Element emergencyContact1 = doc
-//							.createElement("emergencyContact1");
-//					locator.appendChild(emergencyContact1);
-//					emergencyContact1.setTextContent(l.emergencyContact1);
-//				}
-//				if (l.emergencyContact2 != null
-//						&& !l.emergencyContact2.trim().equals("")) {
-//					Element emergencyContact2 = doc
-//							.createElement("emergencyContact2");
-//					locator.appendChild(emergencyContact2);
-//					emergencyContact2.setTextContent(l.emergencyContact2);
-//				}
-//
-//				if (l.guardian1Number != null
-//						&& !l.guardian1Number.trim().equals("")) {
-//					Element guardian1Number = doc.createElement("guardian1");
-//					locator.appendChild(guardian1Number);
-//					guardian1Number.setTextContent(l.guardian1Number);
-//				}
-//
-//				if (l.guardian2Number != null
-//						&& !l.guardian2Number.trim().equals("")) {
-//					Element guardian2Number = doc.createElement("guardian2");
-//					locator.appendChild(guardian2Number);
-//					guardian2Number.setTextContent(l.guardian2Number);
-//				}
-//
-//				Element warning = doc.createElement("warning");
-//				locator.appendChild(warning);
-//				warning.setTextContent("" + l.warning);
-//
-//				Element status = doc.createElement("status");
-//				locator.appendChild(status);
-//				status.setTextContent(l.confirmed ? "0" : "1");
-//
-//				// .........,.....
-//				if (l.electronicFence != null) {// && l.electronicFence.on){
-//												// ....2011/12/07
-//					Element startLat = doc.createElement("startLat");
-//					locator.appendChild(startLat);
-//					startLat.setTextContent("" + l.electronicFence.latitude1);
-//					Element endLat = doc.createElement("endLat");
-//					locator.appendChild(endLat);
-//					endLat.setTextContent("" + l.electronicFence.latitude2);
-//					Element startLon = doc.createElement("startLon");
-//					locator.appendChild(startLon);
-//					startLon.setTextContent("" + l.electronicFence.longitude1);
-//					Element endLon = doc.createElement("endLon");
-//					locator.appendChild(endLon);
-//					endLon.setTextContent("" + l.electronicFence.longitude2);
-//					Element fenceMode = doc.createElement("fenceMode");
-//					locator.appendChild(fenceMode);
-//					fenceMode.setTextContent(l.electronicFence.in ? "0" : "1");
-//					Element fenceTime = doc.createElement("fenceTime");
-//					locator.appendChild(fenceTime);
-//					fenceTime.setTextContent("" + l.electronicFence.dateTime);
-//
-//				}
-//				// .........,.....
-//				if (l.moveAlarm != null) {// && l.moveAlarm.switch_on){
-//											// ....2011/12/07
-//					Element originLat = doc.createElement("originLat");
-//					locator.appendChild(originLat);
-//					originLat.setTextContent("" + l.moveAlarm.latitude);
-//
-//					Element originLon = doc.createElement("originLon");
-//					locator.appendChild(originLon);
-//					originLon.setTextContent("" + l.moveAlarm.longitude);
-//
-//					Element radius = doc.createElement("radius");
-//					locator.appendChild(radius);
-//					radius.setTextContent("" + l.moveAlarm.radius);
-//
-//					Element alarmMode = doc.createElement("alarmMode");
-//					locator.appendChild(alarmMode);
-//					alarmMode.setTextContent(l.moveAlarm.switch_on ? "1" : "0");
-//				}
-//				Element mode = doc.createElement("mode");
-//				locator.appendChild(mode);
-//				mode.setTextContent("" + l.mode);
-//
-//				if (l.locatorSticker != null && l.locatorSticker.exists()) {
-//					Element sticker = doc.createElement("locatorSticker");
-//					locator.appendChild(sticker);
-//					sticker.setTextContent("/download?id=" + l.id
-//							+ "&userName=" + member.username + "&password="
-//							+ member.password
-//							+ "&fileID=locatorSticker&entity="
-//							+ l.getClass().getName());
-//				}
-//
-//			}
-//		}
-//		renderSuccess("get_locator_list_success", doc);
-//	}
-//
-//	/**
-//	 * .....
-//	 * 
-//	 * @param userName
-//	 *            ...
-//	 * @param password
-//	 *            ..
-//	 * @param locatorId
-//	 *            ...id
-//	 * @param name
-//	 *            ..
-//	 * @param emergencyContact1
-//	 *            .....1
-//	 * @param emergencyContact2
-//	 *            .....2
-//	 * @param guardian
-//	 *            ....
-//	 * @param warning
-//	 *            ....
-//	 */
-//	public static void setLocator(@Required String userName,
-//			@Required String password, @Required Long locatorId, String name,
-//			String emergencyContact1, String emergencyContact2,
-//			String guardian1, String guardian2, String warning) {
-//		Document doc = initResultJSON();
-//		// ....
-//		if (Validation.hasErrors()) {
-//			renderFail("error_parameter_required", doc,
-//					error_parameter_required);
-//		}
-//
-//		Member member = memberCache.get();
-//
-//		Locator locator = Locator.findById(locatorId);
-//		validateLocator(locator, member, doc);
-//		// ...........
-//		if (name != null)
-//			locator.name = name;
-//		if (emergencyContact1 != null)
-//			locator.emergencyContact1 = emergencyContact1;
-//		if (emergencyContact2 != null)
-//			locator.emergencyContact2 = emergencyContact2;
-//		if (warning != null) {
-//			try {
-//				locator.warning = Integer.parseInt(warning);
-//			} catch (Exception e) {
-//				renderFail("error_unknown_waring_format", doc,
-//						error_unknown_waring_format);
-//			}
-//		}
-//		if (guardian1 != null && !guardian1.trim().equals("")) {
-//			locator.guardian1Number = guardian1;
-//		}
-//		if (guardian2 != null && !guardian2.trim().equals("")) {
-//			locator.guardian2Number = guardian2;
-//		}
-//		locator.save();
-//
-//		// .........
-//		// S25ConfirmMessage message = S25ConfirmMessage.find("byLocator",
-//		// locator).first();
-//		// if(message!=null){
-//		// Element setLocatorRsp = doc.createElement("setLocatorRsp");
-//		// doc.getDocumentElement().appendChild(setLocatorRsp);
-//		// Element m_dateTime = doc.createElement("dateTime");
-//		// m_dateTime.setTextContent(""+new
-//		// SimpleDateFormat("yyyyMMdd'T'hhmmss'Z'").format(message.dateTime));
-//		// setLocatorRsp.appendChild(m_dateTime);
-//		// Element m_name = doc.createElement("name");
-//		// m_name.setTextContent(""+message.name);
-//		// setLocatorRsp.appendChild(m_name);
-//		// Element m_emergencyContact1 = doc.createElement("emergencyContact1");
-//		// m_emergencyContact1.setTextContent(""+message.emergencyContact1);
-//		// setLocatorRsp.appendChild(m_emergencyContact1);
-//		// Element m_emergencyContact2 = doc.createElement("emergencyContact2");
-//		// m_emergencyContact2.setTextContent(""+message.emergencyContact2);
-//		// setLocatorRsp.appendChild(m_emergencyContact2);
-//		// Element m_warning = doc.createElement("warning");
-//		// m_warning.setTextContent(""+message.warning);
-//		// setLocatorRsp.appendChild(m_warning);
-//		// }
-//		// renderSuccess("locator_set_success", doc, locator.name);
-//		renderSuccess("locator_set_success", doc);
-//	}
-//
 //	/**
 //	 * ......
 //	 * 
@@ -2275,41 +1811,6 @@ results.put("downloadurl", data.game.downloadurl);
 //	}
 //
 //	/**
-//	 * ....
-//	 * 
-//	 * @param userName
-//	 *            ...
-//	 * @param password
-//	 *            ..
-//	 * @param locatorId
-//	 *            ...id
-//	 * @param interval
-//	 * @param count
-//	 */
-//	public static void track(@Required String userName,
-//			@Required String password, @Required Long locatorId,
-//			Integer interval, Integer count) {
-//		Document doc = initResultJSON();
-//		// ....
-//		if (Validation.hasErrors()) {
-//			renderFail("error_parameter_required", doc,
-//					error_parameter_required);
-//		}
-//		if (interval == null || interval < 0) {
-//			interval = 30;
-//		}
-//		if (count == null) {
-//			count = -1;
-//		}
-//
-//		Member member = memberCache.get();
-//
-//		Locator locator = Locator.findById(locatorId);
-//		validateLocator(locator, member, doc);
-//		renderSuccess("locator_set_success", doc);
-//	}
-//
-//	/**
 //	 * .........setInterval.
 //	 * 
 //	 * @param userName
@@ -2362,274 +1863,36 @@ results.put("downloadurl", data.game.downloadurl);
 //		renderSuccess("locator_set_success", doc);
 //	}
 //
-//	/**
-//	 * ....
-//	 * 
-//	 * @param userName
-//	 * @param password
-//	 * @param locatorId
-//	 */
-//
-//	public static void powerOff(@Required String userName,
-//			@Required String password, @Required Long locatorId) {
-//		Document doc = initResultJSON();
-//		// ....
-//		if (Validation.hasErrors()) {
-//			renderFail("error_parameter_required", doc,
-//					error_parameter_required);
-//		}
-//
-//		Member member = memberCache.get();
-//		Locator locator = Locator.findById(locatorId);
-//		validateLocator(locator, member, doc);
-//
-//		// .........
-//		S1ConfirmMessage message = S1ConfirmMessage.find("byLocator", locator)
-//				.first();
-//		if (message != null) {
-//			Element powerOffRsp = doc.createElement("powerOffRsp");
-//			doc.getDocumentElement().appendChild(powerOffRsp);
-//			Element m_dateTime = doc.createElement("dateTime");
-//			m_dateTime.setTextContent(""
-//					+ new SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'")
-//							.format(message.dateTime));
-//			powerOffRsp.appendChild(m_dateTime);
-//		}
-//
-//		// renderSuccess("locator_set_success", doc, locator.name);
-//		renderSuccess("locator_set_success", doc);
-//	}
-//
-//	/**
-//	 * .....listen.
-//	 * 
-//	 * @param userName
-//	 * @param password
-//	 * @param locatorId
-//	 */
-//	public static void listen(@Required String userName,
-//			@Required String password, @Required Long locatorId) {
-//		Document doc = initResultJSON();
-//		// ....
-//		if (Validation.hasErrors()) {
-//			renderFail("error_parameter_required", doc,
-//					error_parameter_required);
-//		}
-//
-//		Member member = memberCache.get();
-//		Locator locator = Locator.findById(locatorId);
-//		validateLocator(locator, member, doc);
-//		// renderSuccess("locator_set_success", doc, locator.name);
-//		renderSuccess("locator_set_success", doc);
-//	}
-//
-//	/**
-//	 * ......
-//	 * 
-//	 * @param userName
-//	 * @param password
-//	 * @param locatorId
-//	 * @param command
-//	 *            ..S1,D1
-//	 */
-//	public static void getResponse(@Required String userName,
-//			@Required String password, @Required Long locatorId,
-//			@Required String command) {
-//		Document doc = initResultJSON();
-//		// ....
-//		if (Validation.hasErrors()) {
-//			renderFail("error_parameter_required", doc,
-//					error_parameter_required);
-//		}
-//		Member member = memberCache.get();
-//		Locator locator = Locator.findById(locatorId);
-//		validateLocator(locator, member, doc);
-//
-//		AbstractConfirmMessage message = null;
-//		if (command.trim().equals("G1")) {
-//			message = G1ConfirmMessage.find("byLocator", locator).first();
-//		} else if (command.trim().equals("D1")) {
-//			message = D1ConfirmMessage.find("byLocator", locator).first();
-//		} else if (command.trim().equals("S1")) {
-//			message = S1ConfirmMessage.find("byLocator", locator).first();
-//		} else if (command.trim().equals("S2")) {
-//			message = S2ConfirmMessage.find("byLocator", locator).first();
-//		} else if (command.trim().equals("S23")) {
-//			message = S23ConfirmMessage.find("byLocator", locator).first();
-//		} else if (command.trim().equals("S25")) {
-//			message = S25ConfirmMessage.find("byLocator", locator).first();
-//		} else if (command.trim().equals("S28")) {
-//			message = S28ConfirmMessage.find("byLocator", locator).first();
-//		} else {
-//			renderFail("error_unknown_command", doc, error_unknown_command);
-//		}
-//
-//		if (message != null) {
-//			Element getResponse = doc.createElement("getResponse");
-//			doc.getDocumentElement().appendChild(getResponse);
-//			Element m_command = doc.createElement("command");
-//			Element m_dateTime = doc.createElement("dateTime");
-//			Element m_param = doc.createElement("param");
-//			m_command.setTextContent(command);
-//			m_dateTime.setTextContent(""
-//					+ new SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'")
-//							.format(message.dateTime));
-//			m_param.setTextContent(message.message);
-//			getResponse.appendChild(m_command);
-//			getResponse.appendChild(m_dateTime);
-//			getResponse.appendChild(m_param);
-//		}
-//		renderSuccess("get_response_success", doc);
-//	}
-//
-//	/**
-//	 * ......
-//	 * 
-//	 * @param userName
-//	 * @param password
-//	 */
-//	public static void getUserInfo(@Required String userName,
-//			@Required String password) {
-//		Document doc = initResultJSON();
-//		// ....
-//		if (Validation.hasErrors()) {
-//			renderFail("error_parameter_required", doc,
-//					error_parameter_required);
-//		}
-//		Member member = memberCache.get();
-//
-//		Element getUserInfoRsp = doc.createElement("getUserInfoRsp");
-//		doc.getDocumentElement().appendChild(getUserInfoRsp);
-//		Element m_name = doc.createElement("name");
-//		Element m_password = doc.createElement("password");
-//		Element m_phoneNumber = doc.createElement("phoneNumber");
-//		Element m_email = doc.createElement("email");
-//		Element m_birthday = doc.createElement("birthday");
-//		Element m_gender = doc.createElement("gender");
-//		Element m_clientSticker = doc.createElement("clientSticker");
-//		if (member.birthday != null) {
-//			java.text.DateFormat format1 = new java.text.SimpleDateFormat(
-//					"yyyy-MM-dd");
-//			m_birthday.setTextContent(format1.format(member.birthday));
-//		}
-//		m_gender.setTextContent(member.gender);
-//		m_name.setTextContent(userName);
-//		m_password.setTextContent(password);
-//		m_phoneNumber.setTextContent(member.phoneNumber);
-//		m_email.setTextContent(member.email);
-//		if (member.clientSticker != null && member.clientSticker.exists()) {
-//			m_clientSticker.setTextContent("/download?id=" + member.id
-//					+ "&userName=" + member.username + "&password="
-//					+ member.password + "&fileID=clientSticker&entity="
-//					+ member.getClass().getName());
-//		}
-//
-//		getUserInfoRsp.appendChild(m_name);
-//		getUserInfoRsp.appendChild(m_password);
-//		getUserInfoRsp.appendChild(m_phoneNumber);
-//		getUserInfoRsp.appendChild(m_email);
-//		getUserInfoRsp.appendChild(m_birthday);
-//		getUserInfoRsp.appendChild(m_gender);
-//		getUserInfoRsp.appendChild(m_clientSticker);
-//
-//		renderSuccess("get_userinfo_success", doc);
-//	}
-//
-//	/**
-//	 * ......
-//	 * 
-//	 * @param userName
-//	 * @param password
-//	 * @param newPassword
-//	 *            ...
-//	 * @param phoneNumber
-//	 * @param email
-//	 * @param clientSticker
-//	 *            ....
-//	 */
-//	public static void modifyUserInfo(@Required String userName,
-//			@Required String password, String newPassword, String phoneNumber,
-//			String email, String gender, String birthday, Blob clientSticker) {
-//		Document doc = initResultJSON();
-//		// ....
-//		if (Validation.hasErrors()) {
-//			renderFail("error_parameter_required", doc,
-//					error_parameter_required);
-//		}
-//		Member member = memberCache.get();
-//
-//		if (newPassword != null && !newPassword.trim().equals("")) {
-//			member.password = newPassword;
-//		}
-//
-//		if (phoneNumber != null && !phoneNumber.trim().equals("")) {
-//			member.phoneNumber = phoneNumber;
-//		}
-//
-//		if (email != null && !email.trim().equals("")) {
-//			member.email = email;
-//		}
-//
-//		if (gender != null && !gender.trim().equals("")) {
-//			member.gender = gender;
-//		}
-//
-//		if (birthday != null) {
-//			java.text.DateFormat format1 = new java.text.SimpleDateFormat(
-//					"yyyy-MM-dd");
-//
-//			Date birthdayDate = null;
-//			try {
-//				birthdayDate = format1.parse(birthday);
-//				member.birthday = birthdayDate;
-//			} catch (ParseException e) {
-//				// renderFail("error_dateformat",doc,error_dateformat,birthday);
-//				renderFail("error_dateformat", doc, error_dateformat);
-//			}
-//		}
-//		if (clientSticker != null) {
-//			member.clientSticker = clientSticker;
-//		}
-//		member.save();
-//
-//		renderSuccess("modify_userinfo_success", doc);
-//	}
-//
-//	/**
-//	 * HTTP.....
-//	 * 
-//	 * @param userName
-//	 * @param password
-//	 * @param serialNumber
-//	 * @param latitude
-//	 * @param longitude
-//	 */
-//	public static void insertLocationData2(@Required String userName,
-//			@Required String password, @Required String serialNumber,
-//			@Required Double latitude, @Required Double longitude, String host,
-//			String receivedTime) {
-//		Document doc = initResultJSON();
-//		// ....
-//		if (Validation.hasErrors()) {
-//			renderFail("error_parameter_required", doc,
-//					error_parameter_required);
-//		}
-//
-//		DecimalFormat df = new DecimalFormat("#.0000");
-//		// 2402DFDC1C3D 074659260911 30115485 00 121118003
-//		// E000000FFFFFBFFFF001120FF0FFFFF6318FF58289F0
-//		String signal = "24";
-//
-//		signal += "0" + Long.toHexString((Long) Long.parseLong(serialNumber));
-//		signal += receivedTime;
-//		signal += String.valueOf(df.format(latitude)).replace(".", "");
-//		signal += "00";
-//		signal += String.valueOf(df.format(longitude)).replace(".", "");
-//		signal += "E000000FFFFFBFFFF000000FF0FFFFF0000FF00000F09";
-//		TcpClient.setGPS(signal, host);
-//
-//	}
-//
+	/**
+	 */
+	public static void getMemberInfo(@Required String z) {
+		
+		if (Validation.hasErrors()) {
+			renderFail("error_parameter_required");
+		}
+		
+		Session s = sessionCache.get();
+		if(s == null){
+			renderFail("error_session_expired");
+		}
+		
+		Customer c = s.customer;
+		JSONObject results = initResultJSON();
+	
+		results.put("exp", c.exp);
+		results.put("level", c.lv.level_name);
+		results.put("phonenumber", c.m_number);
+		results.put("nickname", c.nickname);
+		results.put("type", c.type);
+		results.put("version", c.vid.version);
+		if(c.portrait != null && c.portrait.exists()){
+			results.put("portrait", "/c/download?id=" + c.id + "&fileID=portrait&entity=" + c.getClass().getName() + "&z=" + z);
+		}else{
+			results.put("portrait", "/public/images/portrait.png");
+		}
+		renderSuccess(results);
+	}
+
 //	/**
 //	 * ......
 //	 * 
@@ -2691,62 +1954,6 @@ results.put("downloadurl", data.game.downloadurl);
 //		Cache.delete("electronicFence_" + locator.id);
 //		Cache.set("electronicFence_" + locator.id, ef);
 //		renderSuccess("set_electronic_fence_success", doc);
-//
-//	}
-//
-//	/**
-//	 * ......
-//	 * 
-//	 * @param userName
-//	 * @param password
-//	 * @param locatorId
-//	 * @param on
-//	 * @param latitude
-//	 * @param longitude
-//	 * @param radius
-//	 */
-//	public static void setMoveAlarm(@Required String userName,
-//			@Required String password, @Required Long locatorId,
-//			@Required Boolean on, Double latitude, Double longitude,
-//			Double radius) {
-//		Document doc = initResultJSON();
-//		// ....
-//		if (Validation.hasErrors()) {
-//			renderFail("error_parameter_required", doc,
-//					error_parameter_required);
-//		}
-//		Member member = memberCache.get();
-//		Locator locator = Locator.findById(locatorId);
-//		validateLocator(locator, member, doc);
-//
-//		MoveAlarm ma = MoveAlarm.find("byLocator", locator).first();
-//		if (ma == null) {
-//			ma = new MoveAlarm();
-//			ma.locator = locator;
-//		}
-//		ma.switch_on = on;
-//		if (on) {
-//			// .....
-//			locator.warning = locator.warning | 1;
-//			// ........
-//			if (latitude != null) {
-//				ma.latitude = latitude;
-//			}
-//			if (longitude != null) {
-//				ma.longitude = longitude;
-//			}
-//			if (radius != null) {
-//				ma.radius = radius;
-//			}
-//		} else {
-//			// .....
-//			locator.warning = locator.warning & 0xFFFFFFFE;
-//		}
-//		ma.dateTime = new Date();
-//		ma.save();
-//		Cache.delete("moveAlarm_" + locator.id);
-//		Cache.set("moveAlarm_" + locator.id, ma);
-//		renderSuccess("set_move_alarm_success", doc);
 //
 //	}
 //

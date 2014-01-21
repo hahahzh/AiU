@@ -72,7 +72,7 @@ public class Customer extends Model {
 	
 	public String serialNumber;
 	
-	@ManyToMany(cascade={CascadeType.ALL})
+	@ManyToMany(cascade={CascadeType.REMOVE})
 	public List<Game> addgame;
 	
 	public String toString() {

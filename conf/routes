@@ -36,6 +36,7 @@ GET     /                                       Application.index
 *       /c/newstype								AiU.getNewsType
 *       /c/gameadlist							AiU.gameCarosel
 *       /c/reg2									AiU.register2
+*       /c/userinfo								AiU.getMemberInfo
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

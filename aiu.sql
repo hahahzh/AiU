@@ -14,10 +14,14 @@ SET FOREIGN_KEY_CHECKS=0;
 CREATE TABLE `adlist` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `mtype` int(11) NOT NULL,
+  `ad_game_id` bigint(20) NOT NULL,
   `ad_id` bigint(20) DEFAULT NULL,
   `ct_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `ad_game_id` (`ad_game_id`),
+  KEY `FKAB39F3414B48A982` (`ad_game_id`),
   KEY `FKAB39F341FE6AC987` (`ct_id`),
+  CONSTRAINT `FKAB39F3414B48A982` FOREIGN KEY (`ad_game_id`) REFERENCES `games` (`id`),
   CONSTRAINT `FKAB39F341FE6AC987` FOREIGN KEY (`ct_id`) REFERENCES `carouseltype` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
@@ -68,6 +72,7 @@ CREATE TABLE `checkdigit` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `d` int(11) NOT NULL,
   `updatetime` bigint(20) NOT NULL,
+  `m` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `checkdigit_d` (`d`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
@@ -136,11 +141,10 @@ CREATE TABLE `customer` (
 CREATE TABLE `customer_games` (
   `customer_id` bigint(20) NOT NULL,
   `addgame_id` bigint(20) NOT NULL,
-  UNIQUE KEY `addgame_id` (`addgame_id`),
   KEY `FK8663372052AE89DD` (`addgame_id`),
   KEY `FK8663372055FD001E` (`customer_id`),
-  CONSTRAINT `FK8663372052AE89DD` FOREIGN KEY (`addgame_id`) REFERENCES `games` (`id`),
-  CONSTRAINT `FK8663372055FD001E` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`)
+  CONSTRAINT `FK8663372055FD001E` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`),
+  CONSTRAINT `FK8663372052AE89DD` FOREIGN KEY (`addgame_id`) REFERENCES `games` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -178,7 +182,17 @@ CREATE TABLE `everygametype` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `everygametype` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `forum`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `forum` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `description` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 -- ----------------------------
 -- Table structure for g_d_count
@@ -190,7 +204,51 @@ CREATE TABLE `g_d_count` (
   PRIMARY KEY (`id`),
   KEY `FK85CB299C5002C509` (`g_id`),
   CONSTRAINT `FK85CB299C5002C509` FOREIGN KEY (`g_id`) REFERENCES `games` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `game_adlist`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `game_adlist` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `ad_id` bigint(20) DEFAULT NULL,
+  `mtype` int(11) NOT NULL,
+  `ct_id` bigint(20) DEFAULT NULL,
+  `game_id` bigint(20) DEFAULT NULL,
+  `ad_id2` bigint(20) DEFAULT NULL,
+  `ad_id3` bigint(20) DEFAULT NULL,
+  `ad_id4` bigint(20) DEFAULT NULL,
+  `ad_id5` bigint(20) DEFAULT NULL,
+  `ad_id6` bigint(20) DEFAULT NULL,
+  `ad_id7` bigint(20) DEFAULT NULL,
+  `ad_id8` bigint(20) DEFAULT NULL,
+  `ct2_id` bigint(20) DEFAULT NULL,
+  `ct3_id` bigint(20) DEFAULT NULL,
+  `ct4_id` bigint(20) DEFAULT NULL,
+  `ct5_id` bigint(20) DEFAULT NULL,
+  `ct6_id` bigint(20) DEFAULT NULL,
+  `ct7_id` bigint(20) DEFAULT NULL,
+  `ct8_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKE17BB02E4429C99E` (`game_id`),
+  KEY `FKE17BB02EFE6AC987` (`ct_id`),
+  KEY `FKE17BB02EA82DEF93` (`ct6_id`),
+  KEY `FKE17BB02EA82C9276` (`ct3_id`),
+  KEY `FKE17BB02EA82ED851` (`ct8_id`),
+  KEY `FKE17BB02EA82D06D5` (`ct4_id`),
+  KEY `FKE17BB02EA82E63F2` (`ct7_id`),
+  KEY `FKE17BB02EA82D7B34` (`ct5_id`),
+  KEY `FKE17BB02EA82C1E17` (`ct2_id`),
+  CONSTRAINT `FKE17BB02E4429C99E` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`),
+  CONSTRAINT `FKE17BB02EA82C1E17` FOREIGN KEY (`ct2_id`) REFERENCES `carouseltype` (`id`),
+  CONSTRAINT `FKE17BB02EA82C9276` FOREIGN KEY (`ct3_id`) REFERENCES `carouseltype` (`id`),
+  CONSTRAINT `FKE17BB02EA82D06D5` FOREIGN KEY (`ct4_id`) REFERENCES `carouseltype` (`id`),
+  CONSTRAINT `FKE17BB02EA82D7B34` FOREIGN KEY (`ct5_id`) REFERENCES `carouseltype` (`id`),
+  CONSTRAINT `FKE17BB02EA82DEF93` FOREIGN KEY (`ct6_id`) REFERENCES `carouseltype` (`id`),
+  CONSTRAINT `FKE17BB02EA82E63F2` FOREIGN KEY (`ct7_id`) REFERENCES `carouseltype` (`id`),
+  CONSTRAINT `FKE17BB02EA82ED851` FOREIGN KEY (`ct8_id`) REFERENCES `carouseltype` (`id`),
+  CONSTRAINT `FKE17BB02EFE6AC987` FOREIGN KEY (`ct_id`) REFERENCES `carouseltype` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 -- ----------------------------
 -- Table structure for game_message
@@ -223,6 +281,7 @@ CREATE TABLE `gameicon` (
   `picture5` varchar(255) DEFAULT NULL,
   `picture6` varchar(255) DEFAULT NULL,
   `game_id` bigint(20) DEFAULT NULL,
+  `backgroundpicture` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK96963F6B4429C99E` (`game_id`),
   CONSTRAINT `FK96963F6B4429C99E` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`)
@@ -261,6 +320,7 @@ CREATE TABLE `games` (
   `ranking` int(11) NOT NULL,
   `size` varchar(255) DEFAULT NULL,
   `version` varchar(255) DEFAULT NULL,
+  `rankingicon` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK5D932C1CAC7F769` (`gtype_id`),
   KEY `idx_games_star` (`star`),
@@ -302,9 +362,14 @@ CREATE TABLE `leveltype` (
 CREATE TABLE `logs` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `customer_name` varchar(255) DEFAULT NULL,
-  `data` datetime DEFAULT NULL,
+  `data` bigint(20) DEFAULT NULL,
+  `imei` varchar(255) DEFAULT NULL,
+  `ip` varchar(255) DEFAULT NULL,
+  `mac` varchar(255) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 -- ----------------------------
 -- Table structure for news
@@ -361,27 +426,60 @@ CREATE TABLE `newtype` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+DROP TABLE IF EXISTS `p_g_advertisement`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `p_g_advertisement` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `game_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKF065DA5E4429C99E` (`game_id`),
+  CONSTRAINT `FKF065DA5E4429C99E` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 -- Table structure for packs
 -- ----------------------------
+DROP TABLE IF EXISTS `packs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `packs` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `data` bigint(20) DEFAULT NULL,
   `mtype` int(11) NOT NULL,
   `title` varchar(255) DEFAULT NULL,
+  `allnum` int(11) DEFAULT NULL,
   `describe_aiu` varchar(255) DEFAULT NULL,
   `icon` varchar(255) DEFAULT NULL,
+  `pkey` varchar(255) DEFAULT NULL,
   `star` int(11) DEFAULT NULL,
   `type` int(11) DEFAULT NULL,
   `game_id` bigint(20) DEFAULT NULL,
   `ranking` int(11) NOT NULL,
   `remaining` datetime DEFAULT NULL,
+  `pack_pic` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK657E17A4429C99E` (`game_id`),
   KEY `idx_data` (`data`),
   KEY `idx_packs_star` (`star`),
   KEY `idx_title` (`title`),
   CONSTRAINT `FK657E17A4429C99E` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `post`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `post` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `content` varchar(255) DEFAULT NULL,
+  `postedAt` datetime DEFAULT NULL,
+  `postedBy_id` bigint(20) DEFAULT NULL,
+  `topic_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK3498A0B606726` (`postedBy_id`),
+  KEY `FK3498A0722C1EB6` (`topic_id`),
+  CONSTRAINT `FK3498A0722C1EB6` FOREIGN KEY (`topic_id`) REFERENCES `topic` (`id`),
+  CONSTRAINT `FK3498A0B606726` FOREIGN KEY (`postedBy_id`) REFERENCES `customer` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 -- ----------------------------
 -- Table structure for pubchannel
@@ -396,6 +494,19 @@ CREATE TABLE `pubchannel` (
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+DROP TABLE IF EXISTS `recommend`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `recommend` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `mtype` int(11) NOT NULL,
+  `ranking` int(11) NOT NULL,
+  `game_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK3AF610BC4429C99E` (`game_id`),
+  CONSTRAINT `FK3AF610BC4429C99E` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 -- Table structure for searchkey
 -- ----------------------------
 CREATE TABLE `searchkey` (
@@ -415,7 +526,20 @@ CREATE TABLE `t_pkey` (
   PRIMARY KEY (`id`),
   KEY `FKCB6168DA1FBBC43E` (`pack_id`),
   CONSTRAINT `FKCB6168DA1FBBC43E` FOREIGN KEY (`pack_id`) REFERENCES `packs` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `topic`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `topic` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `subject` varchar(255) DEFAULT NULL,
+  `views` int(11) DEFAULT NULL,
+  `forum_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK696CD2FC72DC176` (`forum_id`),
+  CONSTRAINT `FK696CD2FC72DC176` FOREIGN KEY (`forum_id`) REFERENCES `forum` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 -- ----------------------------
 -- Table structure for ttt

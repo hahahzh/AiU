@@ -13,11 +13,15 @@ public class Log extends Model {
 
 	public String customer_name;
 	
-	public Date data = new Date();
+	public Long data;
 
 	public String ip;
 	
+	public String mac;
+	
 	public String imei;
+	
+	public String type;
 	
 	public String toString() {
 		return customer_name;

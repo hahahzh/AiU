@@ -4,7 +4,13 @@
 <div id="crudIndex">
 
     <h2>&{'crud.index.title'}</h2>
+#{if session.admin_group=='0'}
+<a href="#" onclick="$('#firstbar').show();$('#secondbar').hide();">功能</a>
+<a href="#" onclick="$('#firstbar').hide();$('#secondbar').show();">基本设置</a>
+<br/><br/>
+#{/if}
 
+<div id="firstbar">
     <table>
         <thead>
             <tr>
@@ -15,7 +21,7 @@
         <tbody>
 #{default.types}
 	#{if session.admin_group=='1'}
-		#{if type.name=='News' || type.name=='Games'}
+		#{if type.name=='News' || type.name=='Games' || type.name=='GameCarousels' || type.name=='GameIcons'}
           <tr>
               <td>
                   <a href="${type.listAction}">&{type.name}</a>
@@ -27,6 +33,7 @@
           #{/if}
 	#{/if}
 	#{else}
+		#{if type.name=='Carousels' || type.name=='ClientVersions' || type.name=='Customers' || type.name=='EveryGames' || type.name=='GameCarousels' || type.name=='GameIcons' || type.name=='IndexPages' || type.name=='Packs' || type.name=='PlusGames' || type.name=='News' || type.name=='Games'}
 		<tr>
               <td>
                   <a href="${type.listAction}">&{type.name}</a>
@@ -34,10 +41,41 @@
               <td class="crudNew" >
                   <a href="${type.blankAction}">&{'crud.index.add', type}</a>
               </td>
-          </tr>
+        </tr>
+        #{/if}
 	#{/else}
 #{/default.types}
         </tbody>
     </table>
+</div>
+<div id="secondbar">
+    <table>
+        <thead>
+            <tr>
+                <th>&{'crud.index.objectType'}</th>
+                <th width="20%">&{'crud.index.action'}</th>
+            </tr>
+        </thead>
+        <tbody>
+#{default.types}
+	#{if session.admin_group=='0'}
+		#{if type.name=='AdminManagements' || type.name=='CarouselTypes' || type.name=='EveryGameTypes' || type.name=='GameTypes' || type.name=='LevelTypes' || type.name=='PublicChannels'}
+		<tr>
+              <td>
+                  <a href="${type.listAction}">&{type.name}</a>
+              </td>
+              <td class="crudNew" >
+                  <a href="${type.blankAction}">&{'crud.index.add', type}</a>
+              </td>
+        </tr>
+        #{/if}
+	#{/if}
+#{/default.types}
+        </tbody>
+    </table>
+</div>
 
 </div>
+<script type="text/javascript">
+$('#firstbar').show();$('#secondbar').hide();
+</script>
