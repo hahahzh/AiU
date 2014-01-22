@@ -27,6 +27,20 @@ public class Carousel extends Model {
 	public CarouselType ct;
 
 	public String toString(){
-		return ct.type;
+		String name = null;
+		if(2 == ct.id){
+	  		EveryGame l = EveryGame.findById(ad_id);
+	  		name = l.title;
+	  	  } else if(3 == ct.id){
+	  		Game l = Game.findById(ad_id);
+	  		name = l.title;
+	  	  }else if(4 == ct.id){
+	  		New l = New.findById(ad_id);
+	  		name = l.title;
+	  	  }else if(5 == ct.id){
+	  		Pack l = Pack.findById(ad_id);
+	  		name = l.title;
+	  	  }
+		return name;
 	}
 }

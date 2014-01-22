@@ -29,13 +29,13 @@ public class Carousels extends CRUD {
 	        Model object = (Model) constructor.newInstance();
 	        List l = null;
 		  if("每日一游&玩嗨周五".equals(selval)){
-			  l = EveryGame.findAll();
+			  l = EveryGame.find("order by id desc").fetch();
 		  } else if("游戏".equals(selval)){
-			  l = Game.findAll();
+			  l = Game.find("order by id desc").fetch();
 		  }else if("新闻".equals(selval)){
-			  l = New.findAll();
+			  l = New.find("order by id desc").fetch();
 		  }else if("礼包".equals(selval)){
-			  l = Pack.findAll();
+			  l = Pack.find("order by id desc").fetch();
 		  }
         try {
         	
