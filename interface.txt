@@ -241,3 +241,9 @@ http://139.159.32.29:9000/c/newstype?z=1
 http://139.159.32.29:9000/c/gameadlist?id=10&z=1
 返回
 {"state":"1","results":{"id":1,"g_id":6,"adlist":[{"icon":"/c/download?id=6&fileID=picture1&entity=models.New&z=1","url":"/c/newinfo?id=6&z=1","data":"1388414242478","t_id":6,"t_type":"n"},{"icon":"/c/download?id=7&fileID=picture1&entity=models.New&z=1","url":"/c/newinfo?id=7&z=1","data":"1388415209978","t_id":7,"t_type":"n"},{"icon":"/c/download?id=8&fileID=picture1&entity=models.New&z=1","url":"/c/newinfo?id=8&z=1","data":"1388415262955","t_id":8,"t_type":"n"},{"icon":"/c/download?id=9&fileID=picture1&entity=models.New&z=1","url":"/c/newinfo?id=9&z=1","data":"1388415306065","t_id":9,"t_type":"n"},{"icon":"/c/download?id=6&fileID=picture1&entity=models.New&z=1","url":"/c/newinfo?id=6&z=1","data":"1388414242478","t_id":6,"t_type":"n"},{"icon":"/c/download?id=7&fileID=picture1&entity=models.New&z=1","url":"/c/newinfo?id=7&z=1","data":"1388415209978","t_id":7,"t_type":"n"},{"icon":"/c/download?id=8&fileID=picture1&entity=models.New&z=1","url":"/c/newinfo?id=8&z=1","data":"1388415262955","t_id":8,"t_type":"n"},{"icon":"/c/download?id=9&fileID=picture1&entity=models.New&z=1","url":"/c/newinfo?id=9&z=1","data":"1388415306065","t_id":9,"t_type":"n"}]}}
+
+
+32 得到用户信息
+http://139.159.32.29:9000/c/userinfo?z=1
+返回
+{"state":"1","results":{"exp":0,"level":"小学生","phonenumber":"10000000000","nickname":"游客","version":"1.0","portrait":"/public/images/portrait.png"}}

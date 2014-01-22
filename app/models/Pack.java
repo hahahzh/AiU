@@ -9,6 +9,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 
+import play.data.validation.MaxSize;
 import play.data.validation.Required;
 import play.db.jpa.Blob;
 
@@ -24,6 +25,7 @@ public Blob pack_pic;
 	public Integer star; // 热度
 	
 	@Required
+	@MaxSize(200)
 	public String describe_aiu; // 简介
 	
 	@Required

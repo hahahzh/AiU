@@ -362,7 +362,7 @@ public class AiU extends Controller {
 			JSONObject subad = initResultJSON();
 			subad.put("id", data.id);
 	        
-	  	  if("....&....".equals(data.ct.type)){
+	  	  if("每日一游&玩嗨周五".equals(data.ct.type)){
 	  		EveryGame l = EveryGame.findById(data.ad_id);
 	  		subad.put("icon", "/c/download?id=" + l.id + "&fileID=picture&entity=" + l.getClass().getName() + "&z=" + z);
 			subad.put("url", "/c/invite?num=5&page=1&z="+z);
@@ -371,7 +371,7 @@ public class AiU extends Controller {
 			subad.put("data", l.data+"");
 			subad.put("t_id", l.game.id);
 			subad.put("t_type", "eg");
-	  	  } else if("..".equals(data.ct.type)){
+	  	  } else if("游戏".equals(data.ct.type)){
 	  		Game l = Game.findById(data.ad_id);
 		  	subad.put("icon", "/c/download?id=" + l.id + "&fileID=picture1&entity=" + l.getClass().getName() + "&z=" + z);
 			subad.put("url", "/c/gameinfo?id="+l.id+"&z="+z);
@@ -380,14 +380,14 @@ public class AiU extends Controller {
 			subad.put("data", l.data+"");
 			subad.put("t_id", l.id);
 			subad.put("t_type", "g");
-	  	  }else if("..".equals(data.ct.type)){
+	  	  }else if("新闻".equals(data.ct.type)){
 	  		New l = New.findById(data.ad_id);
 		  	subad.put("icon", "/c/download?id=" + l.id + "&fileID=picture1&entity=" + l.getClass().getName() + "&z=" + z);
 			subad.put("url", "/c/newinfo?id="+l.id+"&z="+z);
 			subad.put("data", l.data+"");
 			subad.put("t_id", l.id);
 			subad.put("t_type", "n");
-	  	  }else if("..".equals(data.ct.type)){
+	  	  }else if("礼包".equals(data.ct.type)){
 	  		Pack l = Pack.findById(data.ad_id);
 		  	subad.put("icon", "/c/download?id=" + l.id + "&fileID=icon&entity=" + l.getClass().getName() + "&z=" + z);
 			subad.put("url", "c/package?num=5&page=1&z="+z);
@@ -1884,7 +1884,9 @@ results.put("downloadurl", data.game.downloadurl);
 		results.put("phonenumber", c.m_number);
 		results.put("nickname", c.nickname);
 		results.put("type", c.type);
-		results.put("version", c.vid.version);
+		if(c.vid != null){
+			results.put("version", c.vid.version);
+		}
 		if(c.portrait != null && c.portrait.exists()){
 			results.put("portrait", "/c/download?id=" + c.id + "&fileID=portrait&entity=" + c.getClass().getName() + "&z=" + z);
 		}else{
