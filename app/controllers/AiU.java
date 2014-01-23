@@ -812,7 +812,7 @@ results.put("downloadurl", data.game.downloadurl);
 		renderSuccess(results);
 	}
 	
-	public static void packageInfo(@Required Long id, @Required String z) throws ParseException {
+	public static void packageInfo(@Required Long gid, @Required String z) throws ParseException {
 		// ....
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
@@ -831,31 +831,34 @@ results.put("downloadurl", data.game.downloadurl);
 		user.put("lv", c.lv.level_name);
 		results.put("user", user);
 		
-		Pack data = Pack.findById(id);
+		List<Pack> l = Pack.find("game_id = ?", gid).fetch();
 		
-		JSONObject subad = initResultJSON();
-		subad.put("id", data.id);
-		subad.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=" + data.getClass().getName() + "&z=" + z);
-		//TODO
-//			subad.put("url", data.ad_game.);
-		subad.put("title", data.title);
-		subad.put("txt", data.describe_aiu);
-		subad.put("star", data.star+"");
-		long allnum = PackPKey.count("pack_id=?", data.id);
-		long day = DateUtil.intervalOfDay(new Date(), data.remaining);
-		if(allnum == 0){
-			subad.put("num", "0");
-		}else if(allnum <= day){
-			subad.put("num", "1");
-		}else{
-			subad.put("num", allnum/day+"");
+		JSONArray packagelist = initResultJSONArray();
+		for(Pack data : l){
+			JSONObject subad = initResultJSON();
+			subad.put("id", data.id);
+			subad.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=" + data.getClass().getName() + "&z=" + z);
+			//TODO
+//				subad.put("url", data.ad_game.);
+			subad.put("title", data.title);
+			subad.put("txt", data.describe_aiu);
+			subad.put("star", data.star+"");
+			long allnum = PackPKey.count("pack_id=?", data.id);
+			long day = DateUtil.intervalOfDay(new Date(), data.remaining);
+			if(allnum == 0){
+				subad.put("num", "0");
+			}else if(allnum <= day){
+				subad.put("num", "1");
+			}else{
+				subad.put("num", allnum/day+"");
+			}
+			
+			subad.put("allnum", allnum);
+			subad.put("data", data.data);
+			subad.put("g_id", data.game.id);
+			packagelist.add(subad);
 		}
-		
-		subad.put("allnum", allnum);
-		subad.put("data", data.data);
-		subad.put("g_id", data.game.id);
-	
-		results.put("packinfo", subad);
+		results.put("packinfo", packagelist);
 		renderSuccess(results);
 	}
 	
