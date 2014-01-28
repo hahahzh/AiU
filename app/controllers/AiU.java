@@ -1207,6 +1207,8 @@ results.put("downloadurl", data.game.downloadurl);
 			subad.put("username", data.c.nickname);
 			if(data.c.portrait.exists()){
 				subad.put("portrait", "/c/download?id=" + data.c.id + "&fileID=portrait&entity=" + data.c.getClass().getName() + "&z=" + z);
+			}else{
+				subad.put("portrait", "/public/images/portrait.png");
 			}
 			list.add(subad);
 		}
