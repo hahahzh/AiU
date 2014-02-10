@@ -1,21 +1,16 @@
 package models;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Index;
-
-import play.data.validation.MaxSize;
-import play.data.validation.MinSize;
-import play.data.validation.Password;
+import play.data.validation.CheckWith;
 import play.data.validation.Required;
 import play.db.jpa.Blob;
 import play.db.jpa.Model;
+import check.PicCompres;
 
 @Table(name = "gameicon")
 @Entity
@@ -26,6 +21,7 @@ public class GameIcon extends Model {
 	public Game game;
 
 	@Required
+	//@CheckWith(PicCompres.class)
 	public Blob picture1;
 
 	//public String txt1;

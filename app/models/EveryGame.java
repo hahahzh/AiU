@@ -8,12 +8,15 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 
+import check.PicCompres;
+import play.data.validation.CheckWith;
 import play.data.validation.MaxSize;
 import play.data.validation.MinSize;
 import play.data.validation.Password;
 import play.data.validation.Required;
 import play.db.jpa.Blob;
 import play.db.jpa.Model;
+import utils.CompressPic;
 
 @Table(name="everygame")
 @Entity
@@ -33,8 +36,18 @@ public class EveryGame extends ThirdModel {
 	@ManyToOne(fetch=FetchType.LAZY,cascade=javax.persistence.CascadeType.REFRESH)
 	public Game game;
 	
+	@CheckWith(PicCompres.class)
 	public Blob picture;
 	
+	public Blob getPicture() {
+		return picture;
+	}
+
+	public void setPicture(Blob picture) {
+		CompressPic.compressPic(picture.getFile().getPath(), picture.getFile().getPath());
+		this.picture = picture;
+	}
+
 	@Required
 	@Column(columnDefinition="TEXT")
 	@MaxSize(500)

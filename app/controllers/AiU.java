@@ -745,64 +745,20 @@ results.put("downloadurl", data.game.downloadurl);
 		JSONArray packagelist = initResultJSONArray();
 		String sTmp = "";
 		if(skey != null && !skey.isEmpty()){
-			sTmp = " and title like '%" + skey + "%' ";
+			sTmp = " and g.title like '%" + skey + "%' ";
 		}
 		if(gid != null){
-			sTmp += " and game_id = "+gid; 
+			sTmp += " and g.id = "+gid;
 		}
-		List<Pack> listData = Pack.find("mtype="+ c.os + sTmp + " and ranking>0 order by ranking desc,id desc").fetch(page, num);
-		for(Pack data:listData){
+
+		List<Game> listData = Game.find("select g from Game g, Pack p where p.game = g.id and g.mtype="+ c.os + sTmp + " GROUP BY g.id order by p.ranking desc,p.id desc").fetch(page, num);		
+		for(Game data:listData){
 			JSONObject subad = initResultJSON();
 			subad.put("id", data.id);
-			subad.put("game_id", data.game.id);
+			subad.put("game_id", data.id);
 			subad.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=" + data.getClass().getName() + "&z=" + z);
-			if(data.pack_pic.exists()){
-				subad.put("pic", "/c/download?id=" + data.id + "&fileID=pack_pic&entity=" + data.getClass().getName() + "&z=" + z);
-			}
-			//TODO
-//			subad.put("url", data.ad_game.);
 			subad.put("title", data.title);
 			subad.put("star", data.star+"");
-			subad.put("data", data.data);
-			
-			long allnum = PackPKey.count("pack_id=?", data.id);
-			long day = DateUtil.intervalOfDay(new Date(), data.remaining);
-			if(allnum == 0){
-				subad.put("num", "0");
-			}else if(allnum <= day){
-				subad.put("num", "1");
-			}else{
-				subad.put("num", allnum/day+"");
-			}
-			subad.put("allnum", allnum);
-			
-			packagelist.add(subad);
-		}
-		List<Pack> listData1 = Pack.find("mtype="+ c.os + sTmp + " and ranking=0 order by id desc").fetch(page, num);
-		for(Pack data:listData1){
-			JSONObject subad = initResultJSON();
-			subad.put("id", data.id);
-			subad.put("game_id", data.game.id);
-			subad.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=" + data.getClass().getName() + "&z=" + z);
-			if(data.pack_pic.exists()){
-				subad.put("pic", "/c/download?id=" + data.id + "&fileID=pack_pic&entity=" + data.getClass().getName() + "&z=" + z);
-			}
-			//TODO
-//			subad.put("url", data.ad_game.);
-			subad.put("title", data.title);
-			subad.put("star", data.star+"");
-			
-			long allnum = PackPKey.count("pack_id=?", data.id);
-			long day = DateUtil.intervalOfDay(new Date(), data.remaining);
-			if(allnum == 0){
-				subad.put("num", "0");
-			}else if(allnum <= day){
-				subad.put("num", "1");
-			}else{
-				subad.put("num", allnum/day+"");
-			}
-			subad.put("allnum", allnum);
-			
 			subad.put("data", data.data);
 			
 			packagelist.add(subad);

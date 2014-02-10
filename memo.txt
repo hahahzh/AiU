@@ -42,3 +42,5 @@ set env DISPLAY 127.0.0.1:0.0
 由于时间有点赶，而且现有数据测试完后要清空上传正式数据，辛苦大家！
 
 9、图片压缩
+
+mysqldump -uroot -p AiU > /tmp/AiUAllData.sql
