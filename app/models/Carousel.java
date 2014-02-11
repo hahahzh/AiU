@@ -35,7 +35,7 @@ public class Carousel extends Model {
 	  		Game l = Game.findById(ad_id);
 	  		name = l.title;
 	  	  }else if(4 == ct.id){
-	  		New l = New.findById(ad_id);
+	  		NativeNew l = NativeNew.findById(ad_id);
 	  		name = l.title;
 	  	  }else if(5 == ct.id){
 	  		Pack l = Pack.findById(ad_id);

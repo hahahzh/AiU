@@ -5,5 +5,5 @@ import play.mvc.With;
 
 @Check("admin")
 @With(Secure.class)
-public class News extends CRUD {
+public class GameStrategys extends CRUD {
 }

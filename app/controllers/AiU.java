@@ -7,24 +7,25 @@ import java.util.Random;
 import java.util.UUID;
 
 import job.RecordJob;
-
 import models.CPkey;
 import models.Carousel;
 import models.CheckDigit;
 import models.ClientVersion;
 import models.Customer;
 import models.EveryGame;
+import models.FirmNew;
 import models.Game;
 import models.GameCarousel;
 import models.GameDownloadCount;
+import models.GameEvaluating;
 import models.GameIcon;
 import models.GameMessage;
+import models.GameStrategy;
 import models.GameType;
 import models.IndexPage;
 import models.LevelType;
-import models.Log;
+import models.NativeNew;
 import models.New;
-import models.NewType;
 import models.Pack;
 import models.PackPKey;
 import models.PlusGame;
@@ -381,7 +382,7 @@ public class AiU extends Controller {
 			subad.put("t_id", l.id);
 			subad.put("t_type", "g");
 	  	  }else if("新闻".equals(data.ct.type)){
-	  		New l = New.findById(data.ad_id);
+	  		NativeNew l = NativeNew.findById(data.ad_id);
 		  	subad.put("icon", "/c/download?id=" + l.id + "&fileID=picture1&entity=" + l.getClass().getName() + "&z=" + z);
 			subad.put("url", "/c/newinfo?id="+l.id+"&z="+z);
 			subad.put("data", l.data+"");
@@ -390,7 +391,7 @@ public class AiU extends Controller {
 	  	  }else if("礼包".equals(data.ct.type)){
 	  		Pack l = Pack.findById(data.ad_id);
 		  	subad.put("icon", "/c/download?id=" + l.id + "&fileID=icon&entity=" + l.getClass().getName() + "&z=" + z);
-			subad.put("url", "c/package?num=5&page=1&z="+z);
+			subad.put("url", "/c/package?num=5&page=1&z="+z);
 			subad.put("data", l.data+"");
 			subad.put("t_id", l.id);
 			subad.put("t_type", "p");
@@ -453,35 +454,74 @@ public class AiU extends Controller {
 		user.put("lv", c.lv.level_name);
 		results.put("user", user);
 		
-		String condition = null;
-		if(type == null){
-			condition = "newtype_id=1";
-		}else{
-			condition = "newtype_id="+type;
-		}
-		if(gid != null){
-			condition += " and game_id="+gid;
-		}
-				
 		JSONArray newlist = initResultJSONArray();
-		List<New> newlistData = New.find("mtype = ? and "+condition+" order by id desc", c.os).fetch(page, num);
-		for(New data:newlistData){
-			JSONObject subad = initResultJSON();
-			subad.put("id", data.id);
-			subad.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=" + data.getClass().getName() + "&z=" + z);
-			subad.put("pic", "/c/download?id=" + data.id + "&fileID=picture1&entity=" + data.getClass().getName() + "&z=" + z);
-//			subad.put("url", data.ad_game.);
-			subad.put("title", data.title);
-			subad.put("txt", data.describe_aiu);
-			subad.put("hit", data.hit);
-			subad.put("data", data.data);
-			if(data.game != null){
-				subad.put("g_id", data.game.id);
+
+		if(gid == null){
+			List<NativeNew> newlistData = NativeNew.find("mtype = ? order by id desc", c.os).fetch(page, num);
+			for(NativeNew data:newlistData){
+				JSONObject subad = initResultJSON();
+				subad.put("id", data.id);
+				subad.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=" + data.getClass().getName() + "&z=" + z);
+				subad.put("pic", "/c/download?id=" + data.id + "&fileID=picture1&entity=" + data.getClass().getName() + "&z=" + z);
+				subad.put("title", data.title);
+				subad.put("txt", data.describe_aiu);
+				subad.put("hit", data.hit);
+				subad.put("data", data.data);
+				newlist.add(subad);
 			}
-			newlist.add(subad);
+		}else{
+			if(type == null || type == 1){
+				List<FirmNew> newlistData = FirmNew.find("mtype = ? and game_id = "+gid+" order by id desc", c.os).fetch(page, num);
+				for(FirmNew data:newlistData){
+					JSONObject subad = initResultJSON();
+					subad.put("id", data.id);
+					subad.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=" + data.getClass().getName() + "&z=" + z);
+					subad.put("pic", "/c/download?id=" + data.id + "&fileID=picture1&entity=" + data.getClass().getName() + "&z=" + z);
+					subad.put("title", data.title);
+					subad.put("txt", data.describe_aiu);
+					subad.put("hit", data.hit);
+					subad.put("data", data.data);
+					if(data.game != null){
+						subad.put("g_id", data.game.id);
+					}
+					newlist.add(subad);
+				}
+			}else if(type == 2){
+				List<GameStrategy> newlistData = GameStrategy.find("mtype = ? and game_id = "+gid+" order by id desc", c.os).fetch(page, num);
+				for(GameStrategy data:newlistData){
+					JSONObject subad = initResultJSON();
+					subad.put("id", data.id);
+					subad.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=" + data.getClass().getName() + "&z=" + z);
+					subad.put("pic", "/c/download?id=" + data.id + "&fileID=picture1&entity=" + data.getClass().getName() + "&z=" + z);
+					subad.put("title", data.title);
+					subad.put("txt", data.describe_aiu);
+					subad.put("hit", data.hit);
+					subad.put("data", data.data);
+					if(data.game != null){
+						subad.put("g_id", data.game.id);
+					}
+					newlist.add(subad);
+				}
+			}else if(type == 3){
+				List<GameEvaluating> newlistData = GameEvaluating.find("mtype = ? and game_id = "+gid+" order by id desc", c.os).fetch(page, num);
+				for(GameEvaluating data:newlistData){
+					JSONObject subad = initResultJSON();
+					subad.put("id", data.id);
+					subad.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=" + data.getClass().getName() + "&z=" + z);
+					subad.put("pic", "/c/download?id=" + data.id + "&fileID=picture1&entity=" + data.getClass().getName() + "&z=" + z);
+					subad.put("title", data.title);
+					subad.put("txt", data.describe_aiu);
+					subad.put("hit", data.hit);
+					subad.put("data", data.data);
+					if(data.game != null){
+						subad.put("g_id", data.game.id);
+					}
+					newlist.add(subad);
+				}
+			}
 		}
+
 		results.put("newlist", newlist);
-		
 		renderSuccess(results);
 	}
 	
@@ -497,18 +537,27 @@ public class AiU extends Controller {
 		JSONObject results = initResultJSON();
 		JSONArray newstypes = initResultJSONArray();
 		
-		List<NewType> l = NewType.findAll();
-		for(NewType n : l){
-			JSONObject subad = initResultJSON();
-			subad.put("id", n.id);
-			subad.put("name", n.newtype);
-			newstypes.add(subad);
-		}
+		JSONObject subad1 = initResultJSON();
+		subad1.put("id", "1");
+		subad1.put("name", "游戏新闻");
+		newstypes.add(subad1);
+		
+		JSONObject subad2 = initResultJSON();
+		subad2.put("id", "2");
+		subad2.put("name", "攻略");
+		newstypes.add(subad2);
+		
+		JSONObject subad3 = initResultJSON();
+		subad3.put("id", "3");
+		subad3.put("name", "评测");
+		newstypes.add(subad3);
+
 		results.put("newstypes", newstypes);
 		renderSuccess(results);
 	}
 	
-	public static void getNewInfo(@Required Long id, @Required String z) {
+	//游戏新闻
+	public static void getNewInfo(@Required Long id, Long gid, @Required String z) {
 		// ....
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
@@ -527,84 +576,296 @@ public class AiU extends Controller {
 		user.put("lv", c.lv.level_name);
 		results.put("user", user);
 		
+		New data = null;
+		if(gid == null){
+			data = NativeNew.findById(id);
+		}else{
+			data = FirmNew.findById(id);
+		}
+		
 		JSONObject newinfo = initResultJSON();
-		New data = New.findById(id);
-		newinfo.put("id", data.id);
-		newinfo.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=" + data.getClass().getName() + "&z=" + z);
-		//TODO
-//			subad.put("url", data.ad_game.);
-		newinfo.put("title", data.title);
-		newinfo.put("author", data.author);
-		newinfo.put("res", data.res);
-		newinfo.put("hit", data.hit);
-		newinfo.put("data", data.data);
-		
-		JSONArray jsonarr = initResultJSONArray(); 
-		if(data.picture1.exists()){
-			JSONObject img1 = initResultJSON();
-			img1.put("picture", "/c/download?id=" + data.id + "&fileID=picture1&entity=" + data.getClass().getName() + "&z=" + z);
-			img1.put("txt", data.txt1);
-			jsonarr.add(img1);
+		if(data != null){
+			newinfo.put("id", data.id);
+			newinfo.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=" + data.getClass().getName() + "&z=" + z);
+			newinfo.put("title", data.title);
+			newinfo.put("author", data.author);
+			newinfo.put("res", data.res);
+			newinfo.put("hit", data.hit);
+			newinfo.put("data", data.data);
+			
+			JSONArray jsonarr = initResultJSONArray(); 
+			if(data.picture1.exists()){
+				JSONObject img1 = initResultJSON();
+				img1.put("picture", "/c/download?id=" + data.id + "&fileID=picture1&entity=" + data.getClass().getName() + "&z=" + z);
+				img1.put("txt", data.txt1);
+				jsonarr.add(img1);
+			}
+			if(data.picture2.exists()){
+				JSONObject img2 = initResultJSON();
+				img2.put("picture", "/c/download?id=" + data.id + "&fileID=picture2&entity=" + data.getClass().getName() + "&z=" + z);
+				img2.put("txt", data.txt2);
+				jsonarr.add(img2);
+			}
+			if(data.picture3.exists()){
+				JSONObject img3 = initResultJSON();
+				img3.put("picture", "/c/download?id=" + data.id + "&fileID=picture3&entity=" + data.getClass().getName() + "&z=" + z);
+				img3.put("txt", data.txt3);
+				jsonarr.add(img3);
+			}
+			if(data.picture4.exists()){
+				JSONObject img4 = initResultJSON();
+				img4.put("picture", "/c/download?id=" + data.id + "&fileID=picture4&entity=" + data.getClass().getName() + "&z=" + z);
+				img4.put("txt", data.txt4);
+				jsonarr.add(img4);
+			}
+			if(data.picture5.exists()){
+				JSONObject img5 = initResultJSON();
+				img5.put("picture", "/c/download?id=" + data.id + "&fileID=picture5&entity=" + data.getClass().getName() + "&z=" + z);
+				img5.put("txt", data.txt5);
+				jsonarr.add(img5);
+			}
+			if(data.picture6.exists()){
+				JSONObject img6 = initResultJSON();
+				img6.put("picture", "/c/download?id=" + data.id + "&fileID=picture6&entity=" + data.getClass().getName() + "&z=" + z);
+				img6.put("txt", data.txt6);
+				jsonarr.add(img6);
+			}
+			if(data.picture7.exists()){
+				JSONObject img7 = initResultJSON();
+				img7.put("picture", "/c/download?id=" + data.id + "&fileID=picture7&entity=" + data.getClass().getName() + "&z=" + z);
+				img7.put("txt", data.txt7);
+				jsonarr.add(img7);
+			}
+			if(data.picture8.exists()){
+				JSONObject img8 = initResultJSON();
+				img8.put("picture", "/c/download?id=" + data.id + "&fileID=picture8&entity=" + data.getClass().getName() + "&z=" + z);
+				img8.put("txt", data.txt8);
+				jsonarr.add(img8);
+			}
+			if(data.picture9.exists()){
+				JSONObject img9 = initResultJSON();
+				img9.put("picture", "/c/download?id=" + data.id + "&fileID=picture9&entity=" + data.getClass().getName() + "&z=" + z);
+				img9.put("txt", data.txt9);
+				jsonarr.add(img9);
+			}
+			if(data.picture10.exists()){
+				JSONObject img10 = initResultJSON();
+				img10.put("picture", "/c/download?id=" + data.id + "&fileID=picture10&entity=" + data.getClass().getName() + "&z=" + z);
+				img10.put("txt", data.txt10);
+				jsonarr.add(img10);
+			}
+			
+			newinfo.put("imgs", jsonarr);
+			data.hit++;
+			data.save();
 		}
-		if(data.picture2.exists()){
-			JSONObject img2 = initResultJSON();
-			img2.put("picture", "/c/download?id=" + data.id + "&fileID=picture2&entity=" + data.getClass().getName() + "&z=" + z);
-			img2.put("txt", data.txt2);
-			jsonarr.add(img2);
-		}
-		if(data.picture3.exists()){
-			JSONObject img3 = initResultJSON();
-			img3.put("picture", "/c/download?id=" + data.id + "&fileID=picture3&entity=" + data.getClass().getName() + "&z=" + z);
-			img3.put("txt", data.txt3);
-			jsonarr.add(img3);
-		}
-		if(data.picture4.exists()){
-			JSONObject img4 = initResultJSON();
-			img4.put("picture", "/c/download?id=" + data.id + "&fileID=picture4&entity=" + data.getClass().getName() + "&z=" + z);
-			img4.put("txt", data.txt4);
-			jsonarr.add(img4);
-		}
-		if(data.picture5.exists()){
-			JSONObject img5 = initResultJSON();
-			img5.put("picture", "/c/download?id=" + data.id + "&fileID=picture5&entity=" + data.getClass().getName() + "&z=" + z);
-			img5.put("txt", data.txt5);
-			jsonarr.add(img5);
-		}
-		if(data.picture6.exists()){
-			JSONObject img6 = initResultJSON();
-			img6.put("picture", "/c/download?id=" + data.id + "&fileID=picture6&entity=" + data.getClass().getName() + "&z=" + z);
-			img6.put("txt", data.txt6);
-			jsonarr.add(img6);
-		}
-		if(data.picture7.exists()){
-			JSONObject img7 = initResultJSON();
-			img7.put("picture", "/c/download?id=" + data.id + "&fileID=picture7&entity=" + data.getClass().getName() + "&z=" + z);
-			img7.put("txt", data.txt7);
-			jsonarr.add(img7);
-		}
-		if(data.picture8.exists()){
-			JSONObject img8 = initResultJSON();
-			img8.put("picture", "/c/download?id=" + data.id + "&fileID=picture8&entity=" + data.getClass().getName() + "&z=" + z);
-			img8.put("txt", data.txt8);
-			jsonarr.add(img8);
-		}
-		if(data.picture9.exists()){
-			JSONObject img9 = initResultJSON();
-			img9.put("picture", "/c/download?id=" + data.id + "&fileID=picture9&entity=" + data.getClass().getName() + "&z=" + z);
-			img9.put("txt", data.txt9);
-			jsonarr.add(img9);
-		}
-		if(data.picture10.exists()){
-			JSONObject img10 = initResultJSON();
-			img10.put("picture", "/c/download?id=" + data.id + "&fileID=picture10&entity=" + data.getClass().getName() + "&z=" + z);
-			img10.put("txt", data.txt10);
-			jsonarr.add(img10);
-		}
-		
-		newinfo.put("imgs", jsonarr);
 		results.put("newinfo", newinfo);
-		data.hit++;
-		data.save();
+		renderSuccess(results);
+	}
+	
+	//游戏攻略
+	public static void getGameStrategyInfo(@Required Long id, @Required String z) {
+		// ....
+		if (Validation.hasErrors()) {
+			renderFail("error_parameter_required");
+		}
+		
+		Session s = sessionCache.get();
+		if(s == null){
+			renderFail("error_session_expired");
+		}
+		Customer c = s.customer;
+
+		JSONObject results = initResultJSON();
+		
+		JSONObject user = initResultJSON();
+		user.put("exp", c.exp);
+		user.put("lv", c.lv.level_name);
+		results.put("user", user);
+		
+		GameStrategy data = GameStrategy.findById(id);
+		
+		JSONObject newinfo = initResultJSON();
+		if(data != null){
+			newinfo.put("id", data.id);
+			newinfo.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=" + data.getClass().getName() + "&z=" + z);
+			newinfo.put("title", data.title);
+			newinfo.put("author", data.author);
+			newinfo.put("res", data.res);
+			newinfo.put("hit", data.hit);
+			newinfo.put("data", data.data);
+			
+			JSONArray jsonarr = initResultJSONArray(); 
+			if(data.picture1.exists()){
+				JSONObject img1 = initResultJSON();
+				img1.put("picture", "/c/download?id=" + data.id + "&fileID=picture1&entity=" + data.getClass().getName() + "&z=" + z);
+				img1.put("txt", data.txt1);
+				jsonarr.add(img1);
+			}
+			if(data.picture2.exists()){
+				JSONObject img2 = initResultJSON();
+				img2.put("picture", "/c/download?id=" + data.id + "&fileID=picture2&entity=" + data.getClass().getName() + "&z=" + z);
+				img2.put("txt", data.txt2);
+				jsonarr.add(img2);
+			}
+			if(data.picture3.exists()){
+				JSONObject img3 = initResultJSON();
+				img3.put("picture", "/c/download?id=" + data.id + "&fileID=picture3&entity=" + data.getClass().getName() + "&z=" + z);
+				img3.put("txt", data.txt3);
+				jsonarr.add(img3);
+			}
+			if(data.picture4.exists()){
+				JSONObject img4 = initResultJSON();
+				img4.put("picture", "/c/download?id=" + data.id + "&fileID=picture4&entity=" + data.getClass().getName() + "&z=" + z);
+				img4.put("txt", data.txt4);
+				jsonarr.add(img4);
+			}
+			if(data.picture5.exists()){
+				JSONObject img5 = initResultJSON();
+				img5.put("picture", "/c/download?id=" + data.id + "&fileID=picture5&entity=" + data.getClass().getName() + "&z=" + z);
+				img5.put("txt", data.txt5);
+				jsonarr.add(img5);
+			}
+			if(data.picture6.exists()){
+				JSONObject img6 = initResultJSON();
+				img6.put("picture", "/c/download?id=" + data.id + "&fileID=picture6&entity=" + data.getClass().getName() + "&z=" + z);
+				img6.put("txt", data.txt6);
+				jsonarr.add(img6);
+			}
+			if(data.picture7.exists()){
+				JSONObject img7 = initResultJSON();
+				img7.put("picture", "/c/download?id=" + data.id + "&fileID=picture7&entity=" + data.getClass().getName() + "&z=" + z);
+				img7.put("txt", data.txt7);
+				jsonarr.add(img7);
+			}
+			if(data.picture8.exists()){
+				JSONObject img8 = initResultJSON();
+				img8.put("picture", "/c/download?id=" + data.id + "&fileID=picture8&entity=" + data.getClass().getName() + "&z=" + z);
+				img8.put("txt", data.txt8);
+				jsonarr.add(img8);
+			}
+			if(data.picture9.exists()){
+				JSONObject img9 = initResultJSON();
+				img9.put("picture", "/c/download?id=" + data.id + "&fileID=picture9&entity=" + data.getClass().getName() + "&z=" + z);
+				img9.put("txt", data.txt9);
+				jsonarr.add(img9);
+			}
+			if(data.picture10.exists()){
+				JSONObject img10 = initResultJSON();
+				img10.put("picture", "/c/download?id=" + data.id + "&fileID=picture10&entity=" + data.getClass().getName() + "&z=" + z);
+				img10.put("txt", data.txt10);
+				jsonarr.add(img10);
+			}
+			
+			newinfo.put("imgs", jsonarr);
+			data.hit++;
+			data.save();
+		}
+		results.put("newinfo", newinfo);
+
+		renderSuccess(results);
+	}
+	
+	//游戏评测
+	public static void getGameEvaluatingInfo(@Required Long id, @Required String z) {
+		// ....
+		if (Validation.hasErrors()) {
+			renderFail("error_parameter_required");
+		}
+		
+		Session s = sessionCache.get();
+		if(s == null){
+			renderFail("error_session_expired");
+		}
+		Customer c = s.customer;
+
+		JSONObject results = initResultJSON();
+		
+		JSONObject user = initResultJSON();
+		user.put("exp", c.exp);
+		user.put("lv", c.lv.level_name);
+		results.put("user", user);
+		
+		GameEvaluating data = GameEvaluating.findById(id);
+		JSONObject newinfo = initResultJSON();
+		if(data != null){
+			
+			newinfo.put("id", data.id);
+			newinfo.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=" + data.getClass().getName() + "&z=" + z);
+			newinfo.put("title", data.title);
+			newinfo.put("author", data.author);
+			newinfo.put("res", data.res);
+			newinfo.put("hit", data.hit);
+			newinfo.put("data", data.data);
+			
+			JSONArray jsonarr = initResultJSONArray(); 
+			if(data.picture1.exists()){
+				JSONObject img1 = initResultJSON();
+				img1.put("picture", "/c/download?id=" + data.id + "&fileID=picture1&entity=" + data.getClass().getName() + "&z=" + z);
+				img1.put("txt", data.txt1);
+				jsonarr.add(img1);
+			}
+			if(data.picture2.exists()){
+				JSONObject img2 = initResultJSON();
+				img2.put("picture", "/c/download?id=" + data.id + "&fileID=picture2&entity=" + data.getClass().getName() + "&z=" + z);
+				img2.put("txt", data.txt2);
+				jsonarr.add(img2);
+			}
+			if(data.picture3.exists()){
+				JSONObject img3 = initResultJSON();
+				img3.put("picture", "/c/download?id=" + data.id + "&fileID=picture3&entity=" + data.getClass().getName() + "&z=" + z);
+				img3.put("txt", data.txt3);
+				jsonarr.add(img3);
+			}
+			if(data.picture4.exists()){
+				JSONObject img4 = initResultJSON();
+				img4.put("picture", "/c/download?id=" + data.id + "&fileID=picture4&entity=" + data.getClass().getName() + "&z=" + z);
+				img4.put("txt", data.txt4);
+				jsonarr.add(img4);
+			}
+			if(data.picture5.exists()){
+				JSONObject img5 = initResultJSON();
+				img5.put("picture", "/c/download?id=" + data.id + "&fileID=picture5&entity=" + data.getClass().getName() + "&z=" + z);
+				img5.put("txt", data.txt5);
+				jsonarr.add(img5);
+			}
+			if(data.picture6.exists()){
+				JSONObject img6 = initResultJSON();
+				img6.put("picture", "/c/download?id=" + data.id + "&fileID=picture6&entity=" + data.getClass().getName() + "&z=" + z);
+				img6.put("txt", data.txt6);
+				jsonarr.add(img6);
+			}
+			if(data.picture7.exists()){
+				JSONObject img7 = initResultJSON();
+				img7.put("picture", "/c/download?id=" + data.id + "&fileID=picture7&entity=" + data.getClass().getName() + "&z=" + z);
+				img7.put("txt", data.txt7);
+				jsonarr.add(img7);
+			}
+			if(data.picture8.exists()){
+				JSONObject img8 = initResultJSON();
+				img8.put("picture", "/c/download?id=" + data.id + "&fileID=picture8&entity=" + data.getClass().getName() + "&z=" + z);
+				img8.put("txt", data.txt8);
+				jsonarr.add(img8);
+			}
+			if(data.picture9.exists()){
+				JSONObject img9 = initResultJSON();
+				img9.put("picture", "/c/download?id=" + data.id + "&fileID=picture9&entity=" + data.getClass().getName() + "&z=" + z);
+				img9.put("txt", data.txt9);
+				jsonarr.add(img9);
+			}
+			if(data.picture10.exists()){
+				JSONObject img10 = initResultJSON();
+				img10.put("picture", "/c/download?id=" + data.id + "&fileID=picture10&entity=" + data.getClass().getName() + "&z=" + z);
+				img10.put("txt", data.txt10);
+				jsonarr.add(img10);
+			}
+			
+			newinfo.put("imgs", jsonarr);
+			data.hit++;
+			data.save();
+		}
+		results.put("newinfo", newinfo);
+	
 		renderSuccess(results);
 	}
 	
@@ -632,7 +893,7 @@ public class AiU extends Controller {
 		List<EveryGame> listData = EveryGame.find("mtype = ? and everygametype_id=1 order by id desc", c.os).fetch(page,num);
 		for(EveryGame data:listData){
 			JSONObject subad = initResultJSON();
-			New survey = New.find("mtype = ? and newtype_id = 3 and game_id=? order by id desc", c.os, data.game).first();
+			FirmNew survey = FirmNew.find("mtype = ? and game_id=? order by id desc", c.os, data.game).first();
 			if(survey != null){
 				subad.put("id", survey.id);
 			}
@@ -696,7 +957,7 @@ public class AiU extends Controller {
 		if(data.ct8 != null && data.ad_id8 != null){
 			adlistArr.add(setGameCarosel(data.ct8.type,data.ad_id8, z));
 		}
-results.put("downloadurl", data.game.downloadurl);
+		results.put("downloadurl", data.game.downloadurl);
 		results.put("adlist", adlistArr);
 
 		renderSuccess(results);
@@ -705,7 +966,7 @@ results.put("downloadurl", data.game.downloadurl);
 	private static JSONObject setGameCarosel(String type, Long ad_id, String z){
 		JSONObject subad = new JSONObject();
 	  	  if("新闻".equals(type)){
-	  		New l = New.findById(ad_id);
+	  		FirmNew l = FirmNew.findById(ad_id);
 		  	subad.put("icon", "/c/download?id=" + l.id + "&fileID=picture1&entity=" + l.getClass().getName() + "&z=" + z);
 			subad.put("url", "/c/newinfo?id="+l.id+"&z="+z);
 			subad.put("data", l.data+"");
@@ -714,7 +975,7 @@ results.put("downloadurl", data.game.downloadurl);
 	  	  }else if("礼包".equals(type)){
 	  		Pack l = Pack.findById(ad_id);
 		  	subad.put("icon", "/c/download?id=" + l.id + "&fileID=icon&entity=" + l.getClass().getName() + "&z=" + z);
-			subad.put("url", "c/package?num=5&page=1&z="+z);
+			subad.put("url", "/c/package?num=5&page=1&z="+z);
 			subad.put("data", l.data+"");
 			subad.put("t_id", l.id);
 			subad.put("t_type", "p");
@@ -757,6 +1018,9 @@ results.put("downloadurl", data.game.downloadurl);
 			subad.put("id", data.id);
 			subad.put("game_id", data.id);
 			subad.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=" + data.getClass().getName() + "&z=" + z);
+			if(data.rankingicon.exists()){
+				subad.put("pic", "/c/download?id=" + data.id + "&fileID=rankingicon&entity=" + data.getClass().getName() + "&z=" + z);
+			}
 			subad.put("title", data.title);
 			subad.put("star", data.star+"");
 			subad.put("data", data.data);
@@ -1093,7 +1357,7 @@ results.put("downloadurl", data.game.downloadurl);
 		renderSuccess(initResultJSON());
 	}
 	
-	public static void addComment(Long id, @Required String type, @Required String msg, @Required String z) {
+	public static void addComment(Long id, String type, @Required String msg, @Required String z) {
 		// ....
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
@@ -1109,11 +1373,12 @@ results.put("downloadurl", data.game.downloadurl);
 			renderFail("error_session_expired");
 		}
 		GameMessage gm = new GameMessage();
+		
 		if(id != null){
 			if("g".equals(type)){
 				gm.game = Game.findById(id);
 			}else if("n".equals(type)){
-				gm.news = New.findById(id);
+				gm.news = FirmNew.findById(id);
 			}
 		}
 		gm.data = new Date().getTime();
@@ -1162,7 +1427,7 @@ results.put("downloadurl", data.game.downloadurl);
 			subad.put("data", data.data);
 			subad.put("username", data.c.nickname);
 			if(data.c.portrait.exists()){
-				subad.put("portrait", "/c/download?id=" + data.c.id + "&fileID=portrait&entity=" + data.c.getClass().getName() + "&z=" + z);
+				subad.put("portrait", "/c/download?id=" + data.c.id + "&fileID=portrait&entity=models.Customer&z=" + z);
 			}else{
 				subad.put("portrait", "/public/images/portrait.png");
 			}
@@ -1374,7 +1639,6 @@ results.put("downloadurl", data.game.downloadurl);
 		renderSuccess(results);
 	}
 	
-//	searchGame
 	/**
 	 * ....
 	 * 

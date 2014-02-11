@@ -21,7 +21,7 @@
         <tbody>
 #{default.types}
 	#{if session.admin_group=='1'}
-		#{if type.name=='News' || type.name=='Games' || type.name=='GameCarousels' || type.name=='GameIcons'}
+		#{if type.name=='FirmNews' || type.name=='Games' || type.name=='GameCarousels' || type.name=='GameIcons'}
           <tr>
               <td>
                   <a href="${type.listAction}">&{type.name}</a>
@@ -33,7 +33,7 @@
           #{/if}
 	#{/if}
 	#{else}
-		#{if type.name=='Carousels' || type.name=='ClientVersions' || type.name=='Customers' || type.name=='EveryGames' || type.name=='GameCarousels' || type.name=='GameIcons' || type.name=='IndexPages' || type.name=='Packs' || type.name=='PlusGames' || type.name=='News' || type.name=='Games'}
+		#{if type.name=='Carousels' || type.name=='ClientVersions' || type.name=='Customers' || type.name=='EveryGames' || type.name=='GameCarousels' || type.name=='GameIcons' || type.name=='IndexPages' || type.name=='Packs' || type.name=='PlusGames' || type.name=='NativeNews' || type.name=='GameEvaluatings' || type.name=='GameStrategys' || type.name=='Games'}
 		<tr>
               <td>
                   <a href="${type.listAction}">&{type.name}</a>

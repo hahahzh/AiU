@@ -1,15 +1,14 @@
 package controllers;
 
 
-import java.io.File;
 import java.lang.reflect.Constructor;
 import java.util.List;
 
-import controllers.CRUD.ObjectType;
 import models.Carousel;
 import models.CarouselType;
 import models.EveryGame;
 import models.Game;
+import models.NativeNew;
 import models.New;
 import models.Pack;
 import play.data.binding.Binder;
@@ -33,7 +32,7 @@ public class Carousels extends CRUD {
 		  } else if("游戏".equals(selval)){
 			  l = Game.find("order by id desc").fetch();
 		  }else if("新闻".equals(selval)){
-			  l = New.find("order by id desc").fetch();
+			  l = NativeNew.find("order by id desc").fetch();
 		  }else if("礼包".equals(selval)){
 			  l = Pack.find("order by id desc").fetch();
 		  }
@@ -100,7 +99,7 @@ public class Carousels extends CRUD {
 	  } else if("游戏".equals(object.ct.type)){
 		  l = Game.findAll();
 	  }else if("新闻".equals(object.ct.type)){
-		  l = New.findAll();
+		  l = NativeNew.findAll();
 	  }else if("礼包".equals(object.ct.type)){
 		  l = Pack.findAll();
 	  }

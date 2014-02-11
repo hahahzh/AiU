@@ -33,7 +33,7 @@ public class GameMessage extends Model {
 	public Game game;
 	
 	@ManyToOne(fetch=FetchType.LAZY,cascade=javax.persistence.CascadeType.REFRESH)
-	public New news;
+	public FirmNew news;
 	
 	@Required
 	@ManyToOne(fetch=FetchType.LAZY,cascade=javax.persistence.CascadeType.REFRESH)

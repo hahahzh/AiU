@@ -14,7 +14,8 @@ GET     /                                       Application.index
 *       /c/new									AiU.getNews
 *       /c/newinfo								AiU.getNewInfo
 *       /c/invite								AiU.invite
-*       /c/textinfo								AiU.getNewInfo
+*       /c/strategyinfo							AiU.getGameStrategyInfo
+*       /c/evaluatinginfo						AiU.getGameEvaluatingInfo
 *       /c/package								AiU.getPackage
 *       /c/game_play							AiU.gameplay
 *       /c/game_invite							AiU.gameinvite
@@ -22,7 +23,6 @@ GET     /                                       Application.index
 *       /c/customerinfo							AiU.updateMemberInfo
 *       /c/addcomment							AiU.addComment
 *       /c/getcomment							AiU.getComment
-*       /c/searchgame							AiU.searchGame
 *       /c/packagelist							AiU.packageInfo
 *       /c/packagepay							AiU.packagePay
 *       /c/plus									AiU.plus

@@ -5,12 +5,11 @@ import java.lang.reflect.Constructor;
 import java.util.List;
 
 import models.CarouselType;
-import models.Game;
+import models.FirmNew;
 import models.GameCarousel;
 import models.New;
 import models.Pack;
 import play.data.binding.Binder;
-import play.db.Model;
 import play.exceptions.TemplateNotFoundException;
 import play.mvc.With;
 
@@ -26,7 +25,7 @@ public class GameCarousels extends CRUD {
 	        
 	        List l = null;
 	      if("新闻".equals(selval)){
-			  l = New.find("game_id=?", gid).fetch();
+			  l = FirmNew.find("game_id=?", gid).fetch();
 		  }else if("礼包".equals(selval)){
 			  l = Pack.find("game_id=?", gid).fetch();
 		  }
@@ -131,7 +130,7 @@ public class GameCarousels extends CRUD {
         String selval = null;
         if(object.ct != null){
         	if("新闻".equals(object.ct.type)){
-  			  l = New.find("byGame", object.game).fetch();
+  			  l = FirmNew.find("byGame", object.game).fetch();
   		  }else if("礼包".equals(object.ct.type)){
   			  l = Pack.find("byGame", object.game).fetch();
   		  }
@@ -146,4 +145,3 @@ public class GameCarousels extends CRUD {
         }
     }
 }
-

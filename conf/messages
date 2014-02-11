@@ -119,6 +119,14 @@ IndexPages=客户端登陆页管理
 LevelTypes=用户等级
 MobileTypes=手机类型
 News=新闻
+NativeNews=新闻
+NativeNew=新闻
+FirmNew=新闻
+FirmNews=新闻
+GameEvaluatings=评测
+GameEvaluating=评测
+GameStrategys=攻略
+GameStrategy=攻略
 Packs=礼包
 
 AdminManagement=用户

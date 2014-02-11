@@ -17,7 +17,7 @@ import play.db.jpa.Blob;
 @Entity
 public class Pack extends BaseModel {
 	public Blob icon;
-public Blob pack_pic;
+	
 	@Required
 	public Integer type; // 游戏类型
 	
