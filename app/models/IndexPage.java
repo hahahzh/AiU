@@ -26,7 +26,9 @@ public class IndexPage extends Model {
 	}
 
 	public void setPic(Blob pic) {
-		CompressPic.compressPic(pic.getFile().getPath(), pic.getFile().getPath());
+		if(pic != null){
+			CompressPic.compressPic(pic.getFile().getPath(), pic.getFile().getPath());
+		}
 		this.pic = pic;
 	}
 	

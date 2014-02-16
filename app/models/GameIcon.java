@@ -42,7 +42,9 @@ public class GameIcon extends Model {
 	}
 
 	public void setBackgroundpicture(Blob backgroundpicture) {
-		CompressPic.compressPic(backgroundpicture.getFile().getPath(), backgroundpicture.getFile().getPath());
+		if(backgroundpicture != null){
+			CompressPic.compressPic(backgroundpicture.getFile().getPath(), backgroundpicture.getFile().getPath());
+		}
 		this.backgroundpicture = backgroundpicture;
 	}
 

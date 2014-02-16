@@ -44,7 +44,9 @@ public class EveryGame extends ThirdModel {
 	}
 
 	public void setPicture(Blob picture) {
-		CompressPic.compressPic(picture.getFile().getPath(), picture.getFile().getPath());
+		if(picture != null){
+			CompressPic.compressPic(picture.getFile().getPath(), picture.getFile().getPath());
+		}
 		this.picture = picture;
 	}
 

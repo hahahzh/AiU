@@ -96,7 +96,9 @@ public class New extends ThirdModel {
 	}
 
 	public void setPicture1(Blob picture1) {
-		CompressPic.compressPic(picture1.getFile().getPath(), picture1.getFile().getPath());
+		if(picture1 != null){
+			CompressPic.compressPic(picture1.getFile().getPath(), picture1.getFile().getPath());
+		}
 		this.picture1 = picture1;
 	}
 
@@ -105,7 +107,9 @@ public class New extends ThirdModel {
 	}
 
 	public void setPicture2(Blob picture2) {
-		CompressPic.compressPic(picture2.getFile().getPath(), picture2.getFile().getPath());
+		if(picture2 != null){
+			CompressPic.compressPic(picture2.getFile().getPath(), picture2.getFile().getPath());
+		}
 		this.picture2 = picture2;
 	}
 
@@ -114,7 +118,9 @@ public class New extends ThirdModel {
 	}
 
 	public void setPicture3(Blob picture3) {
-		CompressPic.compressPic(picture3.getFile().getPath(), picture3.getFile().getPath());
+		if(picture3 != null){
+			CompressPic.compressPic(picture3.getFile().getPath(), picture3.getFile().getPath());
+		}
 		this.picture3 = picture3;
 	}
 
@@ -123,7 +129,9 @@ public class New extends ThirdModel {
 	}
 
 	public void setPicture4(Blob picture4) {
-		CompressPic.compressPic(picture4.getFile().getPath(), picture4.getFile().getPath());
+		if(picture4 != null){
+			CompressPic.compressPic(picture4.getFile().getPath(), picture4.getFile().getPath());
+		}
 		this.picture4 = picture4;
 	}
 
@@ -132,7 +140,9 @@ public class New extends ThirdModel {
 	}
 
 	public void setPicture5(Blob picture5) {
-		CompressPic.compressPic(picture5.getFile().getPath(), picture5.getFile().getPath());
+		if(picture5 != null){
+			CompressPic.compressPic(picture5.getFile().getPath(), picture5.getFile().getPath());
+		}
 		this.picture5 = picture5;
 	}
 
@@ -141,7 +151,9 @@ public class New extends ThirdModel {
 	}
 
 	public void setPicture6(Blob picture6) {
-		CompressPic.compressPic(picture6.getFile().getPath(), picture6.getFile().getPath());
+		if(picture6 != null){
+			CompressPic.compressPic(picture6.getFile().getPath(), picture6.getFile().getPath());
+		}
 		this.picture6 = picture6;
 	}
 
@@ -150,7 +162,9 @@ public class New extends ThirdModel {
 	}
 
 	public void setPicture7(Blob picture7) {
-		CompressPic.compressPic(picture7.getFile().getPath(), picture7.getFile().getPath());
+		if(picture7 != null){
+			CompressPic.compressPic(picture7.getFile().getPath(), picture7.getFile().getPath());
+		}
 		this.picture7 = picture7;
 	}
 
@@ -159,7 +173,9 @@ public class New extends ThirdModel {
 	}
 
 	public void setPicture8(Blob picture8) {
-		CompressPic.compressPic(picture8.getFile().getPath(), picture8.getFile().getPath());
+		if(picture8 != null){
+			CompressPic.compressPic(picture8.getFile().getPath(), picture8.getFile().getPath());
+		}
 		this.picture8 = picture8;
 	}
 
@@ -168,7 +184,9 @@ public class New extends ThirdModel {
 	}
 
 	public void setPicture9(Blob picture9) {
-		CompressPic.compressPic(picture9.getFile().getPath(), picture9.getFile().getPath());
+		if(picture9 != null){
+			CompressPic.compressPic(picture9.getFile().getPath(), picture9.getFile().getPath());
+		}
 		this.picture9 = picture9;
 	}
 
@@ -177,7 +195,9 @@ public class New extends ThirdModel {
 	}
 
 	public void setPicture10(Blob picture10) {
-		CompressPic.compressPic(picture10.getFile().getPath(), picture10.getFile().getPath());
+		if(picture10 != null){
+			CompressPic.compressPic(picture10.getFile().getPath(), picture10.getFile().getPath());
+		}
 		this.picture10 = picture10;
 	}
 
