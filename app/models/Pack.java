@@ -9,6 +9,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 
+import play.data.validation.CheckWith;
 import play.data.validation.MaxSize;
 import play.data.validation.Required;
 import play.db.jpa.Blob;

@@ -5,7 +5,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
+import java.util.List;
+
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
+import org.dom4j.Node;
 
 import play.Play;
 
@@ -35,62 +41,59 @@ error:Black keywords is:鍏氫腑澶�			灞忚斀璇�
 
 
 public class SendSMS {
-
-	/**
-	 * @param args
-	 * @throws IOException
-	 */
-	public static void main(String[] args) throws IOException {
-	
-		// 鍒涘缓StringBuffer瀵硅薄鐢ㄦ潵鎿嶄綔瀛楃涓�
-		StringBuffer sb = new StringBuffer("http://m.5c.com.cn/api/send/?");
-		// APIKEY
-		sb.append("apikey=6cba7a9cdd47494d58101c111f608583");
-		//鐢ㄦ埛鍚�
-		sb.append("&username=suyou");
-		// 鍚慡tringBuffer杩藉姞瀵嗙爜
-		sb.append("&password=suyou123");
+	private static final String TWO = "2";
+	public static void main(String[] args) throws IOException, DocumentException {
+		StringBuffer surl = new StringBuffer("http://106.ihuyi.com/webservice/sms.php?method=Submit&");
+		// 账号
+		surl.append("account=cf_tanlian");
+		// 密码
+		surl.append("&password=tanlian123");
 		// 鍚慡tringBuffer杩藉姞鎵嬫満鍙风爜
-		sb.append("&mobile=15000993473");//,18501667323,15021091765,13564635042");
-		// 鍚慡tringBuffer杩藉姞娑堟伅鍐呭杞琔RL鏍囧噯鐮�
-		sb.append("&content=123456");
+		surl.append("&mobile=150000993473");//,18501667323,15021091765,13564635042");
+		// 内容
+		surl.append("&content=您的验证码是：1783456。请不要把验证码泄露给其他人。");
 		// 鍒涘缓url瀵硅薄
-		URL url = new URL(sb.toString());
+		URL url = new URL(surl.toString());
 		// 鎵撳紑url杩炴帴
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		// 璁剧疆url璇锋眰鏂瑰紡 鈥榞et鈥�鎴栬� 鈥榩ost鈥�
-		connection.setRequestMethod("POST");
+		connection.setRequestMethod("GET");
 		// 鍙戦�
-		BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
-		// 杩斿洖鍙戦�缁撴灉
-		System.out.println(in.readLine()); 
+		BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+		
 	}
 	
-	public static String send(String m, String content) throws IOException{
-		// 鍒涘缓StringBuffer瀵硅薄鐢ㄦ潵鎿嶄綔瀛楃涓�
-		StringBuffer sb = new StringBuffer(Play.configuration.getProperty("aiu.smsmurl"));
-		// APIKEY
-		sb.append("apikey="+Play.configuration.getProperty("aiu.apikey"));
+	public static String send(String m, String content) throws IOException, DocumentException{
+		StringBuffer surl = new StringBuffer(Play.configuration.getProperty("aiu.smsmurl"));
 		//鐢ㄦ埛鍚�
-		sb.append("&username="+Play.configuration.getProperty("aiu.username"));
+		surl.append("account="+Play.configuration.getProperty("aiu.username"));
 		// 鍚慡tringBuffer杩藉姞瀵嗙爜
-		sb.append("&password="+Play.configuration.getProperty("aiu.pwd"));
+		surl.append("&password="+Play.configuration.getProperty("aiu.pwd"));
 		// 鍚慡tringBuffer杩藉姞鎵嬫満鍙风爜
-		sb.append("&mobile="+m);//,18501667323,15021091765,13564635042");
-		// 鍚慡tringBuffer杩藉姞娑堟伅鍐呭杞琔RL鏍囧噯鐮�
-		//sb.append("&content="+URLEncoder.encode(new String(content.getBytes("UTF-8"), "GBK")));
-		sb.append("&content="+URLEncoder.encode(content));
+		surl.append("&mobile="+m);//,18501667323,15021091765,13564635042");
+		surl.append("&content="+content);
 		// 鍒涘缓url瀵硅薄
-		URL url = new URL(sb.toString());
+		URL url = new URL(surl.toString());
 		// 鎵撳紑url杩炴帴
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		// 璁剧疆url璇锋眰鏂瑰紡 鈥榞et鈥�鎴栬� 鈥榩ost鈥�
-		connection.setRequestMethod("POST");
+		connection.setRequestMethod("GET");
 		// 鍙戦�
-		BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
-		// 杩斿洖鍙戦�缁撴灉
-		return in.readLine();
-
+		BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+		
+		String line;
+		StringBuilder result = new StringBuilder(64);
+        while ((line = in.readLine()) != null) {
+            result.append(line);
+        }
+        Document doc = DocumentHelper.parseText(result.toString());
+        Element rootElt = doc.getRootElement();
+        Element codeElt = rootElt.element("code");
+        if(!TWO.equals(codeElt.getStringValue())){
+        	return rootElt.element("msg").getStringValue();
+        }else{
+        	return codeElt.getStringValue();
+        }
 	}
 
 }

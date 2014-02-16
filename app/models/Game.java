@@ -102,7 +102,7 @@ public class Game extends ThirdModel {
 	}
 
 	public void setPicture3(Blob picture3) {
-		if(picture3 != null){
+		if(picture3 != null && picture3.exists()){
 			CompressPic.compressPic(picture3.getFile().getPath(), picture3.getFile().getPath());
 		}
 		this.picture3 = picture3;

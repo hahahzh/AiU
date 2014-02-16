@@ -146,19 +146,20 @@ public class AiU extends Controller {
 		}
 		Random r = new Random();
 		int n = Math.abs(r.nextInt())/10000;
-		CheckDigit cd = new CheckDigit();
-		cd.d = n;
-		cd.updatetime = new Date().getTime();
-		cd.m = m;
-		cd._save();
 		
 		try {
-			String s = SendSMS.send(m, ""+n);
-			if(!s.contains("success")){
-				renderText("failed");
+			String s = SendSMS.send(m, "您的验证码是：" + n + "。请不要把验证码泄露给其他人。");
+			if(!"2".equals(s)){
+				play.Logger.error("checkDigit: result="+s+" PNumber="+m+" digit="+n);
+				renderText(s);
 			}
+			CheckDigit cd = new CheckDigit();
+			cd.d = n;
+			cd.updatetime = new Date().getTime();
+			cd.m = m;
+			cd._save();
 		} catch (Exception e) {
-			cd._delete();
+			play.Logger.error("checkDigit: PNumber="+m+" digit="+n);
 			play.Logger.error(e.getMessage());
 			renderText("failed");
 		}
