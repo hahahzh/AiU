@@ -1380,6 +1380,12 @@ public class AiU extends Controller {
 				gm.game = Game.findById(id);
 			}else if("n".equals(type)){
 				gm.news = FirmNew.findById(id);
+			}else if("nn".equals(type)){
+				gm.nativeNew = NativeNew.findById(id);
+			}else if("ge".equals(type)){
+				gm.gameEvaluating = GameEvaluating.findById(id);
+			}else if("gs".equals(type)){
+				gm.gameStrategy = GameStrategy.findById(id);
 			}
 		}
 		gm.data = new Date().getTime();
@@ -1414,7 +1420,14 @@ public class AiU extends Controller {
 			sql = "game_id="+id;
 		}else if("n".equals(type)){
 			sql = "news_id="+id;
+		}else if("nn".equals(type)){
+			sql = "nativeNew_id="+id;
+		}else if("ge".equals(type)){
+			sql = "gameEvaluating_id="+id;
+		}else if("gs".equals(type)){
+			sql = "gameStrategy_id="+id;
 		}
+		
 		List<GameMessage> listData = GameMessage.find(sql+" order by id desc").fetch(page, num);
 		for(GameMessage data:listData){
 			JSONObject subad = initResultJSON();
