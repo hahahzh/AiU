@@ -38,8 +38,8 @@ public class AdminManagement extends Model {
 	
 	public Integer admingroup;
 	
-	@ManyToOne(fetch=FetchType.LAZY,cascade=javax.persistence.CascadeType.ALL)
-	public Game game;
+	@OneToMany(fetch=FetchType.LAZY,cascade=javax.persistence.CascadeType.ALL)
+	public List<Game> game;
 
 	public String toString() {
 		return name;
