@@ -224,9 +224,11 @@ public class AiU extends Controller {
 				renderSuccess(results);
 			} else {
 				// .......
+				play.Logger.info("register:src");
 				renderFail("error_username_already_used");
 			}
 		} catch (Exception e) {
+			play.Logger.info("register:src");
 			renderFail("error_unknown");
 		}
 		

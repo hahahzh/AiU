@@ -3,7 +3,7 @@
 #
 
 error_parameter_required=参数验证错误.
-error_username_already_used=用户名已被使用.
+error_username_already_used=该手机号码已经被注册.
 error_username_not_exist=用户名不存在.
 error_userid_not_exist=用户id不存在.
 error_not_owner=非当前用户的对象.
