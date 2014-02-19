@@ -1,14 +1,14 @@
 package controllers;
 
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
-import controllers.CRUD.ObjectType;
-
 import models.AdminManagement;
-import models.CarouselType;
+import models.FirmNew;
 import models.Game;
-import play.db.Model;
 import play.exceptions.TemplateNotFoundException;
 import play.mvc.With;
 
@@ -26,9 +26,25 @@ public class FirmNews extends CRUD {
         if (page < 1) {
             page = 1;
         }
-        List<Model> objects = type.findPage(page, search, searchFields, orderBy, order, (String) request.args.get("where"));
-        Long count = type.count(search, searchFields, (String) request.args.get("where"));
-        Long totalCount = type.count(null, null, (String) request.args.get("where"));
+        Long admin_id = Long.parseLong(session.get("admin_id"));
+        List<Game> lg = ((AdminManagement)AdminManagement.findById(admin_id)).game;
+        List<FirmNew> objects = new ArrayList<FirmNew>();
+        Long count = 0L;
+        for(Game g : lg){
+        	List<FirmNew> t = FirmNew.find("byGame", g).fetch();
+        	if(t.size() > 0){
+        		objects.addAll(t);
+        		count += t.size();
+        	}
+        }
+        Long totalCount = count;
+        
+        Collections.sort(objects);
+        Collections.sort(objects,new Comparator<FirmNew>(){  
+            public int compare(FirmNew arg0, FirmNew arg1) {  
+                return arg1.id.compareTo(arg0.id);  
+            }  
+        }); 
         try {
             render(type, objects, count, totalCount, page, orderBy, order);
         } catch (TemplateNotFoundException e) {

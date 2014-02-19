@@ -30,7 +30,7 @@
         </select>
     #{/if}
     #{else}
-    #{if session.admin_group=='0' || _name != 'game'}
+    #{if session.admin_group=='0'}
         <select id="${field.id}" name="${pName}">
     #{/if}
     #{else}

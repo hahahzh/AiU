@@ -1,0 +1,25 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('crud.list.title', type.name) /}
+
+<div id="crudList" class="${type.name}">
+
+    <h2 id="crudListTitle">&{'crud.list.title', type.name}</h2>
+	#{if session.admin_group=='0'}
+	    <div id="crudListSearch">
+	        #{crud.search /}
+	    </div>
+    #{/if}
+
+    <div id="crudListTable">
+        #{crud.table /}
+    </div>
+
+    <div id="crudListPagination">
+        #{crud.pagination /}
+    </div>
+	#{if session.admin_group=='0'}
+	    <p id="crudListAdd">
+	        <a href="@{blank()}">&{'crud.add', type.modelName}</a>
+	    </p>
+    #{/if}
+</div>
