@@ -3,6 +3,9 @@ mysqld -nt --skip-grant-tables
 CREATE DATABASE IF NOT EXISTS AiU default charset utf8 COLLATE utf8_general_ci;
 source /var/app/play-1.2.5.3/AiU/aiu.sql;
 
+grant all privileges on *.* to hwalk1@'%' identified by 'hwalk1';
+flush privileges;
+
 GPS
 userName=kortide
 password=123456
@@ -34,13 +37,5 @@ export DISPLAY=:0.0
 echo $DISPLAY
 set env DISPLAY 127.0.0.1:0.0
 
-时间安排：
-1、22日之前，最好23日早上再给出一个版本，争取把下述问题解决掉。以及最新版本测试可能出现的问题。
-2、23、24日我们测试及调整，完成IOS初始版本。
-3、25日清空数据，备份原始状态，并开始上传正式数据。
-4、年后，2月7日上传审核。
-由于时间有点赶，而且现有数据测试完后要清空上传正式数据，辛苦大家！
-
-9、图片压缩
 
 mysqldump -uroot -p AiU > /tmp/AiUAllData.sql

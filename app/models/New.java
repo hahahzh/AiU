@@ -7,6 +7,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 
+import controllers.CRUD.Hidden;
 import play.data.validation.CheckWith;
 import play.data.validation.MaxSize;
 import play.data.validation.Required;
@@ -16,6 +17,7 @@ import check.PicCompres;
 
 @MappedSuperclass
 public class New extends ThirdModel {
+	@Hidden
 	public Blob icon;
 	@Required
 	public String describe_aiu; // 简介

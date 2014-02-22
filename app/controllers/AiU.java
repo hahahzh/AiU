@@ -478,7 +478,7 @@ public class AiU extends Controller {
 				for(FirmNew data:newlistData){
 					JSONObject subad = initResultJSON();
 					subad.put("id", data.id);
-					subad.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=" + data.getClass().getName() + "&z=" + z);
+					subad.put("icon", "/c/download?id=" + data.game.id + "&fileID=icon&entity=" + data.game.getClass().getName() + "&z=" + z);
 					subad.put("pic", "/c/download?id=" + data.id + "&fileID=picture1&entity=" + data.getClass().getName() + "&z=" + z);
 					subad.put("title", data.title);
 					subad.put("txt", data.describe_aiu);
@@ -494,7 +494,7 @@ public class AiU extends Controller {
 				for(GameStrategy data:newlistData){
 					JSONObject subad = initResultJSON();
 					subad.put("id", data.id);
-					subad.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=" + data.getClass().getName() + "&z=" + z);
+					subad.put("icon", "/c/download?id=" + data.game.id + "&fileID=icon&entity=" + data.game.getClass().getName() + "&z=" + z);
 					subad.put("pic", "/c/download?id=" + data.id + "&fileID=picture1&entity=" + data.getClass().getName() + "&z=" + z);
 					subad.put("title", data.title);
 					subad.put("txt", data.describe_aiu);
@@ -510,7 +510,7 @@ public class AiU extends Controller {
 				for(GameEvaluating data:newlistData){
 					JSONObject subad = initResultJSON();
 					subad.put("id", data.id);
-					subad.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=" + data.getClass().getName() + "&z=" + z);
+					subad.put("icon", "/c/download?id=" + data.game.id + "&fileID=icon&entity=" + data.game.getClass().getName() + "&z=" + z);
 					subad.put("pic", "/c/download?id=" + data.id + "&fileID=picture1&entity=" + data.getClass().getName() + "&z=" + z);
 					subad.put("title", data.title);
 					subad.put("txt", data.describe_aiu);
@@ -589,7 +589,12 @@ public class AiU extends Controller {
 		JSONObject newinfo = initResultJSON();
 		if(data != null){
 			newinfo.put("id", data.id);
-			newinfo.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=" + data.getClass().getName() + "&z=" + z);
+			if(data instanceof NativeNew){
+				newinfo.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=" + data.getClass().getName() + "&z=" + z);
+			}else{
+				FirmNew d = (FirmNew)data;
+				newinfo.put("icon", "/c/download?id=" + d.game.id + "&fileID=icon&entity=" + d.game.getClass().getName() + "&z=" + z);
+			}
 			newinfo.put("title", data.title);
 			newinfo.put("author", data.author);
 			newinfo.put("res", data.res);
@@ -691,7 +696,7 @@ public class AiU extends Controller {
 		JSONObject newinfo = initResultJSON();
 		if(data != null){
 			newinfo.put("id", data.id);
-			newinfo.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=" + data.getClass().getName() + "&z=" + z);
+			newinfo.put("icon", "/c/download?id=" + data.game.id + "&fileID=icon&entity=" + data.game.getClass().getName() + "&z=" + z);
 			newinfo.put("title", data.title);
 			newinfo.put("author", data.author);
 			newinfo.put("res", data.res);
@@ -794,7 +799,7 @@ public class AiU extends Controller {
 		if(data != null){
 			
 			newinfo.put("id", data.id);
-			newinfo.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=" + data.getClass().getName() + "&z=" + z);
+			newinfo.put("icon", "/c/download?id=" + data.game.id + "&fileID=icon&entity=" + data.game.getClass().getName() + "&z=" + z);
 			newinfo.put("title", data.title);
 			newinfo.put("author", data.author);
 			newinfo.put("res", data.res);

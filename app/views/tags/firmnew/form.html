@@ -76,9 +76,15 @@
 	        	<label for="game">
            &{'game'}
        	</label>
-	       <select name="selName" id="selName" >
+	       <select name="object.game.id" id="object_game" >
 		 	        #{list items:controllers.FirmNews.findGames(), as:'c'}
-	        		<option value="${c.id}" ${c.id == _caller?.selval? 'selected="true"'.raw() : ''}>${c}</option>
+						%{
+            		    	selected = false
+            		    	if(currentObject?.game?.id == c.id){
+            		    		selected = true
+            		    	}
+						}%
+	        		<option value="${c.id}" ${selected? 'selected="true"'.raw() : ''}>${c}</option>
 	        #{/list}
 	        </select>
 	  		#{/field}
