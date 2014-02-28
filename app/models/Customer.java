@@ -65,7 +65,7 @@ public class Customer extends Model {
 
 	@Hidden
 	public Long data = new Date().getTime();
-
+	// 0 男 1 女
 	public Byte gender;
 	
 	public Blob portrait;

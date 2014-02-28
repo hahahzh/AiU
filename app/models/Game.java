@@ -48,6 +48,10 @@ public class Game extends ThirdModel {
 	@CheckWith(PicCompres.class)
 	public Blob picture1;
 	
+	@Required
+	@CheckWith(PicCompres.class)
+	public Blob picture1_ip5;
+	
 	@CheckWith(PicCompres.class)
 	public Blob picture2;
 	
@@ -84,6 +88,17 @@ public class Game extends ThirdModel {
 			CompressPic.compressPic(picture1.getFile().getPath(), picture1.getFile().getPath());
 		}
 		this.picture1 = picture1;
+	}
+	
+	public Blob getPicture1_ip5() {
+		return picture1_ip5;
+	}
+
+	public void setPicture1_ip5(Blob picture1_ip5) {
+		if(picture1_ip5 != null){
+			CompressPic.compressPic(picture1_ip5.getFile().getPath(), picture1_ip5.getFile().getPath());
+		}
+		this.picture1_ip5 = picture1_ip5;
 	}
 
 	public Blob getPicture2() {

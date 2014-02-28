@@ -39,6 +39,9 @@ public class EveryGame extends ThirdModel {
 	@CheckWith(PicCompres.class)
 	public Blob picture;
 	
+	@CheckWith(PicCompres.class)
+	public Blob picture_ip5;
+	
 	public Blob getPicture() {
 		return picture;
 	}
@@ -48,6 +51,17 @@ public class EveryGame extends ThirdModel {
 			CompressPic.compressPic(picture.getFile().getPath(), picture.getFile().getPath());
 		}
 		this.picture = picture;
+	}
+	
+	public Blob getPicture_ip5() {
+		return picture_ip5;
+	}
+
+	public void setPicture_ip5(Blob picture_ip5) {
+		if(picture_ip5 != null){
+			CompressPic.compressPic(picture_ip5.getFile().getPath(), picture_ip5.getFile().getPath());
+		}
+		this.picture_ip5 = picture_ip5;
 	}
 
 	@Required

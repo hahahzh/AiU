@@ -341,7 +341,7 @@ public class AiU extends Controller {
 		renderSuccess(results);
 	}
 	
-	public static void indexPage(@Required String z) {
+	public static void indexPage(@Required String z, String ios_t) {
 		// ....
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
@@ -368,7 +368,11 @@ public class AiU extends Controller {
 	        
 	  	  if("每日一游&玩嗨周五".equals(data.ct.type)){
 	  		EveryGame l = EveryGame.findById(data.ad_id);
-	  		subad.put("icon", "/c/download?id=" + l.id + "&fileID=picture&entity=" + l.getClass().getName() + "&z=" + z);
+	  		if(ios_t == null || ios_t.isEmpty() || "4".equals(ios_t)){
+	  			subad.put("icon", "/c/download?id=" + l.id + "&fileID=picture&entity=" + l.getClass().getName() + "&z=" + z);
+	  		}else if("5".equals(ios_t)){
+	  			subad.put("icon", "/c/download?id=" + l.id + "&fileID=picture_ip5&entity=" + l.getClass().getName() + "&z=" + z);
+	  		}
 			subad.put("url", "/c/invite?num=5&page=1&z="+z);
 			subad.put("type", l.type);
 			subad.put("star", l.star);
@@ -377,7 +381,11 @@ public class AiU extends Controller {
 			subad.put("t_type", "eg");
 	  	  } else if("游戏".equals(data.ct.type)){
 	  		Game l = Game.findById(data.ad_id);
-		  	subad.put("icon", "/c/download?id=" + l.id + "&fileID=picture1&entity=" + l.getClass().getName() + "&z=" + z);
+	  		if(ios_t == null || ios_t.isEmpty() || "4".equals(ios_t)){
+	  			subad.put("icon", "/c/download?id=" + l.id + "&fileID=picture1&entity=" + l.getClass().getName() + "&z=" + z);
+	  		}else if("5".equals(ios_t)){
+	  			subad.put("icon", "/c/download?id=" + l.id + "&fileID=picture1_ip5&entity=" + l.getClass().getName() + "&z=" + z);
+	  		}
 			subad.put("url", "/c/gameinfo?id="+l.id+"&z="+z);
 			subad.put("type", l.type);
 			subad.put("star", l.star);
@@ -386,14 +394,22 @@ public class AiU extends Controller {
 			subad.put("t_type", "g");
 	  	  }else if("新闻".equals(data.ct.type)){
 	  		NativeNew l = NativeNew.findById(data.ad_id);
-		  	subad.put("icon", "/c/download?id=" + l.id + "&fileID=picture1&entity=" + l.getClass().getName() + "&z=" + z);
+	  		if(ios_t == null || ios_t.isEmpty() || "4".equals(ios_t)){
+	  			subad.put("icon", "/c/download?id=" + l.id + "&fileID=picture1&entity=" + l.getClass().getName() + "&z=" + z);
+	  		}else if("5".equals(ios_t)){
+	  			subad.put("icon", "/c/download?id=" + l.id + "&fileID=picture1_ip5&entity=" + l.getClass().getName() + "&z=" + z);
+	  		}
 			subad.put("url", "/c/newinfo?id="+l.id+"&z="+z);
 			subad.put("data", l.data+"");
 			subad.put("t_id", l.id);
 			subad.put("t_type", "n");
 	  	  }else if("礼包".equals(data.ct.type)){
 	  		Pack l = Pack.findById(data.ad_id);
-		  	subad.put("icon", "/c/download?id=" + l.id + "&fileID=icon&entity=" + l.getClass().getName() + "&z=" + z);
+	  		if(ios_t == null || ios_t.isEmpty() || "4".equals(ios_t)){
+	  			subad.put("icon", "/c/download?id=" + l.game.id + "&fileID=picture1&entity=models.Game&z=" + z);
+	  		}else if("5".equals(ios_t)){
+	  			subad.put("icon", "/c/download?id=" + l.game.id + "&fileID=picture1_ip5&entity=models.Game&z=" + z);
+	  		}
 			subad.put("url", "/c/package?num=5&page=1&z="+z);
 			subad.put("data", l.data+"");
 			subad.put("t_id", l.id);
@@ -478,7 +494,7 @@ public class AiU extends Controller {
 				for(FirmNew data:newlistData){
 					JSONObject subad = initResultJSON();
 					subad.put("id", data.id);
-					subad.put("icon", "/c/download?id=" + data.game.id + "&fileID=icon&entity=" + data.game.getClass().getName() + "&z=" + z);
+					subad.put("icon", "/c/download?id=" + data.game.id + "&fileID=icon&entity=models.Game&z=" + z);
 					subad.put("pic", "/c/download?id=" + data.id + "&fileID=picture1&entity=" + data.getClass().getName() + "&z=" + z);
 					subad.put("title", data.title);
 					subad.put("txt", data.describe_aiu);
@@ -494,7 +510,7 @@ public class AiU extends Controller {
 				for(GameStrategy data:newlistData){
 					JSONObject subad = initResultJSON();
 					subad.put("id", data.id);
-					subad.put("icon", "/c/download?id=" + data.game.id + "&fileID=icon&entity=" + data.game.getClass().getName() + "&z=" + z);
+					subad.put("icon", "/c/download?id=" + data.game.id + "&fileID=icon&entity=models.Game&z=" + z);
 					subad.put("pic", "/c/download?id=" + data.id + "&fileID=picture1&entity=" + data.getClass().getName() + "&z=" + z);
 					subad.put("title", data.title);
 					subad.put("txt", data.describe_aiu);
@@ -510,7 +526,7 @@ public class AiU extends Controller {
 				for(GameEvaluating data:newlistData){
 					JSONObject subad = initResultJSON();
 					subad.put("id", data.id);
-					subad.put("icon", "/c/download?id=" + data.game.id + "&fileID=icon&entity=" + data.game.getClass().getName() + "&z=" + z);
+					subad.put("icon", "/c/download?id=" + data.game.id + "&fileID=icon&entity=models.Game&z=" + z);
 					subad.put("pic", "/c/download?id=" + data.id + "&fileID=picture1&entity=" + data.getClass().getName() + "&z=" + z);
 					subad.put("title", data.title);
 					subad.put("txt", data.describe_aiu);
@@ -593,7 +609,7 @@ public class AiU extends Controller {
 				newinfo.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=" + data.getClass().getName() + "&z=" + z);
 			}else{
 				FirmNew d = (FirmNew)data;
-				newinfo.put("icon", "/c/download?id=" + d.game.id + "&fileID=icon&entity=" + d.game.getClass().getName() + "&z=" + z);
+				newinfo.put("icon", "/c/download?id=" + d.game.id + "&fileID=icon&entity=models.Game&z=" + z);
 			}
 			newinfo.put("title", data.title);
 			newinfo.put("author", data.author);
@@ -601,65 +617,115 @@ public class AiU extends Controller {
 			newinfo.put("hit", data.hit);
 			newinfo.put("data", data.data);
 			
-			JSONArray jsonarr = initResultJSONArray(); 
+			JSONArray jsonarr = initResultJSONArray();
+
+			JSONObject img1 = initResultJSON();
 			if(data.picture1.exists()){
-				JSONObject img1 = initResultJSON();
 				img1.put("picture", "/c/download?id=" + data.id + "&fileID=picture1&entity=" + data.getClass().getName() + "&z=" + z);
+			}
+			if(!data.txt1.isEmpty()){
 				img1.put("txt", data.txt1);
+			}
+			if(!img1.isNullObject() && !img1.isEmpty()){
 				jsonarr.add(img1);
 			}
+			
+			JSONObject img2 = initResultJSON();
 			if(data.picture2.exists()){
-				JSONObject img2 = initResultJSON();
 				img2.put("picture", "/c/download?id=" + data.id + "&fileID=picture2&entity=" + data.getClass().getName() + "&z=" + z);
+			}
+			if(!data.txt2.isEmpty()){
 				img2.put("txt", data.txt2);
+			}
+			if(!img2.isNullObject() && !img2.isEmpty()){
 				jsonarr.add(img2);
 			}
+			
+			JSONObject img3 = initResultJSON();
 			if(data.picture3.exists()){
-				JSONObject img3 = initResultJSON();
 				img3.put("picture", "/c/download?id=" + data.id + "&fileID=picture3&entity=" + data.getClass().getName() + "&z=" + z);
+			}
+			if(!data.txt3.isEmpty()){
 				img3.put("txt", data.txt3);
+			}
+			if(!img3.isNullObject() && !img3.isEmpty()){
 				jsonarr.add(img3);
 			}
+			
+			JSONObject img4 = initResultJSON();
 			if(data.picture4.exists()){
-				JSONObject img4 = initResultJSON();
 				img4.put("picture", "/c/download?id=" + data.id + "&fileID=picture4&entity=" + data.getClass().getName() + "&z=" + z);
+			}
+			if(!data.txt4.isEmpty()){
 				img4.put("txt", data.txt4);
+			}
+			if(!img4.isNullObject() && !img4.isEmpty()){
 				jsonarr.add(img4);
 			}
+			
+			JSONObject img5 = initResultJSON();
 			if(data.picture5.exists()){
-				JSONObject img5 = initResultJSON();
 				img5.put("picture", "/c/download?id=" + data.id + "&fileID=picture5&entity=" + data.getClass().getName() + "&z=" + z);
+			}
+			if(!data.txt5.isEmpty()){
 				img5.put("txt", data.txt5);
+			}
+			if(!img5.isNullObject() && !img5.isEmpty()){
 				jsonarr.add(img5);
 			}
+			
+			JSONObject img6 = initResultJSON();
 			if(data.picture6.exists()){
-				JSONObject img6 = initResultJSON();
 				img6.put("picture", "/c/download?id=" + data.id + "&fileID=picture6&entity=" + data.getClass().getName() + "&z=" + z);
+			}
+			if(!data.txt6.isEmpty()){
 				img6.put("txt", data.txt6);
+			}
+			if(!img6.isNullObject() && !img6.isEmpty()){
 				jsonarr.add(img6);
 			}
+			
+			JSONObject img7 = initResultJSON();
 			if(data.picture7.exists()){
-				JSONObject img7 = initResultJSON();
 				img7.put("picture", "/c/download?id=" + data.id + "&fileID=picture7&entity=" + data.getClass().getName() + "&z=" + z);
+			}
+			if(!data.txt7.isEmpty()){
 				img7.put("txt", data.txt7);
+			}
+			if(!img7.isNullObject() && !img7.isEmpty()){
 				jsonarr.add(img7);
 			}
+			
+			JSONObject img8 = initResultJSON();
 			if(data.picture8.exists()){
-				JSONObject img8 = initResultJSON();
 				img8.put("picture", "/c/download?id=" + data.id + "&fileID=picture8&entity=" + data.getClass().getName() + "&z=" + z);
+			}
+			if(!data.txt8.isEmpty()){
 				img8.put("txt", data.txt8);
+			}
+			if(!img8.isNullObject() && !img8.isEmpty()){
 				jsonarr.add(img8);
 			}
+			
+			JSONObject img9 = initResultJSON();
 			if(data.picture9.exists()){
-				JSONObject img9 = initResultJSON();
 				img9.put("picture", "/c/download?id=" + data.id + "&fileID=picture9&entity=" + data.getClass().getName() + "&z=" + z);
+			}
+			if(!data.txt9.isEmpty()){
 				img9.put("txt", data.txt9);
+			}
+			if(!img9.isNullObject() && !img9.isEmpty()){
 				jsonarr.add(img9);
 			}
+			
+			JSONObject img10 = initResultJSON();
 			if(data.picture10.exists()){
-				JSONObject img10 = initResultJSON();
 				img10.put("picture", "/c/download?id=" + data.id + "&fileID=picture10&entity=" + data.getClass().getName() + "&z=" + z);
+			}
+			if(!data.txt10.isEmpty()){
 				img10.put("txt", data.txt10);
+			}
+			if(!img10.isNullObject() && !img10.isEmpty()){
 				jsonarr.add(img10);
 			}
 			
@@ -696,7 +762,7 @@ public class AiU extends Controller {
 		JSONObject newinfo = initResultJSON();
 		if(data != null){
 			newinfo.put("id", data.id);
-			newinfo.put("icon", "/c/download?id=" + data.game.id + "&fileID=icon&entity=" + data.game.getClass().getName() + "&z=" + z);
+			newinfo.put("icon", "/c/download?id=" + data.game.id + "&fileID=icon&entity=models.Game&z=" + z);
 			newinfo.put("title", data.title);
 			newinfo.put("author", data.author);
 			newinfo.put("res", data.res);
@@ -704,64 +770,114 @@ public class AiU extends Controller {
 			newinfo.put("data", data.data);
 			
 			JSONArray jsonarr = initResultJSONArray(); 
+			
+			JSONObject img1 = initResultJSON();
 			if(data.picture1.exists()){
-				JSONObject img1 = initResultJSON();
 				img1.put("picture", "/c/download?id=" + data.id + "&fileID=picture1&entity=" + data.getClass().getName() + "&z=" + z);
+			}
+			if(!data.txt1.isEmpty()){
 				img1.put("txt", data.txt1);
+			}
+			if(!img1.isNullObject() && !img1.isEmpty()){
 				jsonarr.add(img1);
 			}
+			
+			JSONObject img2 = initResultJSON();
 			if(data.picture2.exists()){
-				JSONObject img2 = initResultJSON();
 				img2.put("picture", "/c/download?id=" + data.id + "&fileID=picture2&entity=" + data.getClass().getName() + "&z=" + z);
+			}
+			if(!data.txt2.isEmpty()){
 				img2.put("txt", data.txt2);
+			}
+			if(!img2.isNullObject() && !img2.isEmpty()){
 				jsonarr.add(img2);
 			}
+
+			JSONObject img3 = initResultJSON();
 			if(data.picture3.exists()){
-				JSONObject img3 = initResultJSON();
 				img3.put("picture", "/c/download?id=" + data.id + "&fileID=picture3&entity=" + data.getClass().getName() + "&z=" + z);
+			}
+			if(!data.txt3.isEmpty()){
 				img3.put("txt", data.txt3);
+			}
+			if(!img3.isNullObject() && !img3.isEmpty()){
 				jsonarr.add(img3);
 			}
+			
+			JSONObject img4 = initResultJSON();
 			if(data.picture4.exists()){
-				JSONObject img4 = initResultJSON();
 				img4.put("picture", "/c/download?id=" + data.id + "&fileID=picture4&entity=" + data.getClass().getName() + "&z=" + z);
+			}
+			if(!data.txt4.isEmpty()){
 				img4.put("txt", data.txt4);
+			}
+			if(!img4.isNullObject() && !img4.isEmpty()){
 				jsonarr.add(img4);
 			}
+
+			JSONObject img5 = initResultJSON();
 			if(data.picture5.exists()){
-				JSONObject img5 = initResultJSON();
 				img5.put("picture", "/c/download?id=" + data.id + "&fileID=picture5&entity=" + data.getClass().getName() + "&z=" + z);
+			}
+			if(!data.txt5.isEmpty()){
 				img5.put("txt", data.txt5);
+			}
+			if(!img5.isNullObject() && !img5.isEmpty()){
 				jsonarr.add(img5);
 			}
+			
+			JSONObject img6 = initResultJSON();
 			if(data.picture6.exists()){
-				JSONObject img6 = initResultJSON();
 				img6.put("picture", "/c/download?id=" + data.id + "&fileID=picture6&entity=" + data.getClass().getName() + "&z=" + z);
+			}
+			if(!data.txt6.isEmpty()){
 				img6.put("txt", data.txt6);
+			}
+			if(!img6.isNullObject() && !img6.isEmpty()){
 				jsonarr.add(img6);
 			}
+			
+			JSONObject img7 = initResultJSON();
 			if(data.picture7.exists()){
-				JSONObject img7 = initResultJSON();
 				img7.put("picture", "/c/download?id=" + data.id + "&fileID=picture7&entity=" + data.getClass().getName() + "&z=" + z);
+			}
+			if(!data.txt7.isEmpty()){
 				img7.put("txt", data.txt7);
+			}
+			if(!img7.isNullObject() && !img7.isEmpty()){
 				jsonarr.add(img7);
 			}
+			
+			JSONObject img8 = initResultJSON();
 			if(data.picture8.exists()){
-				JSONObject img8 = initResultJSON();
 				img8.put("picture", "/c/download?id=" + data.id + "&fileID=picture8&entity=" + data.getClass().getName() + "&z=" + z);
+			}
+			if(!data.txt8.isEmpty()){
 				img8.put("txt", data.txt8);
+			}
+			if(!img8.isNullObject() && !img8.isEmpty()){
 				jsonarr.add(img8);
 			}
+			
+			JSONObject img9 = initResultJSON();
 			if(data.picture9.exists()){
-				JSONObject img9 = initResultJSON();
 				img9.put("picture", "/c/download?id=" + data.id + "&fileID=picture9&entity=" + data.getClass().getName() + "&z=" + z);
+			}		
+			if(!data.txt9.isEmpty()){
 				img9.put("txt", data.txt9);
+			}
+			if(!img9.isNullObject() && !img9.isEmpty()){
 				jsonarr.add(img9);
 			}
+			
+			JSONObject img10 = initResultJSON();
 			if(data.picture10.exists()){
-				JSONObject img10 = initResultJSON();
 				img10.put("picture", "/c/download?id=" + data.id + "&fileID=picture10&entity=" + data.getClass().getName() + "&z=" + z);
+			}
+			if(!data.txt10.isEmpty()){
 				img10.put("txt", data.txt10);
+			}
+			if(!img10.isNullObject() && !img10.isEmpty()){
 				jsonarr.add(img10);
 			}
 			
@@ -799,72 +915,122 @@ public class AiU extends Controller {
 		if(data != null){
 			
 			newinfo.put("id", data.id);
-			newinfo.put("icon", "/c/download?id=" + data.game.id + "&fileID=icon&entity=" + data.game.getClass().getName() + "&z=" + z);
+			newinfo.put("icon", "/c/download?id=" + data.game.id + "&fileID=icon&entity=models.Game&z=" + z);
 			newinfo.put("title", data.title);
 			newinfo.put("author", data.author);
 			newinfo.put("res", data.res);
 			newinfo.put("hit", data.hit);
 			newinfo.put("data", data.data);
 			
-			JSONArray jsonarr = initResultJSONArray(); 
+			JSONArray jsonarr = initResultJSONArray();
+			
+			JSONObject img1 = initResultJSON();
 			if(data.picture1.exists()){
-				JSONObject img1 = initResultJSON();
 				img1.put("picture", "/c/download?id=" + data.id + "&fileID=picture1&entity=" + data.getClass().getName() + "&z=" + z);
+			}
+			if(!data.txt1.isEmpty()){
 				img1.put("txt", data.txt1);
+			}
+			if(!img1.isNullObject() && !img1.isEmpty()){
 				jsonarr.add(img1);
 			}
+			
+			JSONObject img2 = initResultJSON();
 			if(data.picture2.exists()){
-				JSONObject img2 = initResultJSON();
 				img2.put("picture", "/c/download?id=" + data.id + "&fileID=picture2&entity=" + data.getClass().getName() + "&z=" + z);
+			}			
+			if(!data.txt2.isEmpty()){
 				img2.put("txt", data.txt2);
+			}
+			if(!img2.isNullObject() && !img2.isEmpty()){
 				jsonarr.add(img2);
 			}
+			
+			JSONObject img3 = initResultJSON();
 			if(data.picture3.exists()){
-				JSONObject img3 = initResultJSON();
 				img3.put("picture", "/c/download?id=" + data.id + "&fileID=picture3&entity=" + data.getClass().getName() + "&z=" + z);
+			}
+			if(!data.txt3.isEmpty()){
 				img3.put("txt", data.txt3);
+			}
+			if(!img3.isNullObject() && !img3.isEmpty()){
 				jsonarr.add(img3);
 			}
+			
+			JSONObject img4 = initResultJSON();
 			if(data.picture4.exists()){
-				JSONObject img4 = initResultJSON();
 				img4.put("picture", "/c/download?id=" + data.id + "&fileID=picture4&entity=" + data.getClass().getName() + "&z=" + z);
+			}
+			if(!data.txt4.isEmpty()){
 				img4.put("txt", data.txt4);
+			}
+			if(!img4.isNullObject() && !img4.isEmpty()){
 				jsonarr.add(img4);
 			}
+			
+			JSONObject img5 = initResultJSON();
 			if(data.picture5.exists()){
-				JSONObject img5 = initResultJSON();
 				img5.put("picture", "/c/download?id=" + data.id + "&fileID=picture5&entity=" + data.getClass().getName() + "&z=" + z);
+			}
+			if(!data.txt5.isEmpty()){
 				img5.put("txt", data.txt5);
+			}
+			if(!img5.isNullObject() && !img5.isEmpty()){
 				jsonarr.add(img5);
 			}
+			
+			JSONObject img6 = initResultJSON();
 			if(data.picture6.exists()){
-				JSONObject img6 = initResultJSON();
 				img6.put("picture", "/c/download?id=" + data.id + "&fileID=picture6&entity=" + data.getClass().getName() + "&z=" + z);
+			}
+			if(!data.txt6.isEmpty()){
 				img6.put("txt", data.txt6);
+			}
+			if(!img6.isNullObject() && !img6.isEmpty()){
 				jsonarr.add(img6);
 			}
+			
+			JSONObject img7 = initResultJSON();
 			if(data.picture7.exists()){
-				JSONObject img7 = initResultJSON();
 				img7.put("picture", "/c/download?id=" + data.id + "&fileID=picture7&entity=" + data.getClass().getName() + "&z=" + z);
+			}
+			if(!data.txt7.isEmpty()){
 				img7.put("txt", data.txt7);
+			}
+			if(!img7.isNullObject() && !img7.isEmpty()){
 				jsonarr.add(img7);
 			}
+			
+			JSONObject img8 = initResultJSON();
 			if(data.picture8.exists()){
-				JSONObject img8 = initResultJSON();
 				img8.put("picture", "/c/download?id=" + data.id + "&fileID=picture8&entity=" + data.getClass().getName() + "&z=" + z);
+			}
+			if(!data.txt8.isEmpty()){
 				img8.put("txt", data.txt8);
+			}
+			if(!img8.isNullObject() && !img8.isEmpty()){
 				jsonarr.add(img8);
 			}
+			
+			JSONObject img9 = initResultJSON();
 			if(data.picture9.exists()){
-				JSONObject img9 = initResultJSON();
 				img9.put("picture", "/c/download?id=" + data.id + "&fileID=picture9&entity=" + data.getClass().getName() + "&z=" + z);
+			}
+			if(!data.txt9.isEmpty()){
 				img9.put("txt", data.txt9);
+			}
+			if(!img9.isNullObject() && !img9.isEmpty()){
 				jsonarr.add(img9);
 			}
+			
+			JSONObject img10 = initResultJSON();
 			if(data.picture10.exists()){
-				JSONObject img10 = initResultJSON();
 				img10.put("picture", "/c/download?id=" + data.id + "&fileID=picture10&entity=" + data.getClass().getName() + "&z=" + z);
+			}
+			if(!data.txt10.isEmpty()){
 				img10.put("txt", data.txt10);
+			}
+			if(!img10.isNullObject() && !img10.isEmpty()){
 				jsonarr.add(img10);
 			}
 			
@@ -1450,7 +1616,11 @@ public class AiU extends Controller {
 			if(data.c.portrait.exists()){
 				subad.put("portrait", "/c/download?id=" + data.c.id + "&fileID=portrait&entity=models.Customer&z=" + z);
 			}else{
-				subad.put("portrait", "/public/images/portrait.png");
+				if(c.gender == 0){
+					results.put("portrait", "/public/images/boy.jpg");
+				}else{
+					results.put("portrait", "/public/images/girl.jpg");
+				}
 			}
 			list.add(subad);
 		}
@@ -1608,49 +1778,49 @@ public class AiU extends Controller {
 		GameIcon data = GameIcon.find("game_id=?",id).first();
 		JSONArray gamearray = initResultJSONArray();
 		if(data == null){
-			gamearray.add("/public/images/defaulticon1.png");
-			gamearray.add("/public/images/defaulticon2.png");
-			gamearray.add("/public/images/defaulticon3.png");
-			gamearray.add("/public/images/defaulticon4.png");
-			gamearray.add("/public/images/defaulticon5.png");
-			gamearray.add("/public/images/defaulticon6.png");
-			gamearray.add("/public/images/gamebackgroundimg.png");
+			gamearray.add("/public/images/btnGame_bg_hover1.png");
+			gamearray.add("/public/images/btnGame_bg_hover2.png");
+			gamearray.add("/public/images/btnGame_bg_hover3.png");
+			gamearray.add("/public/images/btnGame_bg_hover4.png");
+			gamearray.add("/public/images/btnGame_bg_hover5.png");
+			gamearray.add("/public/images/btnGame_bg_hover6.png");
+			gamearray.add("/public/images/gamebackgroundimg.jpg");
 		}else{
 			gameicon.put("id", data.id);
 			if(data.picture1.exists()){
 				gamearray.add("/c/download?id=" + data.id + "&fileID=picture1&entity=" + data.getClass().getName() + "&z=" + z);
 			}else{
-				gamearray.add("/public/images/defaulticon1.png");
+				gamearray.add("/public/images/btnGame_bg_hover1.png");
 			}
 			if(data.picture2.exists()){
 				gamearray.add("/c/download?id=" + data.id + "&fileID=picture2&entity=" + data.getClass().getName() + "&z=" + z);
 			}else{
-				gamearray.add("/public/images/defaulticon2.png");
+				gamearray.add("/public/images/btnGame_bg_hover2.png");
 			}
 			if(data.picture3.exists()){
 				gamearray.add("/c/download?id=" + data.id + "&fileID=picture3&entity=" + data.getClass().getName() + "&z=" + z);
 			}else{
-				gamearray.add("/public/images/defaulticon3.png");
+				gamearray.add("/public/images/btnGame_bg_hover3.png");
 			}
 			if(data.picture4.exists()){
 				gamearray.add("/c/download?id=" + data.id + "&fileID=picture4&entity=" + data.getClass().getName() + "&z=" + z);
 			}else{
-				gamearray.add("/public/images/defaulticon4.png");
+				gamearray.add("/public/images/btnGame_bg_hover4.png");
 			}
 			if(data.picture5.exists()){
 				gamearray.add("/c/download?id=" + data.id + "&fileID=picture5&entity=" + data.getClass().getName() + "&z=" + z);
 			}else{
-				gamearray.add("/public/images/defaulticon5.png");
+				gamearray.add("/public/images/btnGame_bg_hover5.png");
 			}
 			if(data.picture6.exists()){
 				gamearray.add("/c/download?id=" + data.id + "&fileID=picture6&entity=" + data.getClass().getName() + "&z=" + z);
 			}else{
-				gamearray.add("/public/images/defaulticon6.png");
+				gamearray.add("/public/images/btnGame_bg_hover6.png");
 			}
 			if(data.backgroundpicture.exists()){
 				gamearray.add("/c/download?id=" + data.id + "&fileID=backgroundpicture&entity=" + data.getClass().getName() + "&z=" + z);
 			}else{
-				gamearray.add("/public/images/gamebackgroundimg.png");
+				gamearray.add("/public/images/gamebackgroundimg.jpg");
 			}
 		}
 		
@@ -2136,7 +2306,11 @@ public class AiU extends Controller {
 		if(c.portrait != null && c.portrait.exists()){
 			results.put("portrait", "/c/download?id=" + c.id + "&fileID=portrait&entity=" + c.getClass().getName() + "&z=" + z);
 		}else{
-			results.put("portrait", "/public/images/portrait.png");
+			if(c.gender == 0){
+				results.put("portrait", "/public/images/boy.jpg");
+			}else{
+				results.put("portrait", "/public/images/girl.jpg");
+			}
 		}
 		renderSuccess(results);
 	}

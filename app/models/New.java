@@ -26,71 +26,75 @@ public class New extends ThirdModel {
 	@CheckWith(PicCompres.class)
 	public Blob picture1;
 	
+	@Required
+	@CheckWith(PicCompres.class)
+	public Blob picture1_ip5;
+	
 	@Column(columnDefinition="TEXT")
-	@MaxSize(500)
+	@MaxSize(2000)
 	public String txt1; // 详细内容
 	
 	@CheckWith(PicCompres.class)
 	public Blob picture2;
 	
 	@Column(columnDefinition="TEXT")
-	@MaxSize(500)
+	@MaxSize(2000)
 	public String txt2; // 详细内容
 	
 	@CheckWith(PicCompres.class)
 	public Blob picture3;
 	
 	@Column(columnDefinition="TEXT")
-	@MaxSize(500)
+	@MaxSize(2000)
 	public String txt3; // 详细内容
 	
 	@CheckWith(PicCompres.class)
 	public Blob picture4;
 	
 	@Column(columnDefinition="TEXT")
-	@MaxSize(500)
+	@MaxSize(2000)
 	public String txt4; // 详细内容
 	
 	@CheckWith(PicCompres.class)
 	public Blob picture5;
 	
 	@Column(columnDefinition="TEXT")
-	@MaxSize(500)
+	@MaxSize(2000)
 	public String txt5; // 详细内容
 	
 	@CheckWith(PicCompres.class)
 	public Blob picture6;
 	
 	@Column(columnDefinition="TEXT")
-	@MaxSize(500)
+	@MaxSize(2000)
 	public String txt6; // 详细内容
 	
 	@CheckWith(PicCompres.class)
 	public Blob picture7;
 	
 	@Column(columnDefinition="TEXT")
-	@MaxSize(500)
+	@MaxSize(2000)
 	public String txt7; // 详细内容
 	
 	@CheckWith(PicCompres.class)
 	public Blob picture8;
 	
 	@Column(columnDefinition="TEXT")
-	@MaxSize(500)
+	@MaxSize(2000)
 	public String txt8; // 详细内容
 	
 	@CheckWith(PicCompres.class)
 	public Blob picture9;
 	
 	@Column(columnDefinition="TEXT")
-	@MaxSize(500)
+	@MaxSize(2000)
 	public String txt9; // 详细内容
 	
 	@CheckWith(PicCompres.class)
 	public Blob picture10;
 	
 	@Column(columnDefinition="TEXT")
-	@MaxSize(500)
+	@MaxSize(2000)
 	public String txt10; // 详细内容
 	
 	public Blob getPicture1() {
@@ -102,6 +106,17 @@ public class New extends ThirdModel {
 			CompressPic.compressPic(picture1.getFile().getPath(), picture1.getFile().getPath());
 		}
 		this.picture1 = picture1;
+	}
+	
+	public Blob getPicture1_ip5() {
+		return picture1_ip5;
+	}
+
+	public void setPicture1_ip5(Blob picture1_ip5) {
+		if(picture1_ip5 != null){
+			CompressPic.compressPic(picture1_ip5.getFile().getPath(), picture1_ip5.getFile().getPath());
+		}
+		this.picture1_ip5 = picture1_ip5;
 	}
 
 	public Blob getPicture2() {

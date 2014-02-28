@@ -17,6 +17,7 @@ import play.db.jpa.Blob;
 @Table(name="packs")
 @Entity
 public class Pack extends BaseModel {
+	
 	public Blob icon;
 	
 	@Required
