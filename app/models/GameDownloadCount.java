@@ -13,7 +13,7 @@ import play.db.jpa.Model;
 @Entity
 public class GameDownloadCount extends Model {
 
-	@OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.REMOVE)
+	@OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.REFRESH)
 	public Game g;
 	
 	public long gcount;

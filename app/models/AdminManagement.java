@@ -38,7 +38,7 @@ public class AdminManagement extends Model {
 	
 	public Integer admingroup;
 	
-	@OneToMany(fetch=FetchType.LAZY,cascade=javax.persistence.CascadeType.ALL)
+	@OneToMany(fetch=FetchType.LAZY)
 	public List<Game> game;
 
 	public String toString() {

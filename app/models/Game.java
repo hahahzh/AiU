@@ -33,7 +33,7 @@ public class Game extends ThirdModel {
 	@URL
 	public String bbsurl;
 	
-	@ManyToOne(fetch=FetchType.EAGER,cascade=javax.persistence.CascadeType.ALL)
+	@ManyToOne(fetch=FetchType.EAGER,cascade=javax.persistence.CascadeType.REFRESH)
 	public GameType gtype;
 	
 	public String exp;

@@ -217,5 +217,11 @@ PlusGames=订阅栏广告位
 PlusGame=订阅栏广告位
 picture1_ip5=广告图（640*306） IPhone5
 picture_ip5=截图 IPhone5
+picture1_g_icon=游戏礼包icon
+picture2_g_icon=新闻公告icon
+picture3_g_icon=游戏攻略icon
+picture4_g_icon=游戏评测icon
+picture5_g_icon=游戏介绍icon
+picture6_g_icon=玩家论坛icon
 
 crud.help.required=<font color=red>必填</font>

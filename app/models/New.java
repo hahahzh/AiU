@@ -22,11 +22,9 @@ public class New extends ThirdModel {
 	@Required
 	public String describe_aiu; // 简介
 	
-	@Required
 	@CheckWith(PicCompres.class)
 	public Blob picture1;
 	
-	@Required
 	@CheckWith(PicCompres.class)
 	public Blob picture1_ip5;
 	

@@ -15,7 +15,7 @@ import play.db.jpa.Model;
 @Entity
 public class PlusGame extends Model {
 	@Required
-	@OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.REMOVE)
+	@OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.REFRESH)
 	public Game game;
 
 	public String toString(){

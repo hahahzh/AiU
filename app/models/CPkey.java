@@ -11,10 +11,10 @@ import play.db.jpa.Model;
 @Entity
 public class CPkey extends Model {
 
-	@ManyToOne(fetch=FetchType.LAZY,cascade=javax.persistence.CascadeType.REMOVE)
+	@ManyToOne(fetch=FetchType.LAZY,cascade=javax.persistence.CascadeType.REFRESH)
 	public Customer c;
 
-	@ManyToOne(fetch=FetchType.LAZY,cascade=javax.persistence.CascadeType.REMOVE)
+	@ManyToOne(fetch=FetchType.LAZY,cascade=javax.persistence.CascadeType.REFRESH)
 	public Pack p;
 	
 	public String pkey;

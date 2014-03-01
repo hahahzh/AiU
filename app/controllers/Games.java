@@ -47,7 +47,7 @@ public class Games extends CRUD {
 	        gc2._save();
 	        GameIcon gi = new GameIcon();
 	        gi.game = g;
-	        gi.picture1 = new Blob();
+	        gi.picture1_g_icon = new Blob();
 	        gi._save();
 	        flash.success(play.i18n.Messages.get("crud.created", type.modelName));
 	        if (params.get("_save") != null) {

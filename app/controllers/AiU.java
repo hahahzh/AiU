@@ -1616,10 +1616,10 @@ public class AiU extends Controller {
 			if(data.c.portrait.exists()){
 				subad.put("portrait", "/c/download?id=" + data.c.id + "&fileID=portrait&entity=models.Customer&z=" + z);
 			}else{
-				if(c.gender == 0){
-					results.put("portrait", "/public/images/boy.jpg");
+				if(c.gender == null || c.gender == 0){
+					subad.put("portrait", "/public/images/boy.jpg");
 				}else{
-					results.put("portrait", "/public/images/girl.jpg");
+					subad.put("portrait", "/public/images/girl.jpg");
 				}
 			}
 			list.add(subad);
@@ -1655,7 +1655,7 @@ public class AiU extends Controller {
 			JSONObject subad = initResultJSON();
 			subad.put("id", pg.game.id);
 			subad.put("title", pg.game.title);
-			subad.put("icon", "/c/download?id=" + pg.game.id + "&fileID=icon&entity=models.Game&z=" + z);
+			subad.put("icon", "/c/download?id=" + pg.game.id + "&fileID=rankingicon&entity=models.Game&z=" + z);
 			advertisementlist.add(subad);
 			i++;
 			if(i == 2)break;
@@ -1787,33 +1787,33 @@ public class AiU extends Controller {
 			gamearray.add("/public/images/gamebackgroundimg.jpg");
 		}else{
 			gameicon.put("id", data.id);
-			if(data.picture1.exists()){
-				gamearray.add("/c/download?id=" + data.id + "&fileID=picture1&entity=" + data.getClass().getName() + "&z=" + z);
+			if(data.picture1_g_icon.exists()){
+				gamearray.add("/c/download?id=" + data.id + "&fileID=picture1_g_icon&entity=" + data.getClass().getName() + "&z=" + z);
 			}else{
 				gamearray.add("/public/images/btnGame_bg_hover1.png");
 			}
-			if(data.picture2.exists()){
-				gamearray.add("/c/download?id=" + data.id + "&fileID=picture2&entity=" + data.getClass().getName() + "&z=" + z);
+			if(data.picture2_g_icon.exists()){
+				gamearray.add("/c/download?id=" + data.id + "&fileID=picture2_g_icon&entity=" + data.getClass().getName() + "&z=" + z);
 			}else{
 				gamearray.add("/public/images/btnGame_bg_hover2.png");
 			}
-			if(data.picture3.exists()){
-				gamearray.add("/c/download?id=" + data.id + "&fileID=picture3&entity=" + data.getClass().getName() + "&z=" + z);
+			if(data.picture3_g_icon.exists()){
+				gamearray.add("/c/download?id=" + data.id + "&fileID=picture3_g_icon&entity=" + data.getClass().getName() + "&z=" + z);
 			}else{
 				gamearray.add("/public/images/btnGame_bg_hover3.png");
 			}
-			if(data.picture4.exists()){
-				gamearray.add("/c/download?id=" + data.id + "&fileID=picture4&entity=" + data.getClass().getName() + "&z=" + z);
+			if(data.picture4_g_icon.exists()){
+				gamearray.add("/c/download?id=" + data.id + "&fileID=picture4_g_icon&entity=" + data.getClass().getName() + "&z=" + z);
 			}else{
 				gamearray.add("/public/images/btnGame_bg_hover4.png");
 			}
-			if(data.picture5.exists()){
-				gamearray.add("/c/download?id=" + data.id + "&fileID=picture5&entity=" + data.getClass().getName() + "&z=" + z);
+			if(data.picture5_g_icon.exists()){
+				gamearray.add("/c/download?id=" + data.id + "&fileID=picture5_g_icon&entity=" + data.getClass().getName() + "&z=" + z);
 			}else{
 				gamearray.add("/public/images/btnGame_bg_hover5.png");
 			}
-			if(data.picture6.exists()){
-				gamearray.add("/c/download?id=" + data.id + "&fileID=picture6&entity=" + data.getClass().getName() + "&z=" + z);
+			if(data.picture6_g_icon.exists()){
+				gamearray.add("/c/download?id=" + data.id + "&fileID=picture6_g_icon&entity=" + data.getClass().getName() + "&z=" + z);
 			}else{
 				gamearray.add("/public/images/btnGame_bg_hover6.png");
 			}
@@ -2306,7 +2306,7 @@ public class AiU extends Controller {
 		if(c.portrait != null && c.portrait.exists()){
 			results.put("portrait", "/c/download?id=" + c.id + "&fileID=portrait&entity=" + c.getClass().getName() + "&z=" + z);
 		}else{
-			if(c.gender == 0){
+			if(c.gender == null || c.gender == 0){
 				results.put("portrait", "/public/images/boy.jpg");
 			}else{
 				results.put("portrait", "/public/images/girl.jpg");

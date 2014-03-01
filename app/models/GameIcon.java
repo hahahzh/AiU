@@ -18,21 +18,20 @@ import check.PicCompres;
 public class GameIcon extends Model {
 
 	@Required
-	@OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.REMOVE)
+	@OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.REFRESH)
 	public Game game;
 
-	@Required
-	public Blob picture1;
+	public Blob picture1_g_icon;
 
-	public Blob picture2;
+	public Blob picture2_g_icon;
 
-	public Blob picture3;
+	public Blob picture3_g_icon;
 
-	public Blob picture4;
+	public Blob picture4_g_icon;
 
-	public Blob picture5;
+	public Blob picture5_g_icon;
 
-	public Blob picture6;
+	public Blob picture6_g_icon;
 
 	@CheckWith(PicCompres.class)
 	public Blob backgroundpicture;
