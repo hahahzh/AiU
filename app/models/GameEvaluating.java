@@ -19,6 +19,9 @@ public class GameEvaluating extends New {
 	@ManyToOne(fetch=FetchType.LAZY,cascade=javax.persistence.CascadeType.REFRESH)
 	public Game game;
 
+	// 1显示 0不显示
+	public int isShowNews;
+
 	public String toString(){
 		return title;
 	}

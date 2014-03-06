@@ -223,5 +223,6 @@ picture3_g_icon=游戏攻略icon
 picture4_g_icon=游戏评测icon
 picture5_g_icon=游戏介绍icon
 picture6_g_icon=玩家论坛icon
+isShowNews=是否显示在新闻列表
 
 crud.help.required=<font color=red>必填</font>

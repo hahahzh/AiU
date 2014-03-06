@@ -11,8 +11,16 @@ userName=kortide
 password=123456
 ip=42.96.164.23
 
+one server ip
 139.159.32.29
 MK08ta%*
+
+two server ip
+139.159.32.29
+port 2250
+password MK08ta%!
+
+
 
 /usr/local/mysql/bin/mysql -uroot -p -S/tmp/mysql.sock
 
@@ -20,18 +28,12 @@ export JAVA_HOME=/usr/java/jdk1.7.0_45
 export PATH=$PATH:$JAVA_HOME/bin
 export CLASSPATH=.:$JAVA_HOME/lib
 
-
-2 4 7 8 9
-初学Linux什么都不懂，我刚从官网下载的JDK，文件是java_ee_sdk-6u1-jdk-linux.sh
-从网上找了好多资料大体都一样，没有安装.sh这种文件的。
-把我的命令贴出来：
 [root@mgm jdk]# sudo chmod 755 java_ee_sdk-6u1-jdk-linux.sh
 [root@mgm jdk]# sudo ./java_ee_sdk-6u1-jdk-linux.sh
 Could not locate a suitable jar utility.
 Please ensure that you have Java 6 or newer installed on your system
 and accessible in your PATH or by setting JAVA_HOME
 
-要先装java_se的sdk，然后把JAVA_HOME环境变量设置好
 
 export DISPLAY=:0.0
 echo $DISPLAY

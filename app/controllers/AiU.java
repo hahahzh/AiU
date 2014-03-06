@@ -39,6 +39,7 @@ import play.data.validation.Required;
 import play.data.validation.Validation;
 import play.db.Model;
 import play.db.jpa.Blob;
+import play.db.jpa.JPA;
 import play.i18n.Messages;
 import play.mvc.Before;
 import play.mvc.Controller;
@@ -379,6 +380,7 @@ public class AiU extends Controller {
 			subad.put("data", l.data+"");
 			subad.put("t_id", l.game.id);
 			subad.put("t_type", "eg");
+			subad.put("title", l.title);
 	  	  } else if("游戏".equals(data.ct.type)){
 	  		Game l = Game.findById(data.ad_id);
 	  		if(ios_t == null || ios_t.isEmpty() || "4".equals(ios_t)){
@@ -392,6 +394,7 @@ public class AiU extends Controller {
 			subad.put("data", l.data+"");
 			subad.put("t_id", l.id);
 			subad.put("t_type", "g");
+			subad.put("title", l.title);
 	  	  }else if("新闻".equals(data.ct.type)){
 	  		NativeNew l = NativeNew.findById(data.ad_id);
 	  		if(ios_t == null || ios_t.isEmpty() || "4".equals(ios_t)){
@@ -402,7 +405,8 @@ public class AiU extends Controller {
 			subad.put("url", "/c/newinfo?id="+l.id+"&z="+z);
 			subad.put("data", l.data+"");
 			subad.put("t_id", l.id);
-			subad.put("t_type", "n");
+			subad.put("t_type", "nn");
+			subad.put("title", l.title);
 	  	  }else if("礼包".equals(data.ct.type)){
 	  		Pack l = Pack.findById(data.ad_id);
 	  		if(ios_t == null || ios_t.isEmpty() || "4".equals(ios_t)){
@@ -414,6 +418,7 @@ public class AiU extends Controller {
 			subad.put("data", l.data+"");
 			subad.put("t_id", l.id);
 			subad.put("t_type", "p");
+			subad.put("title", l.title);
 	  	  }
 			
 		adlistArr.add(subad);
@@ -474,23 +479,50 @@ public class AiU extends Controller {
 		results.put("user", user);
 		
 		JSONArray newlist = initResultJSONArray();
-
 		if(gid == null){
-			List<NativeNew> newlistData = NativeNew.find("mtype = ? order by id desc", c.os).fetch(page, num);
-			for(NativeNew data:newlistData){
+			String sql = "select id,title,describe_aiu,hit,data,game_id from (select id,title,describe_aiu,hit,data,'' as game_id from (SELECT id,title,describe_aiu,hit,data FROM nativenews where mtype="+c.os+"  order by id desc limit "+page+","+num+") t1 UNION select id,title,describe_aiu,hit,data,game_id from (SELECT id,title,describe_aiu,hit,data,game_id FROM gameevaluating where mtype="+c.os+" and isShowNews=1 order by id desc limit "+page+","+num+") t2 ) t order by data desc  limit "+page+","+num;
+			
+			List<Object> l = JPA.em().createNativeQuery(sql).getResultList();
+//			List<NativeNew> newlistData = NativeNew.find("mtype = ? order by id desc", c.os).fetch(page, num);
+//			List<GameEvaluating> newlistData2 = GameEvaluating.find("mtype = ? order by id desc", c.os).fetch(page, num);
+//			for(NativeNew data:newlistData){
+//				JSONObject subad = initResultJSON();
+//				subad.put("id", data.id);
+//				subad.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=" + data.getClass().getName() + "&z=" + z);
+//				subad.put("pic", "/c/download?id=" + data.id + "&fileID=picture1&entity=" + data.getClass().getName() + "&z=" + z);
+//				subad.put("title", data.title);
+//				subad.put("txt", data.describe_aiu);
+//				subad.put("hit", data.hit);
+//				subad.put("data", data.data);
+//				subad.put("t_type", "nn");
+//				newlist.add(subad);
+//			}
+			for(int i=0;i<l.size();i++){
+				Object[] o = (Object[])l.get(i);
 				JSONObject subad = initResultJSON();
-				subad.put("id", data.id);
-				subad.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=" + data.getClass().getName() + "&z=" + z);
-				subad.put("pic", "/c/download?id=" + data.id + "&fileID=picture1&entity=" + data.getClass().getName() + "&z=" + z);
-				subad.put("title", data.title);
-				subad.put("txt", data.describe_aiu);
-				subad.put("hit", data.hit);
-				subad.put("data", data.data);
+				subad.put("id", o[0]);
+				if(o[5] == null || o[5].toString().isEmpty()){
+					subad.put("icon", "/c/download?id=" + o[0] + "&fileID=icon&entity=models.NativeNew&z=" + z);
+					subad.put("pic", "/c/download?id=" + o[0] + "&fileID=picture1&entity=models.NativeNew&z=" + z);
+				}else{
+					subad.put("icon", "/c/download?id=" + o[0] + "&fileID=icon&entity=models.GameEvaluating&z=" + z);
+					subad.put("pic", "/c/download?id=" + o[0] + "&fileID=picture1&entity=models.GameEvaluating&z=" + z);
+				}
+				subad.put("title", o[1]);
+				subad.put("txt", o[2]);
+				subad.put("hit", o[3]);
+				subad.put("data", o[4]);
+				if(o[5] == null || o[5].toString().isEmpty()){
+					subad.put("t_type", "nn");
+				}else{
+					subad.put("t_type", "ge");
+					subad.put("g_id", o[5]);
+				}
 				newlist.add(subad);
 			}
 		}else{
 			if(type == null || type == 1){
-				List<FirmNew> newlistData = FirmNew.find("mtype = ? and game_id = "+gid+" order by id desc", c.os).fetch(page, num);
+				List<FirmNew> newlistData = FirmNew.find("mtype = ? and game_id = "+gid+" order by id desc", c.os).fetch(page, num);				
 				for(FirmNew data:newlistData){
 					JSONObject subad = initResultJSON();
 					subad.put("id", data.id);
@@ -500,8 +532,9 @@ public class AiU extends Controller {
 					subad.put("txt", data.describe_aiu);
 					subad.put("hit", data.hit);
 					subad.put("data", data.data);
+					subad.put("t_type", "n");
 					if(data.game != null){
-						subad.put("g_id", data.game.id);
+						subad.put("g_id", gid);
 					}
 					newlist.add(subad);
 				}
@@ -516,8 +549,9 @@ public class AiU extends Controller {
 					subad.put("txt", data.describe_aiu);
 					subad.put("hit", data.hit);
 					subad.put("data", data.data);
+					subad.put("t_type", "gs");
 					if(data.game != null){
-						subad.put("g_id", data.game.id);
+						subad.put("g_id", gid);
 					}
 					newlist.add(subad);
 				}
@@ -532,14 +566,14 @@ public class AiU extends Controller {
 					subad.put("txt", data.describe_aiu);
 					subad.put("hit", data.hit);
 					subad.put("data", data.data);
+					subad.put("t_type", "ge");
 					if(data.game != null){
-						subad.put("g_id", data.game.id);
+						subad.put("g_id", gid);
 					}
 					newlist.add(subad);
 				}
 			}
 		}
-
 		results.put("newlist", newlist);
 		renderSuccess(results);
 	}
@@ -1087,7 +1121,7 @@ public class AiU extends Controller {
 	}
 	
 	//.....
-	public static void gameCarosel(@Required Long id, @Required String z) {
+	public static void gameCarosel(@Required Long id, @Required String z, String ios_t) {
 		// ....
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
@@ -1108,28 +1142,28 @@ public class AiU extends Controller {
 		
 		JSONArray adlistArr = initResultJSONArray();
 		if(data.ct != null && data.ad_id != null){
-			adlistArr.add(setGameCarosel(data.ct.type,data.ad_id, z));
+			adlistArr.add(setGameCarosel(data.ct.type,data.ad_id, z, ios_t));
 		}
 		if(data.ct2 != null && data.ad_id2 != null){
-			adlistArr.add(setGameCarosel(data.ct2.type,data.ad_id2, z));
+			adlistArr.add(setGameCarosel(data.ct2.type,data.ad_id2, z, ios_t));
 		}
 		if(data.ct3 != null && data.ad_id3 != null){
-			adlistArr.add(setGameCarosel(data.ct3.type,data.ad_id3, z));
+			adlistArr.add(setGameCarosel(data.ct3.type,data.ad_id3, z, ios_t));
 		}   
 		if(data.ct4 != null && data.ad_id4 != null){
-			adlistArr.add(setGameCarosel(data.ct4.type,data.ad_id4, z));
+			adlistArr.add(setGameCarosel(data.ct4.type,data.ad_id4, z, ios_t));
 		}
 		if(data.ct5 != null && data.ad_id5 != null){
-			adlistArr.add(setGameCarosel(data.ct5.type,data.ad_id5, z));
+			adlistArr.add(setGameCarosel(data.ct5.type,data.ad_id5, z, ios_t));
 		}
 		if(data.ct6 != null && data.ad_id6 != null){
-			adlistArr.add(setGameCarosel(data.ct6.type,data.ad_id6, z));
+			adlistArr.add(setGameCarosel(data.ct6.type,data.ad_id6, z, ios_t));
 		}
 		if(data.ct7 != null && data.ad_id7 != null){
-			adlistArr.add(setGameCarosel(data.ct7.type,data.ad_id7, z));
+			adlistArr.add(setGameCarosel(data.ct7.type,data.ad_id7, z, ios_t));
 		}
 		if(data.ct8 != null && data.ad_id8 != null){
-			adlistArr.add(setGameCarosel(data.ct8.type,data.ad_id8, z));
+			adlistArr.add(setGameCarosel(data.ct8.type,data.ad_id8, z, ios_t));
 		}
 		results.put("downloadurl", data.game.downloadurl);
 		results.put("adlist", adlistArr);
@@ -1137,15 +1171,20 @@ public class AiU extends Controller {
 		renderSuccess(results);
 	}
 	
-	private static JSONObject setGameCarosel(String type, Long ad_id, String z){
+	private static JSONObject setGameCarosel(String type, Long ad_id, String z, String ios_t){
 		JSONObject subad = new JSONObject();
 	  	  if("新闻".equals(type)){
 	  		FirmNew l = FirmNew.findById(ad_id);
-		  	subad.put("icon", "/c/download?id=" + l.id + "&fileID=picture1&entity=" + l.getClass().getName() + "&z=" + z);
+	  		if(ios_t == null || ios_t.isEmpty() || "4".equals(ios_t)){
+	  			subad.put("icon", "/c/download?id=" + l.id + "&fileID=picture1&entity=" + l.getClass().getName() + "&z=" + z);
+	  		}else if("5".equals(ios_t)){
+	  			subad.put("icon", "/c/download?id=" + l.id + "&fileID=picture1_ip5&entity=" + l.getClass().getName() + "&z=" + z);
+	  		}
 			subad.put("url", "/c/newinfo?id="+l.id+"&z="+z);
 			subad.put("data", l.data+"");
 			subad.put("t_id", l.id);
 			subad.put("t_type", "n");
+			subad.put("title", l.title);
 	  	  }else if("礼包".equals(type)){
 	  		Pack l = Pack.findById(ad_id);
 		  	subad.put("icon", "/c/download?id=" + l.id + "&fileID=icon&entity=" + l.getClass().getName() + "&z=" + z);
@@ -1153,6 +1192,7 @@ public class AiU extends Controller {
 			subad.put("data", l.data+"");
 			subad.put("t_id", l.id);
 			subad.put("t_type", "p");
+			subad.put("title", l.title);
 	  	  }
 	  	  return subad;
 	}
@@ -1655,7 +1695,8 @@ public class AiU extends Controller {
 			JSONObject subad = initResultJSON();
 			subad.put("id", pg.game.id);
 			subad.put("title", pg.game.title);
-			subad.put("icon", "/c/download?id=" + pg.game.id + "&fileID=rankingicon&entity=models.Game&z=" + z);
+			subad.put("icon", "/c/download?id=" + pg.game.id + "&fileID=icon&entity=models.Game&z=" + z);
+			subad.put("rankingicon", "/c/download?id=" + pg.game.id + "&fileID=rankingicon&entity=models.Game&z=" + z);
 			advertisementlist.add(subad);
 			i++;
 			if(i == 2)break;
