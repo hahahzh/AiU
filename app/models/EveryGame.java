@@ -37,10 +37,10 @@ public class EveryGame extends ThirdModel {
 	public Game game;
 	
 	@CheckWith(PicCompres.class)
-	public Blob picture;
+	public Blob picture_ip5;
 	
 	@CheckWith(PicCompres.class)
-	public Blob picture_ip5;
+	public Blob picture;
 	
 	public Blob getPicture() {
 		return picture;

@@ -41,3 +41,10 @@ set env DISPLAY 127.0.0.1:0.0
 
 
 mysqldump -uroot -p AiU > /tmp/AiUAllData.sql
+
+
+0 评测显示在新闻列表 OK
+1 后台问题 0308
+2 断点续传 OK
+3 压缩图片 OK
+4 web接口

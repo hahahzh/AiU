@@ -37,7 +37,7 @@ public class ClientVersion extends Model {
 	
 	@Required
 	@Hidden
-	public Long data = new Date().getTime();
+	public Date data = new Date();
 	
 	@Required
 	public int mobiletype;

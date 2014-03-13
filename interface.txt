@@ -49,11 +49,23 @@ type:新闻类型 1=新闻 2=攻略 3=评测（非必须）
 gid：游戏ID（非必须）
 
 9 新闻详细
-http://139.159.32.29:9000/c/newinfo?id=3&z=af017cae-d043-4cd7-8dea-a38315bc44a4
+http://139.159.32.29:9000/c/newinfo?id=3&gid=2&z=af017cae-d043-4cd7-8dea-a38315bc44a4
+id：新闻ID
+gid：游戏ID（非必须）gid有：研发商新闻 gid无：本地新闻
+result 例
+{"state":"1","results":{"user":{"exp":0,"lv":"小学生"},"newinfo":{"id":1,"icon":"/c/download?id=1&fileID=icon&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"新闻测试1","author":"我","res":"百度","hit":403,"data":1385914285993,"imgs":[{"picture":"/c/download?id=1&fileID=picture1&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt":"图片1"},{"picture":"/c/download?id=1&fileID=picture2&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt":"图片2"},{"picture":"/c/download?id=1&fileID=picture3&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt":"图片3"},{"picture":"/c/download?id=1&fileID=picture4&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt":"图片4"},{"picture":"/c/download?id=1&fileID=picture5&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt":"图片5"},{"picture":"/c/download?id=1&fileID=picture6&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt":"图片6"},{"picture":"/c/download?id=1&fileID=picture7&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt":"图片7"},{"picture":"/c/download?id=1&fileID=picture8&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt":"图片8"},{"picture":"/c/download?id=1&fileID=picture9&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt":"图片9"},{"picture":"/c/download?id=1&fileID=picture10&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt":"图片10"}]}}}
+
+9.1 攻略详细
+http://139.159.32.29:9000/c/strategyinfo?id=3&z=af017cae-d043-4cd7-8dea-a38315bc44a4
 id：新闻ID
 result 例
 {"state":"1","results":{"user":{"exp":0,"lv":"小学生"},"newinfo":{"id":1,"icon":"/c/download?id=1&fileID=icon&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"新闻测试1","author":"我","res":"百度","hit":403,"data":1385914285993,"imgs":[{"picture":"/c/download?id=1&fileID=picture1&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt":"图片1"},{"picture":"/c/download?id=1&fileID=picture2&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt":"图片2"},{"picture":"/c/download?id=1&fileID=picture3&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt":"图片3"},{"picture":"/c/download?id=1&fileID=picture4&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt":"图片4"},{"picture":"/c/download?id=1&fileID=picture5&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt":"图片5"},{"picture":"/c/download?id=1&fileID=picture6&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt":"图片6"},{"picture":"/c/download?id=1&fileID=picture7&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt":"图片7"},{"picture":"/c/download?id=1&fileID=picture8&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt":"图片8"},{"picture":"/c/download?id=1&fileID=picture9&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt":"图片9"},{"picture":"/c/download?id=1&fileID=picture10&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt":"图片10"}]}}}
 
+9.2 评测详细
+http://139.159.32.29:9000/c/evaluatinginfo?id=3&z=af017cae-d043-4cd7-8dea-a38315bc44a4
+id：新闻ID
+result 例
+{"state":"1","results":{"user":{"exp":0,"lv":"小学生"},"newinfo":{"id":1,"icon":"/c/download?id=1&fileID=icon&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"新闻测试1","author":"我","res":"百度","hit":403,"data":1385914285993,"imgs":[{"picture":"/c/download?id=1&fileID=picture1&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt":"图片1"},{"picture":"/c/download?id=1&fileID=picture2&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt":"图片2"},{"picture":"/c/download?id=1&fileID=picture3&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt":"图片3"},{"picture":"/c/download?id=1&fileID=picture4&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt":"图片4"},{"picture":"/c/download?id=1&fileID=picture5&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt":"图片5"},{"picture":"/c/download?id=1&fileID=picture6&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt":"图片6"},{"picture":"/c/download?id=1&fileID=picture7&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt":"图片7"},{"picture":"/c/download?id=1&fileID=picture8&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt":"图片8"},{"picture":"/c/download?id=1&fileID=picture9&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt":"图片9"},{"picture":"/c/download?id=1&fileID=picture10&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt":"图片10"}]}}}
 
 10 每日一游
 http://139.159.32.29:9000/c/invite?num=5&time=98&page=0&z=af017cae-d043-4cd7-8dea-a38315bc44a4
@@ -64,27 +76,23 @@ result 例
 {"state":"1","results":{"user":{"exp":0,"lv":"小学生"},"list":[{"id":5,"title":"每日一游测试2","txt":"测试2","data":1385913960042,"picture":"/c/download?id=2&fileID=picture&entity=models.EveryGame&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3"},{"id":4,"title":"每日一游测试1","txt":"是非得失飞个个 打撒","hit":500,"data":1385913920244,"picture":"/c/download?id=1&fileID=picture&entity=models.EveryGame&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3"}]}}
 
 
-11 评测具体内容
-http://139.159.32.29:9000/c/textinfo?z=af017cae-d043-4cd7-8dea-a38315bc44a4&id=4
-id：评测ID
-result 例
-{"state":"1","results":{"user":{"exp":0,"lv":"小学生"},"newinfo":{"id":4,"icon":"/c/download?id=4&fileID=icon&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"评测1","author":"","res":"","data":1385914556244,"picture1":"/c/download?id=4&fileID=picture1&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt1":"饿位","picture2":"/c/download?id=4&fileID=picture2&entity=models.New&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","txt2":"额外 饿"}}}
-
 12 礼包列表
-http://139.159.32.29:9000/c/package?num=5&time=98&page=1&z=af017cae-d043-4cd7-8dea-a38315bc44a4
+http://139.159.32.29:9000/c/package?num=5&time=98&page=1&skey=key&gid=3&z=af017cae-d043-4cd7-8dea-a38315bc44a4
 num：同新闻
 page：同新闻
 time：同新闻
+skey:搜索关键字
+gid：游戏ID
 
 result 例
 {"state":"1","results":{"user":{"exp":0,"lv":"小学生"},"packagelist":[{"id":5,"game_id":1,"icon":"/c/download?id=5&fileID=icon&entity=models.Pack&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"娜美","star":"4","data":1386482165335,"num":"0","allnum":0},{"id":3,"game_id":1,"icon":"/c/download?id=3&fileID=icon&entity=models.Pack&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"左诺","star":"4","data":1386482095036,"num":"0","allnum":0},{"id":4,"game_id":2,"icon":"/c/download?id=4&fileID=icon&entity=models.Pack&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"山治","star":"4","data":1386482126507,"num":"3","allnum":3},{"id":2,"game_id":1,"icon":"/c/download?id=2&fileID=icon&entity=models.Pack&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"路飞","star":"1","data":1386482048893,"num":"0","allnum":0},{"id":6,"game_id":1,"icon":"/c/download?id=6&fileID=icon&entity=models.Pack&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"骗人布","star":"4","num":"0","allnum":0,"data":1386482970478},{"id":1,"game_id":1,"icon":"/c/download?id=1&fileID=icon&entity=models.Pack&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"火影忍者","star":"4","num":"0","allnum":0,"data":1386470056206}]}}
 
 
 13 礼包信息
-http://139.159.32.29:9000/c/packagelist?id=1&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3
-id：礼包ID
+http://139.159.32.29:9000/c/packagelist?gid=1&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3
+gid：游戏ID
 result 例
-{"state":"1","results":{"user":{"exp":0,"lv":"小学生"},"packinfo":{"id":1,"icon":"/c/download?id=1&fileID=icon&entity=models.Pack&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"火影忍者","txt":"出席这次选择","star":"4","num":"1","allnum":3,"data":1386470056206}}}
+{"state":"1","results":{"user":{"exp":0,"lv":"小学生"},"packinfo":[{"id":1,"icon":"/c/download?id=1&fileID=icon&entity=models.Pack&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"火影忍者","txt":"出席这次选择","star":"4","num":"1","allnum":3,"data":1386470056206},{"id":2,"icon":"/c/download?id=1&fileID=icon&entity=models.Pack&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3","title":"火影忍者","txt":"出席这次选择","star":"4","num":"1","allnum":3,"data":1386470056206}]}}
 
 
 14 礼包领取

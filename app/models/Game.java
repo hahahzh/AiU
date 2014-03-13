@@ -33,6 +33,7 @@ public class Game extends ThirdModel {
 	@URL
 	public String bbsurl;
 	
+	@Required
 	@ManyToOne(fetch=FetchType.EAGER,cascade=javax.persistence.CascadeType.REFRESH)
 	public GameType gtype;
 	
@@ -46,11 +47,11 @@ public class Game extends ThirdModel {
 	
 	@Required
 	@CheckWith(PicCompres.class)
-	public Blob picture1;
+	public Blob picture1_ip5;
 	
 	@Required
 	@CheckWith(PicCompres.class)
-	public Blob picture1_ip5;
+	public Blob picture1;
 	
 	@CheckWith(PicCompres.class)
 	public Blob picture2;

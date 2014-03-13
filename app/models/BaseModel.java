@@ -26,7 +26,7 @@ public class BaseModel extends Model {
 	
 	@Index(name = "idx_data")
 	@Hidden
-	public Long data = new Date().getTime();
+	public Date data = new Date();
 	
 	@Required
 	// 1 IOS 2 Android 3 WP

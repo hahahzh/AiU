@@ -26,7 +26,7 @@ public class PublicChannel extends Model {
 	public String exp;
 	
 	@Hidden
-	public Long data = new Date().getTime();
+	public Date data = new Date();
 
 	public String toString() {
 		return pubchannelname;

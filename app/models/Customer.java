@@ -64,7 +64,7 @@ public class Customer extends Model {
 	public LevelType lv;
 
 	@Hidden
-	public Long data = new Date().getTime();
+	public Date data = new Date();
 	// 0 男 1 女
 	public Byte gender;
 	

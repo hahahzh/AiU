@@ -23,10 +23,10 @@ public class New extends ThirdModel {
 	public String describe_aiu; // 简介
 	
 	@CheckWith(PicCompres.class)
-	public Blob picture1;
+	public Blob picture1_ip5;
 	
 	@CheckWith(PicCompres.class)
-	public Blob picture1_ip5;
+	public Blob picture1;
 	
 	@Column(columnDefinition="TEXT")
 	@MaxSize(2000)
@@ -210,7 +210,7 @@ public class New extends ThirdModel {
 	}
 
 	public void setPicture10(Blob picture10) {
-		if(picture10 != null){
+		if(picture10 != null && picture10.getFile() != null){
 			CompressPic.compressPic(picture10.getFile().getPath(), picture10.getFile().getPath());
 		}
 		this.picture10 = picture10;

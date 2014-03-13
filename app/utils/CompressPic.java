@@ -33,29 +33,42 @@ public class CompressPic {
 		imgWrier = ImageIO.getImageWritersByFormatName("jpg").next();
 		imgWriteParams = new javax.imageio.plugins.jpeg.JPEGImageWriteParam(
 				null);
-		// 压缩必须制定为MODE_EXPLICIT
-		imgWriteParams.setCompressionMode(imgWriteParams.MODE_EXPLICIT);
-		// 压缩比在0-1之间
-		imgWriteParams.setCompressionQuality((float) 0.2);
-		imgWriteParams.setProgressiveMode(imgWriteParams.MODE_DISABLED);
-		ColorModel colorModel = ColorModel.getRGBdefault();
-		//颜色
-		imgWriteParams.setDestinationType(new javax.imageio.ImageTypeSpecifier(
-				colorModel, colorModel.createCompatibleSampleModel(256, 256)));
+		
 
 		try {
 			if (StringUtils.isBlank(srcFilePath)) {
 				return false;
 			} else {
 				file = new File(srcFilePath);
-				src = ImageIO.read(file);
-				out = new FileOutputStream(descFilePath);
-				imgWrier.reset();
-				imgWrier.setOutput(ImageIO.createImageOutputStream(out));
-				imgWrier.write(null, new IIOImage(src, null, null),
-						imgWriteParams);
-				out.flush();
-				out.close();
+				if(file.length() > 100000){
+					
+					float rate = (float) 0.1;
+					if(file.length() < 200000){
+						rate=(float)0.4;
+					}else if(file.length() < 300000){
+						rate=(float)0.3;
+					}else if(file.length() < 750000){
+						rate=(float)0.2;
+					}
+					// 压缩必须制定为MODE_EXPLICIT
+					imgWriteParams.setCompressionMode(imgWriteParams.MODE_EXPLICIT);
+					// 压缩比在0-1之间
+					imgWriteParams.setCompressionQuality(rate);
+					imgWriteParams.setProgressiveMode(imgWriteParams.MODE_DISABLED);
+					ColorModel colorModel = ColorModel.getRGBdefault();
+					//颜色
+					imgWriteParams.setDestinationType(new javax.imageio.ImageTypeSpecifier(
+							colorModel, colorModel.createCompatibleSampleModel(256, 256)));
+					
+					src = ImageIO.read(file);
+					out = new FileOutputStream(descFilePath);
+					imgWrier.reset();
+					imgWrier.setOutput(ImageIO.createImageOutputStream(out));
+					imgWrier.write(null, new IIOImage(src, null, null),
+							imgWriteParams);
+					out.flush();
+					out.close();
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

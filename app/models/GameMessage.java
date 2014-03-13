@@ -27,7 +27,7 @@ public class GameMessage extends Model {
 	@MaxSize(30)
 	public String msg;
 	
-	public long data;
+	public Date data;
 	
 	@ManyToOne(fetch=FetchType.LAZY,cascade=javax.persistence.CascadeType.REFRESH)
 	public Game game;

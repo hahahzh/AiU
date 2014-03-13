@@ -28,7 +28,7 @@ public class Session extends Model {
 	@Unique
 	public String sessionID;
 	
-	public Long data = new Date().getTime();
+	public Date data = new Date();
 
 	public String toString() {
 		return customer.toString();

@@ -39,10 +39,10 @@ import play.data.validation.Required;
 import play.data.validation.Validation;
 import play.db.Model;
 import play.db.jpa.Blob;
-import play.db.jpa.JPA;
 import play.i18n.Messages;
 import play.mvc.Before;
 import play.mvc.Controller;
+import play.mvc.Http.Header;
 import utils.Coder;
 import utils.DateUtil;
 import utils.JSONUtil;
@@ -130,7 +130,7 @@ public class AiU extends Controller {
 		sessionCache.set(s);
 		if (s == null) {
 			renderFail("error_session_expired");
-			if(new Date().getTime() - s.data > 86400000){
+			if(new Date().getTime() - s.data.getTime() > 86400000){
 				s.delete();
 				renderFail("error_session_expired");
 			}
@@ -210,7 +210,7 @@ public class AiU extends Controller {
 				
 				Session s = new Session();
 				s.customer = newUser;
-				s.data = new Date().getTime();
+				s.data = new Date();
 				s.sessionID = UUID.randomUUID().toString();
 				s.save();
 				
@@ -264,7 +264,7 @@ public class AiU extends Controller {
 				
 				Session s = new Session();
 				s.customer = newUser;
-				s.data = new Date().getTime();
+				s.data = new Date();
 				s.sessionID = UUID.randomUUID().toString();
 				s.save();
 				
@@ -327,7 +327,7 @@ public class AiU extends Controller {
 			s = new Session();
 			s.customer = customer;
 			s.sessionID = UUID.randomUUID().toString();
-			s.data = new Date().getTime();
+			s.data = new Date();
 			s.save();
 		}
 
@@ -480,43 +480,21 @@ public class AiU extends Controller {
 		
 		JSONArray newlist = initResultJSONArray();
 		if(gid == null){
-			String sql = "select id,title,describe_aiu,hit,data,game_id from (select id,title,describe_aiu,hit,data,'' as game_id from (SELECT id,title,describe_aiu,hit,data FROM nativenews where mtype="+c.os+"  order by id desc limit "+page+","+num+") t1 UNION select id,title,describe_aiu,hit,data,game_id from (SELECT id,title,describe_aiu,hit,data,game_id FROM gameevaluating where mtype="+c.os+" and isShowNews=1 order by id desc limit "+page+","+num+") t2 ) t order by data desc  limit "+page+","+num;
-			
-			List<Object> l = JPA.em().createNativeQuery(sql).getResultList();
-//			List<NativeNew> newlistData = NativeNew.find("mtype = ? order by id desc", c.os).fetch(page, num);
-//			List<GameEvaluating> newlistData2 = GameEvaluating.find("mtype = ? order by id desc", c.os).fetch(page, num);
-//			for(NativeNew data:newlistData){
-//				JSONObject subad = initResultJSON();
-//				subad.put("id", data.id);
-//				subad.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=" + data.getClass().getName() + "&z=" + z);
-//				subad.put("pic", "/c/download?id=" + data.id + "&fileID=picture1&entity=" + data.getClass().getName() + "&z=" + z);
-//				subad.put("title", data.title);
-//				subad.put("txt", data.describe_aiu);
-//				subad.put("hit", data.hit);
-//				subad.put("data", data.data);
-//				subad.put("t_type", "nn");
-//				newlist.add(subad);
-//			}
-			for(int i=0;i<l.size();i++){
-				Object[] o = (Object[])l.get(i);
+			List<NativeNew> newlistData = NativeNew.find("mtype = ? order by id desc", c.os).fetch(page, num);
+			for(NativeNew data:newlistData){
 				JSONObject subad = initResultJSON();
-				subad.put("id", o[0]);
-				if(o[5] == null || o[5].toString().isEmpty()){
-					subad.put("icon", "/c/download?id=" + o[0] + "&fileID=icon&entity=models.NativeNew&z=" + z);
-					subad.put("pic", "/c/download?id=" + o[0] + "&fileID=picture1&entity=models.NativeNew&z=" + z);
-				}else{
-					subad.put("icon", "/c/download?id=" + o[0] + "&fileID=icon&entity=models.GameEvaluating&z=" + z);
-					subad.put("pic", "/c/download?id=" + o[0] + "&fileID=picture1&entity=models.GameEvaluating&z=" + z);
-				}
-				subad.put("title", o[1]);
-				subad.put("txt", o[2]);
-				subad.put("hit", o[3]);
-				subad.put("data", o[4]);
-				if(o[5] == null || o[5].toString().isEmpty()){
-					subad.put("t_type", "nn");
-				}else{
+				subad.put("id", data.id);
+				subad.put("icon", "/c/download?id=" + data.id + "&fileID=icon&entity=" + data.getClass().getName() + "&z=" + z);
+				subad.put("pic", "/c/download?id=" + data.id + "&fileID=picture1&entity=" + data.getClass().getName() + "&z=" + z);
+				subad.put("title", data.title);
+				subad.put("txt", data.describe_aiu);
+				subad.put("hit", data.hit);
+				subad.put("data", data.data);
+				if(data.game != null){
+					subad.put("g_id", gid);
 					subad.put("t_type", "ge");
-					subad.put("g_id", o[5]);
+				}else{
+					subad.put("t_type", "nn");
 				}
 				newlist.add(subad);
 			}
@@ -1601,7 +1579,7 @@ public class AiU extends Controller {
 				gm.gameStrategy = GameStrategy.findById(id);
 			}
 		}
-		gm.data = new Date().getTime();
+		gm.data = new Date();
 		gm.msg = msg;
 		gm.c = s.customer;
 		
@@ -1992,334 +1970,6 @@ public class AiU extends Controller {
 		renderSuccess(initResultJSON());
 	}
 
-//	/**
-//	 * ......
-//	 * 
-//	 * @param userName
-//	 * @param password
-//	 * @param locatorId
-//	 * @param mode
-//	 * @param startTime
-//	 * @param endTime
-//	 * @param keepReadState
-//	 * @param page
-//	 * @param num
-//	 */
-//	public static void getLocation(@Required String userName,
-//			@Required String password, @Required Long locatorId, Integer mode,
-//			String startTime, String endTime, boolean keepReadState,Integer page,Integer num) {
-//		long start = System.currentTimeMillis();int count=0;
-//		Document doc = initResultJSON();
-//		// ....
-//		if (Validation.hasErrors()) {
-//			renderFail("error_parameter_required", doc,
-//					error_parameter_required);
-//		}
-//		if (mode == null) {
-//			mode = -1;
-//		}
-//
-//		//...
-//		int begin = 0;
-//		if(num == null){
-//			num = 100;
-//		}
-//		num = num > 100? 100:num;
-//		if(page != null && page > 1){
-//			begin = (page-1)*num;
-//		}
-//
-//		Member member = memberCache.get();
-//		Locator locator = Locator.findById(locatorId);
-//		validateLocator(locator, member, doc);
-//		
-//		// ...........
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//
-//		String startTimeDate = null;
-//		String endTimeDate = null;
-//		try {
-//			if (startTime != null) {
-//				startTimeDate = sdf.format(sdf.parse(startTime));
-//			}
-//			if (endTime != null) {
-//				endTimeDate = sdf.format(sdf.parse(endTime));
-//			}
-//		} catch (ParseException e) {
-//			renderFail("error_dateformat", doc, error_dateformat);
-//		}
-//
-//		String sql = "";
-//		String tableNum = getLocationTableNum(locator);
-//		if (mode == 0) {
-//			if (startTimeDate != null && endTimeDate != null) {
-//				sql = "select * from "+tableNum+" where locator_id = "+locator.id+" and receivedTime >= '"+startTimeDate+"' and receivedTime <= '"+endTimeDate+"' and readed = 0 order by id desc limit " + begin + "," + num;
-//			} else if (startTimeDate != null) {
-//				sql = "select * from "+tableNum+" where locator_id = "+locator.id+" and receivedTime >= '"+startTimeDate+"' and readed = 0 order by id desc limit " + begin + "," + num;
-//			} else {
-//				if(page == null){
-//					sql = "select * from "+tableNum+" where locator_id = "+ locator.id	+ " and readed = 0 order by id desc";//limit " + begin + "," + num;
-//				}else{
-//					sql = "select * from "+tableNum+" where locator_id = "+ locator.id	+ " and readed = 0 order by id desc limit " + begin + "," + num;
-//				}
-//			}
-//		} else if (mode < 0) {
-//			if (startTimeDate != null && endTimeDate != null) {
-//				sql = "select * from "+tableNum+" where locator_id = "+ locator.id+ " and receivedTime >= '"+startTimeDate+"' and receivedTime <= '"+endTimeDate+"' order by id desc limit " + begin + "," + num;
-//			} else if (startTimeDate != null) {
-//				sql = "select * from "+tableNum+" where locator_id = "+ locator.id+ " and receivedTime >= '"+startTimeDate+"' order by id desc limit " + begin + "," + num;
-//			} else {
-//				if(page == null){
-//					sql = "select * from "+tableNum+" where locator_id = "+ locator.id+" order by id desc";//+ " limit " + begin + "," + num;
-//				}else{
-//					sql = "select * from "+tableNum+" where locator_id = "+ locator.id+ " order by id desc limit " + begin + "," + num;
-//				}
-//			}
-//		} else {
-//			if(page == null){
-//				sql = "select * from "+tableNum+" where locator_id = "+ locator.id + " order by id desc limit " + mode;
-//			}else{
-//				sql = "select * from "+tableNum+" where locator_id = "+ locator.id + " order by id desc limit " + begin + "," + num;
-//			}
-//		}
-//		Connection conn = DB.getConnection();
-//		Statement st = null;
-//		PreparedStatement pst = null;
-//		ResultSet rs = null;
-//		
-//		try {
-//				conn.setAutoCommit(false);
-//				conn.setTransactionIsolation(conn.TRANSACTION_READ_UNCOMMITTED);
-//				st = conn.createStatement();
-//				pst = conn.prepareStatement("update locations set readed = 1 where id = ?");
-//				rs = st.executeQuery(sql);
-//				long id;
-//				double latitude;
-//				double longitude;
-//				double cell_latitude;
-//				double cell_longitude;
-//				int cell_accuracy;
-//				int cell_coordinateType;
-//				int speed;
-//				int direction;
-//				Date dateTime;
-//				Date receivedTime;
-//				String status;
-//				boolean readed;
-//				int mcc;
-//				int mnc;
-//				int lac;
-//				int cellid;
-//				int valid;
-//				int latitudeFlag;
-//				int longitudeFlag;
-//				double latitudeForTest;
-//				double longitudeForTest;
-//				
-//				while (rs.next()) {
-//					id = rs.getLong("id");
-//					latitude = rs.getDouble("latitude");
-//					longitude = rs.getDouble("longitude");
-//					cell_latitude = rs.getDouble("cell_latitude");
-//					cell_longitude = rs.getDouble("cell_longitude");
-//					cell_accuracy = rs.getInt("cell_accuracy");
-//					cell_coordinateType = rs.getInt("cell_coordinateType");
-//					speed = rs.getInt("speed");
-//					direction = rs.getInt("direction");
-//					dateTime = rs.getTimestamp("dateTime");
-//					receivedTime = rs.getTimestamp("receivedTime");
-//					status = rs.getString("status");
-//					readed = rs.getBoolean("readed");
-//					mcc = rs.getInt("mcc");
-//					mnc = rs.getInt("mnc");
-//					lac = rs.getInt("lac");
-//					cellid = rs.getInt("cellid");
-//					valid = rs.getInt("valid");
-//					latitudeFlag = rs.getInt("latitudeFlag");
-//					longitudeFlag = rs.getInt("longitudeFlag");
-//					latitudeForTest = rs.getDouble("latitudeForTest");
-//					longitudeForTest = rs.getDouble("longitudeForTest");
-//					
-//					Element m_location = doc.createElement("location");
-//					doc.getDocumentElement().appendChild(m_location);
-//
-//					Element eleId = doc.createElement("id");
-//					eleId.setTextContent("" + id);
-//					m_location.appendChild(eleId);
-//
-//					Element eleMcc = doc.createElement("mcc");
-//					eleMcc.setTextContent("" + mcc);
-//					m_location.appendChild(eleMcc);
-//					
-//					Element eleMnc = doc.createElement("mnc");
-//					eleMnc.setTextContent("" + mnc);
-//					m_location.appendChild(eleMnc);
-//					
-//					Element eleLac = doc.createElement("lac");
-//					eleLac.setTextContent("" + lac);
-//					m_location.appendChild(eleLac);
-//					
-//					Element eleCellid = doc.createElement("cellid");
-//					eleCellid.setTextContent("" + cellid);
-//					m_location.appendChild(eleCellid);
-//					
-//					Element eleCell_latitude = doc.createElement("cell_latitude");
-//					eleCell_latitude.setTextContent("" + cell_latitude);
-//					m_location.appendChild(eleCell_latitude);
-//					
-//					Element eleCell_longitude = doc.createElement("cell_longitude");
-//					eleCell_longitude.setTextContent("" + cell_longitude);
-//					m_location.appendChild(eleCell_longitude);
-//					
-//					Element eleCell_accuracy = doc.createElement("cell_accuracy");
-//					eleCell_accuracy.setTextContent("" + cell_accuracy);
-//					m_location.appendChild(eleCell_accuracy);
-//					
-//					Element eleCell_coordinateType = doc
-//							.createElement("cell_coordinateType");
-//					eleCell_coordinateType.setTextContent(""
-//							+ cell_coordinateType);
-//					m_location.appendChild(eleCell_coordinateType);
-//					
-//					Element eleValid = doc.createElement("valid");
-//					eleValid.setTextContent("" + (valid&3));
-//					m_location.appendChild(eleValid);
-//					
-//					Element eleLatitudeFlag = doc.createElement("latitudeFlag");
-//					eleLatitudeFlag.setTextContent("" + latitudeFlag);
-//					m_location.appendChild(eleLatitudeFlag);
-//					
-//					Element eleLatitude = doc.createElement("latitude");
-//					eleLatitude.setTextContent("" + latitude);
-//					m_location.appendChild(eleLatitude);
-//					
-//					Element eleLongitudeFlag = doc.createElement("longitudeFlag");
-//					eleLongitudeFlag.setTextContent("" + longitudeFlag);
-//					m_location.appendChild(eleLongitudeFlag);
-//					
-//					Element eleLongitude = doc.createElement("longitude");
-//					eleLongitude.setTextContent("" + longitude);
-//					m_location.appendChild(eleLongitude);
-//					
-//					Element eleSpeed = doc.createElement("speed");
-//					eleSpeed.setTextContent("" + speed);
-//					m_location.appendChild(eleSpeed);
-//					
-//					Element eleDirection = doc.createElement("direction");
-//					eleDirection.setTextContent("" + direction);
-//					m_location.appendChild(eleDirection);
-//					
-//					Element eleDateTime = doc.createElement("dateTime");
-//					eleDateTime.setTextContent(""
-//							+ new SimpleDateFormat("yyyyMMdd'T'HHmmss")
-//									.format(dateTime));
-//					m_location.appendChild(eleDateTime);
-//					
-//					Element eleReceivedTime = doc.createElement("receivedTime");
-//					eleReceivedTime.setTextContent(""
-//							+ new SimpleDateFormat("yyyyMMdd'T'HHmmss")
-//									.format(receivedTime));
-//					m_location.appendChild(eleReceivedTime);
-//					
-//					Element eleStatus = doc.createElement("status");
-//					eleStatus.setTextContent("" + status);
-//					m_location.appendChild(eleStatus);
-//
-//					Element eleElectronicfence = doc.createElement("electronicfence");
-//					if(locator.electronicFence != null && locator.electronicFence.on){
-//						eleElectronicfence.setTextContent(""+((valid >> 4) & 3));
-//					}else{
-//						eleElectronicfence.setTextContent("0");
-//					}
-//					m_location.appendChild(eleElectronicfence);
-//
-//					if(locator.moveAlarm != null && locator.moveAlarm.switch_on && (valid >> 7) == 1){
-//						Element eleMove_alarm = doc.createElement("move_alarm");
-//						eleMove_alarm.setTextContent("0");
-//						m_location.appendChild(eleMove_alarm);
-//					}
-//					// TODO .....GPS
-//					Element eleLatitudeForTest = doc.createElement("latitudeForTest");
-//					eleLatitudeForTest.setTextContent("" + latitudeForTest);
-//					m_location.appendChild(eleLatitudeForTest);
-//					
-//					Element eleLongitudeForTest = doc.createElement("longitudeForTest");
-//					eleLongitudeForTest.setTextContent("" + longitudeForTest);
-//					m_location.appendChild(eleLongitudeForTest);
-//					count++;
-//					// .....
-//					if (!keepReadState && !readed) {
-//						pst.setLong(1, id);
-//						pst.addBatch();
-//					}
-//				}
-//				pst.executeBatch();
-//				conn.commit();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}finally{
-//			DB.close();
-//		}
-//		long end = System.currentTimeMillis();
-//		if(end - start >200){
-//			Logger.info("Time:"+(end-start)+"  User:"+member.username+"  Count:"+count);
-//		}
-//		renderSuccess("location_get_success", doc);
-//	}
-//
-//	/**
-//	 * .........setInterval.
-//	 * 
-//	 * @param userName
-//	 * @param password
-//	 * @param locatorId
-//	 * @param interval
-//	 * @param count
-//	 */
-//	public static void setInterval(@Required String userName,
-//			@Required String password, @Required Long locatorId,
-//			Integer interval, Integer count) {
-//		Document doc = initResultJSON();
-//		// ....
-//		if (Validation.hasErrors()) {
-//			renderFail("error_parameter_required", doc,
-//					error_parameter_required);
-//		}
-//		if (interval == null || interval < 10 || interval > 65535) {
-//			interval = 10;
-//		}
-//
-//		if (count == null || count < 5 || count > 65535) {
-//			count = 5;
-//		}
-//
-//		Member member = memberCache.get();
-//
-//		Locator locator = Locator.findById(locatorId);
-//		validateLocator(locator, member, doc);
-//
-//		// .........
-//		// G1ConfirmMessage message = G1ConfirmMessage.find("byLocator",
-//		// locator).first();
-//		// if(message!=null){
-//		// Element setIntervalRsp = doc.createElement("setIntervalRsp");
-//		// doc.getDocumentElement().appendChild(setIntervalRsp);
-//		// Element m_dateTime = doc.createElement("dateTime");
-//		// m_dateTime.setTextContent(""+new
-//		// SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'").format(message.dateTime));
-//		// setIntervalRsp.appendChild(m_dateTime);
-//		// Element m_interval = doc.createElement("interval");
-//		// m_interval.setTextContent(""+message.intervals);
-//		// setIntervalRsp.appendChild(m_interval);
-//		// Element m_count = doc.createElement("count");
-//		// m_count.setTextContent(""+message.count);
-//		// setIntervalRsp.appendChild(m_count);
-//		// }
-//
-//		// renderSuccess("locator_set_success", doc, locator.name);
-//		renderSuccess("locator_set_success", doc);
-//	}
-//
 	/**
 	 */
 	public static void getMemberInfo(@Required String z) {
@@ -2356,70 +2006,6 @@ public class AiU extends Controller {
 		renderSuccess(results);
 	}
 
-//	/**
-//	 * ......
-//	 * 
-//	 * @param userName
-//	 * @param password
-//	 * @param locatorId
-//	 * @param on
-//	 * @param in
-//	 * @param latitude1
-//	 * @param longitude1
-//	 * @param latitude2
-//	 * @param longitude2
-//	 */
-//	public static void setElectronicFence(@Required String userName,
-//			@Required String password, @Required Long locatorId,
-//			@Required Boolean on, Boolean in, Double latitude1,
-//			Double longitude1, Double latitude2, Double longitude2) {
-//		Document doc = initResultJSON();
-//		// ....
-//		if (Validation.hasErrors()) {
-//			renderFail("error_parameter_required", doc,
-//					error_parameter_required);
-//		}
-//		Member member = memberCache.get();
-//		Locator locator = Locator.findById(locatorId);
-//		validateLocator(locator, member, doc);
-//
-//		ElectronicFence ef = ElectronicFence.find("byLocator", locator).first();
-//		if (ef == null) {
-//			ef = new ElectronicFence();
-//			ef.locator = locator;
-//		}
-//		ef.dateTime = new Date();
-//		ef.on = on;
-//		if (on) {
-//			// .....
-//			locator.warning = locator.warning | 2;
-//			if (in != null) {
-//				ef.in = in;
-//			}
-//			if (latitude1 != null) {
-//				ef.latitude1 = latitude1;
-//			}
-//			if (longitude1 != null) {
-//				ef.longitude1 = longitude1;
-//			}
-//			if (latitude2 != null) {
-//				ef.latitude2 = latitude2;
-//			}
-//			if (longitude2 != null) {
-//				ef.longitude2 = longitude2;
-//			}
-//
-//		} else {
-//			// .....
-//			locator.warning = locator.warning & 0xFFFFFFFD;
-//		}
-//		ef.save();
-//		Cache.delete("electronicFence_" + locator.id);
-//		Cache.set("electronicFence_" + locator.id, ef);
-//		renderSuccess("set_electronic_fence_success", doc);
-//
-//	}
-//
 	public static void clearCache(@Required String z) {
 		JSONObject results = initResultJSON();
 		// ....
@@ -2464,24 +2050,24 @@ public class AiU extends Controller {
 				if (attachment == null || !attachment.exists()) {
 					renderFail("error_download");
 				}
+				long p = 0;
+				Header h = request.headers.get("Range");
+				play.Logger.info("download header:", h);
+				if(h != null){
+					p = Long.parseLong(h.value().replaceAll("bytes=", "").replaceAll("-", ""));
+				}
+				play.Logger.info("download header:", p);
 				response.contentType = attachment.type();
-				renderBinary(attachment.get(), attachment.length());
+				if(p > 0){
+					renderBinary(attachment.get(), attachment.get().skip(p));
+				}else{
+					renderBinary(attachment.get(), attachment.length());
+				}
+				
 			}
 		} catch (Exception e) {
 			renderText("Download failed");
 		}
-
-		// // DEPRECATED
-		// if (att instanceof play.db.jpa.FileAttachment) {
-		// play.db.jpa.FileAttachment attachment = (play.db.jpa.FileAttachment)
-		// att;
-		// if (attachment == null || !attachment.exists()) {
-		// renderText("THE FILE HAS BEEN LOST");
-		// }
-		// response.setHeader("Content-Disposition", "attachment; filename=\""
-		// + encoder.encode(attachment.filename, "utf-8") + "\"");
-		// renderBinary(attachment.get());
-		// }
 		renderFail("error_download");
 	}
 
