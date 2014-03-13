@@ -130,7 +130,7 @@ public class AiU extends Controller {
 		sessionCache.set(s);
 		if (s == null) {
 			renderFail("error_session_expired");
-			if(new Date().getTime() - s.data.getTime() > 86400000){
+			if(new Date().getTime() - s.data > 86400000){
 				s.delete();
 				renderFail("error_session_expired");
 			}
@@ -210,7 +210,7 @@ public class AiU extends Controller {
 				
 				Session s = new Session();
 				s.customer = newUser;
-				s.data = new Date();
+				s.data = new Date().getTime();
 				s.sessionID = UUID.randomUUID().toString();
 				s.save();
 				
@@ -264,7 +264,7 @@ public class AiU extends Controller {
 				
 				Session s = new Session();
 				s.customer = newUser;
-				s.data = new Date();
+				s.data = new Date().getTime();
 				s.sessionID = UUID.randomUUID().toString();
 				s.save();
 				
@@ -327,7 +327,7 @@ public class AiU extends Controller {
 			s = new Session();
 			s.customer = customer;
 			s.sessionID = UUID.randomUUID().toString();
-			s.data = new Date();
+			s.data = new Date().getTime();
 			s.save();
 		}
 
@@ -1579,7 +1579,7 @@ public class AiU extends Controller {
 				gm.gameStrategy = GameStrategy.findById(id);
 			}
 		}
-		gm.data = new Date();
+		gm.data = new Date().getTime();
 		gm.msg = msg;
 		gm.c = s.customer;
 		

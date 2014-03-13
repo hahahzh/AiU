@@ -1,7 +1,5 @@
 package models;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,7 +25,7 @@ public class GameMessage extends Model {
 	@MaxSize(30)
 	public String msg;
 	
-	public Date data;
+	public Long data;
 	
 	@ManyToOne(fetch=FetchType.LAZY,cascade=javax.persistence.CascadeType.REFRESH)
 	public Game game;
