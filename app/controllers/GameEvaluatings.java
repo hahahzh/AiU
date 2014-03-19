@@ -40,7 +40,7 @@ public class GameEvaluatings extends CRUD {
  	        nn.describe_aiu = object.describe_aiu;
  	        nn.game = object.game;
  	        nn.hit = object.hit;
- 	        nn.icon = object.icon;
+ 	        nn.icon = object.game.icon;
  	        nn.mtype = object.mtype;
  	        nn.picture1 = object.picture1;
  	        nn.picture10 = object.picture10;
@@ -103,7 +103,7 @@ public class GameEvaluatings extends CRUD {
  	        nn.describe_aiu = object.describe_aiu;
  	        nn.game = object.game;
  	        nn.hit = object.hit;
- 	        nn.icon = object.icon;
+ 	        nn.icon = object.game.icon;
  	        nn.mtype = object.mtype;
  	        nn.picture1 = object.picture1;
  	        nn.picture10 = object.picture10;

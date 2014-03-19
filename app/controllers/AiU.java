@@ -130,9 +130,12 @@ public class AiU extends Controller {
 		sessionCache.set(s);
 		if (s == null) {
 			renderFail("error_session_expired");
-			if(new Date().getTime() - s.data > 86400000){
-				s.delete();
-				renderFail("error_session_expired");
+		}else{
+			if(!ONE.equals(s.sessionID) && !TWO.equals(s.sessionID)){
+				if(new Date().getTime() - s.data > 86400000){
+					s.delete();
+					renderFail("error_session_expired");
+				}
 			}
 		}
 	}

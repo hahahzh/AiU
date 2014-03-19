@@ -40,15 +40,19 @@ public class CompressPic {
 				return false;
 			} else {
 				file = new File(srcFilePath);
-				if(file.length() > 100000){
+				if(file.length() > 50000){
 					
 					float rate = (float) 0.1;
-					if(file.length() < 200000){
+					if(file.length() < 100000){
+						rate=(float)0.6;
+					}else if(file.length() < 200000){
 						rate=(float)0.4;
 					}else if(file.length() < 300000){
 						rate=(float)0.3;
 					}else if(file.length() < 750000){
 						rate=(float)0.2;
+					}else if(file.length() < 1240000){
+						rate=(float)0.1;
 					}
 					// 压缩必须制定为MODE_EXPLICIT
 					imgWriteParams.setCompressionMode(imgWriteParams.MODE_EXPLICIT);
