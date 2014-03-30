@@ -12,6 +12,7 @@ GET     /                                       Application.index
 *       /c/subscription							AiU.subscription
 *       /c/unsubscription						AiU.unsubscription
 *       /c/new									AiU.getNews
+*       /c/evaluatings							AiU.getEvaluatings
 *       /c/newinfo								AiU.getNewInfo
 *       /c/invite								AiU.invite
 *       /c/strategyinfo							AiU.getGameStrategyInfo
@@ -43,7 +44,7 @@ GET     /favicon.ico                            404
 
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
-GET     /attachments/                      		staticDir:attachments
+GET     /attachments/                      		staticDir:data/attachments
 
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}

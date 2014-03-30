@@ -365,7 +365,7 @@ public class AiU extends Controller {
 		results.put("user", user);
 		
 		JSONArray adlistArr = initResultJSONArray();
-		List<Carousel> adlistData = Carousel.find("mtype=? order by id desc",customer.os).fetch(0,5);
+		List<Carousel> adlistData = Carousel.find("mtype=? or mtype=3 order by id desc",customer.os).fetch(0,5);
 		for(Carousel data:adlistData){
 			JSONObject subad = initResultJSON();
 			subad.put("id", data.id);
@@ -467,7 +467,7 @@ public class AiU extends Controller {
 		if (Validation.hasErrors()) {
 			renderFail("error_parameter_required");
 		}
-		
+		play.Logger.info("getNews:num="+num+",time="+time+",page="+page+",type="+type+",gid="+gid+"z="+z);
 		Session s = sessionCache.get();
 		if(s == null){
 			renderFail("error_session_expired");
@@ -483,7 +483,7 @@ public class AiU extends Controller {
 		
 		JSONArray newlist = initResultJSONArray();
 		if(gid == null){
-			List<NativeNew> newlistData = NativeNew.find("mtype = ? order by id desc", c.os).fetch(page, num);
+			List<NativeNew> newlistData = NativeNew.find("mtype = ? or mtype=3 order by id desc", c.os).fetch(page, num);
 			for(NativeNew data:newlistData){
 				JSONObject subad = initResultJSON();
 				subad.put("id", data.id);
@@ -503,7 +503,7 @@ public class AiU extends Controller {
 			}
 		}else{
 			if(type == null || type == 1){
-				List<FirmNew> newlistData = FirmNew.find("mtype = ? and game_id = "+gid+" order by id desc", c.os).fetch(page, num);				
+				List<FirmNew> newlistData = FirmNew.find("mtype = ? or mtype=3 and game_id = "+gid+" order by id desc", c.os).fetch(page, num);				
 				for(FirmNew data:newlistData){
 					JSONObject subad = initResultJSON();
 					subad.put("id", data.id);
@@ -520,7 +520,7 @@ public class AiU extends Controller {
 					newlist.add(subad);
 				}
 			}else if(type == 2){
-				List<GameStrategy> newlistData = GameStrategy.find("mtype = ? and game_id = "+gid+" order by id desc", c.os).fetch(page, num);
+				List<GameStrategy> newlistData = GameStrategy.find("mtype = ? or mtype=3 and game_id = "+gid+" order by id desc", c.os).fetch(page, num);
 				for(GameStrategy data:newlistData){
 					JSONObject subad = initResultJSON();
 					subad.put("id", data.id);
@@ -537,7 +537,7 @@ public class AiU extends Controller {
 					newlist.add(subad);
 				}
 			}else if(type == 3){
-				List<GameEvaluating> newlistData = GameEvaluating.find("mtype = ? and game_id = "+gid+" order by id desc", c.os).fetch(page, num);
+				List<GameEvaluating> newlistData = GameEvaluating.find("mtype = ? or mtype=3 and game_id = "+gid+" order by id desc", c.os).fetch(page, num);
 				for(GameEvaluating data:newlistData){
 					JSONObject subad = initResultJSON();
 					subad.put("id", data.id);
@@ -555,6 +555,50 @@ public class AiU extends Controller {
 				}
 			}
 		}
+		results.put("newlist", newlist);
+		renderSuccess(results);
+	}
+	
+	public static void getEvaluatings(int num, long time, int page, Long gid, @Required String z) {
+		// ....
+		if (Validation.hasErrors()) {
+			renderFail("error_parameter_required");
+		}
+		
+		Session s = sessionCache.get();
+		if(s == null){
+			renderFail("error_session_expired");
+		}
+		Customer c = s.customer;
+
+		JSONObject results = initResultJSON();
+		
+		JSONObject user = initResultJSON();
+		user.put("exp", c.exp);
+		user.put("lv", c.lv.level_name);
+		results.put("user", user);
+		
+		JSONArray newlist = initResultJSONArray();
+		
+		String condition = "";
+		if(gid != null){
+			condition = "and game_id = "+gid;
+		}
+		List<GameEvaluating> newlistData = GameEvaluating.find("mtype = ? or mtype=3 "+condition+" order by id desc", c.os).fetch(page, num);
+		for(GameEvaluating data:newlistData){
+			JSONObject subad = initResultJSON();
+			subad.put("id", data.id);
+			subad.put("icon", "/c/download?id=" + data.game.id + "&fileID=icon&entity=models.Game&z=" + z);
+			subad.put("pic", "/c/download?id=" + data.id + "&fileID=picture1&entity=" + data.getClass().getName() + "&z=" + z);
+			subad.put("title", data.title);
+			subad.put("txt", data.describe_aiu);
+			subad.put("hit", data.hit);
+			subad.put("data", data.data);
+			subad.put("t_type", "ge");
+			subad.put("g_id", data.game.id);
+			newlist.add(subad);
+		}
+		
 		results.put("newlist", newlist);
 		renderSuccess(results);
 	}
@@ -936,6 +980,7 @@ public class AiU extends Controller {
 			newinfo.put("res", data.res);
 			newinfo.put("hit", data.hit);
 			newinfo.put("data", data.data);
+			newinfo.put("describe_aiu", data.describe_aiu);
 			
 			JSONArray jsonarr = initResultJSONArray();
 			
@@ -1050,6 +1095,9 @@ public class AiU extends Controller {
 			}
 			
 			newinfo.put("imgs", jsonarr);
+			newinfo.put("g_id", data.game.id);
+			newinfo.put("g_title", data.game.title);
+			newinfo.put("g_star", data.game.star);
 			data.hit++;
 			data.save();
 		}
@@ -1079,10 +1127,10 @@ public class AiU extends Controller {
 		results.put("user", user);
 		
 		JSONArray list = initResultJSONArray();
-		List<EveryGame> listData = EveryGame.find("mtype = ? and everygametype_id=1 order by id desc", c.os).fetch(page,num);
+		List<EveryGame> listData = EveryGame.find("mtype = ? or mtype=3 and everygametype_id=1 order by id desc", c.os).fetch(page,num);
 		for(EveryGame data:listData){
 			JSONObject subad = initResultJSON();
-			FirmNew survey = FirmNew.find("mtype = ? and game_id=? order by id desc", c.os, data.game).first();
+			FirmNew survey = FirmNew.find("mtype = ? or mtype=3 and game_id=? order by id desc", c.os, data.game).first();
 			if(survey != null){
 				subad.put("id", survey.id);
 			}
@@ -1116,7 +1164,7 @@ public class AiU extends Controller {
 
 		JSONObject results = initResultJSON();
 		
-		GameCarousel data = GameCarousel.find("mtype=? and game_id=? order by id desc",customer.os,id).first();
+		GameCarousel data = GameCarousel.find("mtype=? or mtype=3 and game_id=? order by id desc",customer.os,id).first();
 		if(data == null) renderFail("error_game_deleted");
 		results.put("id", data.id);
 		results.put("g_id", data.game.id);
@@ -1348,7 +1396,7 @@ public class AiU extends Controller {
 		results.put("user", user);
 		
 		JSONArray list = initResultJSONArray();
-		List<EveryGame> listData = EveryGame.find("mtype = ? and everygametype_id=2 order by id desc", c.os).fetch(page, num);
+		List<EveryGame> listData = EveryGame.find("mtype = ? or mtype=3 and everygametype_id=2 order by id desc", c.os).fetch(page, num);
 		for(EveryGame data:listData){
 			JSONObject subad = initResultJSON();
 			subad.put("id", data.id);
@@ -1388,7 +1436,7 @@ public class AiU extends Controller {
 		results.put("user", user);
 		
 		JSONArray list = initResultJSONArray();
-		List<Game> listData = Game.find("mtype = ? order by ranking desc,id desc", c.os).fetch();
+		List<Game> listData = Game.find("mtype = ? or mtype=3 order by ranking desc,id desc", c.os).fetch();
 		for(Game data:listData){
 			JSONObject subad = initResultJSON();
 			subad.put("id", data.id);

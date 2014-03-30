@@ -162,7 +162,7 @@ result 例
 19 增加评论 #目前只有游戏有评论
 http://127.0.0.1:9000/c/addcomment?id=2&msg=%E6%88%91%E4%BA%86&z=f2e8d93c-c205-468a-8c6d-4f0df01302c3&type=n
 id:游戏、新闻、评测、攻略的ID
-type=g(游戏) type=n（新闻）
+type=g(游戏) type=n（研发商新闻）type=nn(本地游戏) type=ge（游戏评测）type=gs（游戏攻略）
 
 20 查看评论Ok
 http://127.0.0.1:9000/c/getcomment?id=4&num=3&page=1&z=af017cae-d043-4cd7-8dea-a38315bc44a4&type=n
@@ -246,7 +246,8 @@ http://139.159.32.29:9000/c/newstype?z=1
 
 
 31 游戏专区轮播位
-http://139.159.32.29:9000/c/gameadlist?id=10&z=1
+http://139.159.32.29:9000/c/gameadlist?id=10&z=1&ios_t=4
+ios_t=4 IPhone4 5 IPhone5
 返回
 {"state":"1","results":{"id":1,"g_id":6,"adlist":[{"icon":"/c/download?id=6&fileID=picture1&entity=models.New&z=1","url":"/c/newinfo?id=6&z=1","data":"1388414242478","t_id":6,"t_type":"n"},{"icon":"/c/download?id=7&fileID=picture1&entity=models.New&z=1","url":"/c/newinfo?id=7&z=1","data":"1388415209978","t_id":7,"t_type":"n"},{"icon":"/c/download?id=8&fileID=picture1&entity=models.New&z=1","url":"/c/newinfo?id=8&z=1","data":"1388415262955","t_id":8,"t_type":"n"},{"icon":"/c/download?id=9&fileID=picture1&entity=models.New&z=1","url":"/c/newinfo?id=9&z=1","data":"1388415306065","t_id":9,"t_type":"n"},{"icon":"/c/download?id=6&fileID=picture1&entity=models.New&z=1","url":"/c/newinfo?id=6&z=1","data":"1388414242478","t_id":6,"t_type":"n"},{"icon":"/c/download?id=7&fileID=picture1&entity=models.New&z=1","url":"/c/newinfo?id=7&z=1","data":"1388415209978","t_id":7,"t_type":"n"},{"icon":"/c/download?id=8&fileID=picture1&entity=models.New&z=1","url":"/c/newinfo?id=8&z=1","data":"1388415262955","t_id":8,"t_type":"n"},{"icon":"/c/download?id=9&fileID=picture1&entity=models.New&z=1","url":"/c/newinfo?id=9&z=1","data":"1388415306065","t_id":9,"t_type":"n"}]}}
 
@@ -255,3 +256,8 @@ http://139.159.32.29:9000/c/gameadlist?id=10&z=1
 http://139.159.32.29:9000/c/userinfo?z=1
 返回
 {"state":"1","results":{"exp":0,"level":"小学生","phonenumber":"10000000000","nickname":"游客","version":"1.0","portrait":"/public/images/portrait.png"}}
+
+33 得到评测列表
+http://139.159.32.29:9000/c/evaluatings?num=5&time=&page=1&gid=2&z=1
+gid 有 显示当前游戏的评测列表；gid 无 显示所有评测的列表
+评测列表
