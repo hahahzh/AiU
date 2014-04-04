@@ -28,16 +28,16 @@ public class GameStrategys extends CRUD {
         
         Long admin_id = Long.parseLong(session.get("admin_id"));
       	List<Game> lg = ((AdminManagement)AdminManagement.findById(admin_id)).game;
-      	StringBuffer where = new StringBuffer(32);
+      	String where = null;
       	int i = lg.size();
-      	if(i>0)where.append("game_id in(");
+      	if(i>0)where += "game_id in(";
       	for(Game g:lg){
-      		where.append(g.id+",");
+      		where += g.id+",";
       	}
-      	if(i>0)where.append("0)");
-        List<Model> objects = type.findPage(page, search, searchFields, orderBy, order, where.toString());
-        Long count = type.count(search, searchFields, where.toString());
-        Long totalCount = type.count(null, null, where.toString());
+      	if(i>0)where += "0)";
+        List<Model> objects = type.findPage(page, search, searchFields, orderBy, order, where);
+        Long count = type.count(search, searchFields, where);
+        Long totalCount = type.count(null, null, where);
         try {
             render(type, objects, count, totalCount, page, orderBy, order);
         } catch (TemplateNotFoundException e) {

@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import play.data.validation.Required;
-import play.data.validation.URL;
 import play.data.validation.Unique;
 import play.db.jpa.Model;
 

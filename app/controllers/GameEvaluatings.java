@@ -97,7 +97,6 @@ public class GameEvaluatings extends CRUD {
         if(object.isShowNews == 1){
         	NativeNew nn = NativeNew.find("game_id=? and title=?", object.game.id, object.title).first();
         	if(nn == null)nn = new NativeNew();
-        	else nn.id = object.id;
  	        nn.author = object.author;
  	        nn.data = object.data;
  	        nn.describe_aiu = object.describe_aiu;

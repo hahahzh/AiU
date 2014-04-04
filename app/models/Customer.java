@@ -35,6 +35,7 @@ public class Customer extends Model {
 
 	public String mac;
 
+	// 1 IOS正版 2 Android 3 IOS越狱  4 IPad 5 OPad
 	public int os;
 
 	public String type;

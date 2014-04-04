@@ -7,7 +7,12 @@
 
     <div class="objectForm">
     #{form action:@save(object._key()), enctype:'multipart/form-data'}
-        #{gamestrategy.form /}
+    	#{if session.admin_group=='1'}
+        	#{gamestrategy.form /}
+        #{/if}
+        #{else}
+        	#{CRUD.form /}
+        #{/else}
         <p class="crudButtons">
             <input type="submit" name="_save" value="&{'crud.save', type.modelName}" />
             <input type="submit" name="_saveAndContinue" value="&{'crud.saveAndContinue', type.modelName}" />

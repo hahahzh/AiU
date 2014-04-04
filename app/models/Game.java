@@ -206,8 +206,20 @@ public class Game extends ThirdModel {
 	@MaxSize(1000)
 	public String txt; // 详细内容
 	
-	@Required
-	public String downloadurl;
+	// IOS正版
+	public String downloadurl1;
+	
+	// Android
+	public String downloadurl2;
+	
+	// IOS越狱
+	public String downloadurl3;
+	
+	// IPad
+	public String downloadurl4;
+	
+	// OPad
+	public String downloadurl5;
 	
 	@Required
 	public int ranking;

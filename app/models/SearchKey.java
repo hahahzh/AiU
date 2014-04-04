@@ -15,7 +15,6 @@ import play.data.validation.MinSize;
 import play.data.validation.Password;
 import play.data.validation.Phone;
 import play.data.validation.Required;
-import play.data.validation.URL;
 import play.db.jpa.Model;
 
 @Table(name = "searchkey")
