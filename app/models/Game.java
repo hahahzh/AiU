@@ -45,7 +45,6 @@ public class Game extends ThirdModel {
 	@Required
 	public String version;
 	
-	@Required
 	@CheckWith(PicCompres.class)
 	public Blob picture1_ip5;
 	

@@ -23,10 +23,13 @@ public class Carousel extends Model {
 	@Required
 	public int mtype;
 	
+	@Hidden
+	public String carousel_name;
+	
 	@ManyToOne(fetch=FetchType.EAGER,cascade=javax.persistence.CascadeType.REFRESH)
 	public CarouselType ct;
 
-	public String toString(){
+	public String getCarousel_name(){
 		String name = null;
 		if(2 == ct.id){
 	  		EveryGame l = EveryGame.findById(ad_id);

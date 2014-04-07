@@ -54,6 +54,7 @@ locator_modify_success=修改定位器信息成功.
 clear_cache_success=清空缓存成功.
 set_move_alarm_success=设置移动报警成功.
 get_version_success=获取最新版本成功.
+carousel_name=名称
 
 crud.title=矮油互动娱乐管理平台
 crud.home=主页

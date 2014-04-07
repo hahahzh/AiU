@@ -761,7 +761,7 @@ public class AiU extends Controller {
 			img11.put("picture", "/c/download?id=" + data.id + "&fileID=picture11&entity=" + data.getClass().getName() + "&z=" + z);
 		}
 		if(data.txt11 != null && !data.txt11.isEmpty()){
-			img1.put("txt", data.txt11);
+			img11.put("txt", data.txt11);
 		}
 		if(!img11.isNullObject() && !img11.isEmpty()){
 			jsonarr.add(img11);
@@ -771,7 +771,7 @@ public class AiU extends Controller {
 		if(data.picture12.exists()){
 			img12.put("picture", "/c/download?id=" + data.id + "&fileID=picture12&entity=" + data.getClass().getName() + "&z=" + z);
 		}
-		if(data.txt11 != null && !data.txt12.isEmpty()){
+		if(data.txt12 != null && !data.txt12.isEmpty()){
 			img12.put("txt", data.txt12);
 		}
 		if(!img12.isNullObject() && !img12.isEmpty()){
@@ -782,7 +782,7 @@ public class AiU extends Controller {
 		if(data.picture13.exists()){
 			img13.put("picture", "/c/download?id=" + data.id + "&fileID=picture13&entity=" + data.getClass().getName() + "&z=" + z);
 		}
-		if(data.txt11 != null && !data.txt13.isEmpty()){
+		if(data.txt13 != null && !data.txt13.isEmpty()){
 			img13.put("txt", data.txt13);
 		}
 		if(!img13.isNullObject() && !img13.isEmpty()){
@@ -793,7 +793,7 @@ public class AiU extends Controller {
 		if(data.picture14.exists()){
 			img14.put("picture", "/c/download?id=" + data.id + "&fileID=picture14&entity=" + data.getClass().getName() + "&z=" + z);
 		}
-		if(data.txt11 != null && !data.txt14.isEmpty()){
+		if(data.txt14 != null && !data.txt14.isEmpty()){
 			img14.put("txt", data.txt14);
 		}
 		if(!img14.isNullObject() && !img14.isEmpty()){
@@ -804,7 +804,7 @@ public class AiU extends Controller {
 		if(data.picture15.exists()){
 			img15.put("picture", "/c/download?id=" + data.id + "&fileID=picture15&entity=" + data.getClass().getName() + "&z=" + z);
 		}
-		if(data.txt11 != null && !data.txt15.isEmpty()){
+		if(data.txt15 != null && !data.txt15.isEmpty()){
 			img15.put("txt", data.txt15);
 		}
 		if(!img15.isNullObject() && !img15.isEmpty()){
@@ -815,7 +815,7 @@ public class AiU extends Controller {
 		if(data.picture16.exists()){
 			img16.put("picture", "/c/download?id=" + data.id + "&fileID=picture16&entity=" + data.getClass().getName() + "&z=" + z);
 		}
-		if(data.txt11 != null && !data.txt16.isEmpty()){
+		if(data.txt16 != null && !data.txt16.isEmpty()){
 			img16.put("txt", data.txt16);
 		}
 		if(!img16.isNullObject() && !img16.isEmpty()){
@@ -826,7 +826,7 @@ public class AiU extends Controller {
 		if(data.picture17.exists()){
 			img17.put("picture", "/c/download?id=" + data.id + "&fileID=picture17&entity=" + data.getClass().getName() + "&z=" + z);
 		}
-		if(data.txt11 != null && !data.txt17.isEmpty()){
+		if(data.txt17 != null && !data.txt17.isEmpty()){
 			img17.put("txt", data.txt17);
 		}
 		if(!img17.isNullObject() && !img17.isEmpty()){
@@ -837,7 +837,7 @@ public class AiU extends Controller {
 		if(data.picture18.exists()){
 			img18.put("picture", "/c/download?id=" + data.id + "&fileID=picture18&entity=" + data.getClass().getName() + "&z=" + z);
 		}
-		if(data.txt11 != null && !data.txt18.isEmpty()){
+		if(data.txt18 != null && !data.txt18.isEmpty()){
 			img18.put("txt", data.txt18);
 		}
 		if(!img18.isNullObject() && !img18.isEmpty()){
@@ -848,7 +848,7 @@ public class AiU extends Controller {
 		if(data.picture19.exists()){
 			img19.put("picture", "/c/download?id=" + data.id + "&fileID=picture19&entity=" + data.getClass().getName() + "&z=" + z);
 		}
-		if(data.txt11 != null && !data.txt19.isEmpty()){
+		if(data.txt19 != null && !data.txt19.isEmpty()){
 			img19.put("txt", data.txt19);
 		}
 		if(!img19.isNullObject() && !img19.isEmpty()){
@@ -859,7 +859,7 @@ public class AiU extends Controller {
 		if(data.picture20.exists()){
 			img20.put("picture", "/c/download?id=" + data.id + "&fileID=picture20&entity=" + data.getClass().getName() + "&z=" + z);
 		}
-		if(data.txt11 != null && !data.txt20.isEmpty()){
+		if(data.txt20 != null && !data.txt20.isEmpty()){
 			img20.put("txt", data.txt20);
 		}
 		if(!img20.isNullObject() && !img20.isEmpty()){
@@ -870,7 +870,7 @@ public class AiU extends Controller {
 		if(data.picture21.exists()){
 			img21.put("picture", "/c/download?id=" + data.id + "&fileID=picture21&entity=" + data.getClass().getName() + "&z=" + z);
 		}
-		if(data.txt11 != null && !data.txt21.isEmpty()){
+		if(data.txt21 != null && !data.txt21.isEmpty()){
 			img21.put("txt", data.txt21);
 		}
 		if(!img21.isNullObject() && !img21.isEmpty()){
@@ -881,7 +881,7 @@ public class AiU extends Controller {
 		if(data.picture22.exists()){
 			img22.put("picture", "/c/download?id=" + data.id + "&fileID=picture22&entity=" + data.getClass().getName() + "&z=" + z);
 		}
-		if(data.txt11 != null && !data.txt22.isEmpty()){
+		if(data.txt22 != null && !data.txt22.isEmpty()){
 			img22.put("txt", data.txt22);
 		}
 		if(!img22.isNullObject() && !img22.isEmpty()){
@@ -892,7 +892,7 @@ public class AiU extends Controller {
 		if(data.picture23.exists()){
 			img23.put("picture", "/c/download?id=" + data.id + "&fileID=picture23&entity=" + data.getClass().getName() + "&z=" + z);
 		}
-		if(data.txt11 != null && !data.txt23.isEmpty()){
+		if(data.txt23 != null && !data.txt23.isEmpty()){
 			img23.put("txt", data.txt23);
 		}
 		if(!img23.isNullObject() && !img23.isEmpty()){
@@ -903,7 +903,7 @@ public class AiU extends Controller {
 		if(data.picture24.exists()){
 			img24.put("picture", "/c/download?id=" + data.id + "&fileID=picture24&entity=" + data.getClass().getName() + "&z=" + z);
 		}
-		if(data.txt11 != null && !data.txt24.isEmpty()){
+		if(data.txt24 != null && !data.txt24.isEmpty()){
 			img24.put("txt", data.txt24);
 		}
 		if(!img24.isNullObject() && !img24.isEmpty()){
@@ -914,7 +914,7 @@ public class AiU extends Controller {
 		if(data.picture25.exists()){
 			img25.put("picture", "/c/download?id=" + data.id + "&fileID=picture25&entity=" + data.getClass().getName() + "&z=" + z);
 		}
-		if(data.txt11 != null && !data.txt25.isEmpty()){
+		if(data.txt25 != null && !data.txt25.isEmpty()){
 			img25.put("txt", data.txt25);
 		}
 		if(!img25.isNullObject() && !img25.isEmpty()){
