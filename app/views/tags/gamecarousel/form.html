@@ -29,242 +29,249 @@
 </div>
 
 <div class="crudField crud_relation">
-	#{field 'object.ct'}
-    	<label for="ct">
-           &{'ct'}
-       	</label>
-       <select name="selName" id="selName" >
+	#{field 'object.ct1'}
+       <select name="selName1" id="selName1" >
         	<option value="" >请选择...</option>
 	        #{list items:controllers.GameCarousels.findSimpleCarouselType(), as:'c'}
-	        		<option value="${c.type}" ${c.type == _caller?.selval? 'selected="true"'.raw() : ''}>${c}</option>
+	        		<option value="${c.id}" ${c.id == currentObject.ct1?.id? 'selected="true"'.raw() : ''}>${c}</option>
 	        #{/list}
         </select>
-           <input type="button" value="查询" onclick="change1()"/>
-  	#{/field}
-</div>
-
-#{if _caller.l == null || _caller.l.size() == 0}
-没有任何数据返回
-#{/if}
-#{else}
-    	<label for="ct1">
+           <input type="button" value="查询" onclick="change1(1, 1);"/>
+           <label for="ct1">
 		           播放信息1
        	</label>
        <select name="ad_name1" id="ad_id1" >
         	<option value="" >请选择...</option>
-	        #{list items:_caller.l, as:'c'}
-	        		<option value="${c.id}">${c}</option>
-	        #{/list}
         </select>
-#{/else}
-
-<div class="crudField crud_relation">
-	#{field 'object.ct2'}
-    	<label for="ct2">
-           &{'ct2'}
-       	</label>
-       <select name="selName2" id="selName2" >
-        	<option value="" >请选择...</option>
-	        #{list items:controllers.GameCarousels.findSimpleCarouselType(), as:'c'}
-	        		<option value="${c.type}" ${c.type == _caller?.selval? 'selected="true"'.raw() : ''}>${c}</option>
-	        #{/list}
-        </select>
-           <input type="button" value="查询" onclick="change1()"/>
   	#{/field}
 </div>
 
-#{if _caller.l == null || _caller.l.size() == 0}
-没有任何数据返回
-#{/if}
-#{else}
-    	<label for="ct2">
+
+<div class="crudField crud_relation">
+	#{field 'object.ct2'}
+       <select name="selName2" id="selName2" >
+        	<option value="" >请选择...</option>
+	        #{list items:controllers.GameCarousels.findSimpleCarouselType(), as:'c'}
+	        		<option value="${c.id}" ${c.id == currentObject.ct2?.id? 'selected="true"'.raw() : ''}>${c}</option>
+	        #{/list}
+        </select>
+           <input type="button" value="查询" onclick="change1(2, 1)"/>
+            	<label for="ct2">
 		           播放信息2
        	</label>
        <select name="ad_name2" id="ad_id2" >
         	<option value="" >请选择...</option>
-	        #{list items:_caller.l, as:'c'}
-	        		<option value="${c.id}">${c}</option>
-	        #{/list}
-        </select>
-#{/else}
 
-<div class="crudField crud_relation">
-	#{field 'object.ct3'}
-    	<label for="ct3">
-           &{'ct3'}
-       	</label>
-       <select name="selName3" id="selName3" >
-        	<option value="" >请选择...</option>
-	        #{list items:controllers.GameCarousels.findSimpleCarouselType(), as:'c'}
-	        		<option value="${c.type}" ${c.type == _caller?.selval? 'selected="true"'.raw() : ''}>${c}</option>
-	        #{/list}
         </select>
-           <input type="button" value="查询" onclick="change1()"/>
   	#{/field}
 </div>
 
-#{if _caller.l == null || _caller.l.size() == 0}
-没有任何数据返回
-#{/if}
-#{else}
-    	<label for="ct3">
+<div class="crudField crud_relation">
+	#{field 'object.ct3'}
+       <select name="selName3" id="selName3" >
+        	<option value="" >请选择...</option>
+	        #{list items:controllers.GameCarousels.findSimpleCarouselType(), as:'c'}
+	        		<option value="${c.id}" ${c.id == currentObject.ct3?.id? 'selected="true"'.raw() : ''}>${c}</option>
+	        #{/list}
+        </select>
+           <input type="button" value="查询" onclick="change1(3, 1)"/>
+           <label for="ct3">
 		           播放信息3
        	</label>
        <select name="ad_name3" id="ad_id3" >
         	<option value="" >请选择...</option>
-	        #{list items:_caller.l, as:'c'}
-	        		<option value="${c.id}">${c}</option>
-	        #{/list}
+	
         </select>
-#{/else}
+  	#{/field}
+</div>
+    	
+
 
 <div class="crudField crud_relation">
 	#{field 'object.ct4'}
-    	<label for="c4">
-           &{'ct4'}
-       	</label>
        <select name="selName4" id="selName4" >
         	<option value="" >请选择...</option>
 	        #{list items:controllers.GameCarousels.findSimpleCarouselType(), as:'c'}
-	        		<option value="${c.type}" ${c.type == _caller?.selval? 'selected="true"'.raw() : ''}>${c}</option>
+	        		<option value="${c.id}" ${c.id == currentObject.ct4?.id? 'selected="true"'.raw() : ''}>${c}</option>
 	        #{/list}
         </select>
-           <input type="button" value="查询" onclick="change1()"/>
-  	#{/field}
-</div>
-
-#{if _caller.l == null || _caller.l.size() == 0}
-没有任何数据返回
-#{/if}
-#{else}
-    	<label for="ct4">
+           <input type="button" value="查询" onclick="change1(4, 1)"/>
+           <label for="ct4">
 		           播放信息4
        	</label>
        <select name="ad_name4" id="ad_id4" >
         	<option value="" >请选择...</option>
-	        #{list items:_caller.l, as:'c'}
-	        		<option value="${c.id}">${c}</option>
-	        #{/list}
-        </select>
-#{/else}
 
-<div class="crudField crud_relation">
-	#{field 'object.ct5'}
-    	<label for="ct5">
-           &{'ct5'}
-       	</label>
-       <select name="selName5" id="selName5" >
-        	<option value="" >请选择...</option>
-	        #{list items:controllers.GameCarousels.findSimpleCarouselType(), as:'c'}
-	        		<option value="${c.type}" ${c.type == _caller?.selval? 'selected="true"'.raw() : ''}>${c}</option>
-	        #{/list}
         </select>
-           <input type="button" value="查询" onclick="change1()"/>
   	#{/field}
 </div>
 
-#{if _caller.l == null || _caller.l.size() == 0}
-没有任何数据返回
-#{/if}
-#{else}
-    	<label for="ct5">
+    	
+
+
+<div class="crudField crud_relation">
+	#{field 'object.ct5'}
+       <select name="selName5" id="selName5" >
+        	<option value="" >请选择...</option>
+	        #{list items:controllers.GameCarousels.findSimpleCarouselType(), as:'c'}
+	        		<option value="${c.id}" ${c.id == currentObject.ct5?.id? 'selected="true"'.raw() : ''}>${c}</option>
+	        #{/list}
+        </select>
+           <input type="button" value="查询" onclick="change1(5, 1)"/>
+           <label for="ct5">
 		           播放信息5
        	</label>
        <select name="ad_name5" id="ad_id5" >
         	<option value="" >请选择...</option>
-	        #{list items:_caller.l, as:'c'}
-	        		<option value="${c.id}">${c}</option>
-	        #{/list}
-        </select>
-#{/else}
 
-<div class="crudField crud_relation">
-	#{field 'object.ct6'}
-    	<label for="ct6">
-           &{'ct6'}
-       	</label>
-       <select name="selName6" id="selName6" >
-        	<option value="" >请选择...</option>
-	        #{list items:controllers.GameCarousels.findSimpleCarouselType(), as:'c'}
-	        		<option value="${c.type}" ${c.type == _caller?.selval? 'selected="true"'.raw() : ''}>${c}</option>
-	        #{/list}
         </select>
-           <input type="button" value="查询" onclick="change1()"/>
   	#{/field}
 </div>
 
-#{if _caller.l == null || _caller.l.size() == 0}
-没有任何数据返回
-#{/if}
-#{else}
+    	
+
+
+<div class="crudField crud_relation">
+	#{field 'object.ct6'}
+       <select name="selName6" id="selName6" >
+        	<option value="" >请选择...</option>
+	        #{list items:controllers.GameCarousels.findSimpleCarouselType(), as:'c'}
+	        		<option value="${c.id}" ${c.id == currentObject.ct6?.id? 'selected="true"'.raw() : ''}>${c}</option>
+	        #{/list}
+        </select>
+           <input type="button" value="查询" onclick="change1(6, 1)"/>
+           
     	<label for="ct6">
 		           播放信息6
        	</label>
        <select name="ad_name6" id="ad_id6" >
         	<option value="" >请选择...</option>
-	        #{list items:_caller.l, as:'c'}
-	        		<option value="${c.id}">${c}</option>
-	        #{/list}
-        </select>
-#{/else}
 
-<div class="crudField crud_relation">
-	#{field 'object.ct7'}
-    	<label for="ct7">
-           &{'ct7'}
-       	</label>
-       <select name="selName7" id="selName7" >
-        	<option value="" >请选择...</option>
-	        #{list items:controllers.GameCarousels.findSimpleCarouselType(), as:'c'}
-	        		<option value="${c.type}" ${c.type == _caller?.selval? 'selected="true"'.raw() : ''}>${c}</option>
-	        #{/list}
         </select>
-           <input type="button" value="查询" onclick="change1()"/>
   	#{/field}
 </div>
 
-#{if _caller.l == null || _caller.l.size() == 0}
-没有任何数据返回
-#{/if}
-#{else}
-    	<label for="ct7">
+<div class="crudField crud_relation">
+	#{field 'object.ct7'}
+
+       <select name="selName7" id="selName7" >
+        	<option value="" >请选择...</option>
+	        #{list items:controllers.GameCarousels.findSimpleCarouselType(), as:'c'}
+	        		<option value="${c.id}" ${c.id == currentObject.ct7?.id? 'selected="true"'.raw() : ''}>${c}</option>
+	        #{/list}
+        </select>
+           <input type="button" value="查询" onclick="change1(7, 1)"/>
+           	<label for="ct7">
 		           播放信息7
        	</label>
        <select name="ad_name7" id="ad_id7" >
         	<option value="" >请选择...</option>
-	        #{list items:_caller.l, as:'c'}
-	        		<option value="${c.id}">${c}</option>
-	        #{/list}
+
         </select>
-#{/else}
+  	#{/field}
+</div>
+    
+
 
 <div class="crudField crud_relation">
 	#{field 'object.ct8'}
-    	<label for="ct8">
-           &{'ct8'}
-       	</label>
+
        <select name="selName8" id="selName8" >
         	<option value="" >请选择...</option>
 	        #{list items:controllers.GameCarousels.findSimpleCarouselType(), as:'c'}
-	        		<option value="${c.type}" ${c.type == _caller?.selval? 'selected="true"'.raw() : ''}>${c}</option>
+	        		<option value="${c.id}" ${c.id == currentObject.ct8?.id? 'selected="true"'.raw() : ''}>${c}</option>
 	        #{/list}
         </select>
-           <input type="button" value="查询" onclick="change1()"/>
-  	#{/field}
-</div>
-
-#{if _caller.l == null || _caller.l.size() == 0}
-没有任何数据返回
-#{/if}
-#{else}
-    	<label for="ct8">
+           <input type="button" value="查询" onclick="change1(8, 1)"/>
+        
+  	<label for="ct8">
 		           播放信息8
        	</label>
+       	
        <select name="ad_name8" id="ad_id8" >
         	<option value="" >请选择...</option>
-	        #{list items:_caller.l, as:'c'}
-	        		<option value="${c.id}">${c}</option>
-	        #{/list}
-        </select>
-#{/else}
 
+        </select>
+  	#{/field}
+
+</div>
+
+<script type="text/javascript">
+
+for(var i=0;i<=7;i++){
+	change1(i, 0);
+}
+
+function change1(field_num, flag){
+	var method = "/gamecarousels/getentitylist?selval="+$("#selName"+field_num).val()+"&gid="+$("#game").val()+"&id=${currentObject._key()}&mType=${currentObject.mtype}";
+	
+	loadXMLDoc(method, field_num, flag);
+}
+ 
+function loadXMLDoc(m, field_num, flag){
+	var xmlhttp;
+
+	if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	}else{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	
+	xmlhttp.onreadystatechange=function(){
+
+		if (xmlhttp.readyState==4 && xmlhttp.status==200){
+		    jsonData=xmlhttp.responseText;
+		    var json = eval("(" + jsonData + ")"); 
+	//	    document.getElementById("myDiv1").innerHTML=json.state;
+	//	    document.getElementById("myDiv2").innerHTML=json.msg;
+			
+			if(json.state == "0" && flag == 1){
+				$("#ad_id"+field_num).empty();
+				alert("没有可用数据");
+			}else{
+				var jsonArray = json.results;
+				selectval = "";
+				for(var i=0;i<jsonArray.length;i++){
+					x = '';
+					switch (field_num){
+					case 1:
+					  x='${currentObject.ad_id1}'==jsonArray[i].id? "selected='true'":"";
+					  break;
+					case 2:
+						x='${currentObject.ad_id2}'==jsonArray[i].id? "selected='true'":"";
+					  break;
+					case 3:
+						x='${currentObject.ad_id3}'==jsonArray[i].id? "selected='true'":"";
+					  break;
+					case 4:
+						x='${currentObject.ad_id4}'==jsonArray[i].id? "selected='true'":"";
+					  break;
+					case 5:
+						x='${currentObject.ad_id5}'==jsonArray[i].id? "selected='true'":"";
+					  break;
+					case 6:
+						x='${currentObject.ad_id6}'==jsonArray[i].id? "selected='true'":"";
+					  break;
+					case 7:
+						x='${currentObject.ad_id7}'==jsonArray[i].id? "selected='true'":"";
+					  break;
+					case 8:
+						x='${currentObject.ad_id8}'==jsonArray[i].id? "selected='true'":"";
+					  break;
+					}
+					selectval += "<option value='"+jsonArray[i].id+"' "+x+" >"+jsonArray[i].title+"</option>";
+				}
+				
+				document.getElementById("ad_id"+field_num).innerHTML=selectval;	
+				
+				
+			}
+		
+		}
+	}
+	xmlhttp.open("GET",m,true);
+	xmlhttp.send();
+}
+
+</script>
+    	

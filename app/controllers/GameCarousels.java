@@ -5,41 +5,64 @@ import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
-import controllers.CRUD.ObjectType;
-
 import models.AdminManagement;
 import models.CarouselType;
 import models.FirmNew;
 import models.Game;
 import models.GameCarousel;
-import models.New;
 import models.Pack;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import play.data.binding.Binder;
 import play.db.Model;
 import play.exceptions.TemplateNotFoundException;
 import play.mvc.With;
+import utils.JSONUtil;
 
 @Check("admin")
 @With(Secure.class)
 public class GameCarousels extends CRUD {
 	
-	  public static void getEntityList(String id, String selval, Long gid) throws Exception {
-	       ObjectType type = ObjectType.get(getControllerClass());
-	        notFoundIfNull(type);
-	        GameCarousel object = (GameCarousel)type.findById(id);
-	        notFoundIfNull(object);
+	public static void getEntityList(String id, String selval, Long gid, Integer mType) throws Exception {
+		ObjectType type = ObjectType.get(getControllerClass());
+		notFoundIfNull(type);
+		GameCarousel object = (GameCarousel)type.findById(id);
+		notFoundIfNull(object);
 	        
-	        List l = null;
-	      if("新闻".equals(selval)){
-			  l = FirmNew.find("game_id=?", gid).fetch();
-		  }else if("礼包".equals(selval)){
-			  l = Pack.find("game_id=?", gid).fetch();
-		  }
-	      Long ad_id = object.ad_id;
-        try {
-            render("GameCarousels/show.html", type, object, l, selval, ad_id);
+		
+		JSONObject results = JSONUtil.getNewJSON();
+		JSONArray jsonArr = JSONUtil.getNewJSONArray();
+		if("4".equals(selval)){
+			List<FirmNew> l = FirmNew.find("game_id=? and (mtype=? or mtype=3)", gid, mType).fetch();
+			for(FirmNew fn : l){
+				JSONObject subdata = JSONUtil.getNewJSON();
+				subdata.put("id", fn.id);
+				subdata.put("title", fn.title);
+				jsonArr.add(subdata);
+			}
+		}else if("5".equals(selval)){ 
+			List<Pack> l = Pack.find("game_id=? and (mtype=? or mtype=3)", gid, mType).fetch();
+			for(Pack fn : l){
+				JSONObject subdata = JSONUtil.getNewJSON();
+				subdata.put("id", fn.id);
+				subdata.put("title", fn.title);
+				jsonArr.add(subdata);
+			}
+		}
+		
+		try {
+			if(jsonArr.size()==0){
+				results.put("state", "0");
+				results.put("msg", "No found data.");
+			}else{
+				results.put("state", "1");
+				results.put("results", jsonArr);
+			}
+			renderJSON(results);
         } catch (TemplateNotFoundException e) {
-            render("GameCarousels/show.html", type, object);
+        	results.put("state", "0");
+        	results.put("msg", "System Error");
+        	renderJSON(results);
         }
     }
 	  
@@ -60,32 +83,33 @@ public class GameCarousels extends CRUD {
         }
         notFoundIfNull(object);
         Binder.bindBean(params.getRootParamNode(), "object", object);
-        if(params.get("selName") != null && !params.get("selName").isEmpty()){
-        	object.ct = CarouselType.find("byType", params.get("selName")).first();
+        if(params.get("selName1") != null && !params.get("selName1").isEmpty()){
+        	object.ct1 = CarouselType.findById(Long.parseLong(params.get("selName1")));
         }
         if(params.get("selName2") != null && !params.get("selName2").isEmpty()){
-        	object.ct2 = CarouselType.find("byType", params.get("selName2")).first();
+        	object.ct2 = CarouselType.findById(Long.parseLong(params.get("selName2")));
         }
         if(params.get("selName3") != null && !params.get("selName3").isEmpty()){
-        	object.ct3 = CarouselType.find("byType", params.get("selName3")).first();
+        	object.ct3 = CarouselType.findById(Long.parseLong(params.get("selName3")));
         }
         if(params.get("selName4") != null && !params.get("selName4").isEmpty()){
-        	object.ct4 = CarouselType.find("byType", params.get("selName4")).first();
+        	object.ct4 = CarouselType.findById(Long.parseLong(params.get("selName4")));
         }
         if(params.get("selName5") != null && !params.get("selName5").isEmpty()){
-        	object.ct5 = CarouselType.find("byType", params.get("selName5")).first();
+        	object.ct5 = CarouselType.findById(Long.parseLong(params.get("selName5")));
         }
         if(params.get("selName6") != null && !params.get("selName6").isEmpty()){
-        	object.ct6 = CarouselType.find("byType", params.get("selName6")).first();
+        	object.ct6 = CarouselType.findById(Long.parseLong(params.get("selName6")));
         }
         if(params.get("selName7") != null && !params.get("selName7").isEmpty()){
-        	object.ct7 = CarouselType.find("byType", params.get("selName7")).first();
+        	object.ct7 = CarouselType.findById(Long.parseLong(params.get("selName7")));
         }
         if(params.get("selName8") != null && !params.get("selName8").isEmpty()){
-        	object.ct8 = CarouselType.find("byType", params.get("selName8")).first();
+        	object.ct8 = CarouselType.findById(Long.parseLong(params.get("selName8")));
         }
+        
         if(params.get("ad_name1") != null && !params.get("ad_name1").isEmpty()){
-        	object.ad_id = Long.parseLong(params.get("ad_name1"));
+        	object.ad_id1 = Long.parseLong(params.get("ad_name1"));
         }
         if(params.get("ad_name2") != null && !params.get("ad_name2").isEmpty()){
         	object.ad_id2 = Long.parseLong(params.get("ad_name2"));
@@ -131,24 +155,12 @@ public class GameCarousels extends CRUD {
         notFoundIfNull(type);
         GameCarousel object = (GameCarousel)type.findById(id);
         notFoundIfNull(object);
-        
-        List l = null;
-        String selval = null;
-        if(object.ct != null){
-        	if("新闻".equals(object.ct.type)){
-  			  l = FirmNew.find("byGame", object.game).fetch();
-  		  }else if("礼包".equals(object.ct.type)){
-  			  l = Pack.find("byGame", object.game).fetch();
-  		  }
-        	selval = object.ct.type;
-        }
-	  Long ad_id = object.ad_id;
-	  
-        try {
-            render(type, object, l, selval, ad_id);
-        } catch (TemplateNotFoundException e) {
-            render("CRUD/show.html", type, object);
-        }
+
+		try {
+		    render(type, object);
+		} catch (TemplateNotFoundException e) {
+		    render("CRUD/show.html", type, object);
+		}
     }
     
     public static void list(int page, String search, String searchFields, String orderBy, String order) {

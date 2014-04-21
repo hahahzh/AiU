@@ -46,11 +46,11 @@ public class CompressPic {
 					if(file.length() < 100000){
 						rate=(float)0.6;
 					}else if(file.length() < 200000){
-						rate=(float)0.4;
+						rate=(float)0.5;
 					}else if(file.length() < 300000){
 						rate=(float)0.3;
 					}else if(file.length() < 750000){
-						rate=(float)0.2;
+						rate=(float)0.3;
 					}else if(file.length() < 1240000){
 						rate=(float)0.1;
 					}

@@ -28,9 +28,9 @@ public class GameStrategys extends CRUD {
         
         Long admin_id = Long.parseLong(session.get("admin_id"));
       	List<Game> lg = ((AdminManagement)AdminManagement.findById(admin_id)).game;
-      	String where = null;
+      	String where = "";
       	int i = lg.size();
-      	if(i>0)where += "game_id in(";
+      	if(i>0)where = "game_id in(";
       	for(Game g:lg){
       		where += g.id+",";
       	}

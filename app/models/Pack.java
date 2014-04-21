@@ -40,6 +40,9 @@ public class Pack extends BaseModel {
 	@Required
 	public Date remaining;
 	
+	@Required
+	public Integer p_count;
+	
 	public String toString(){
 		return title;
 	}

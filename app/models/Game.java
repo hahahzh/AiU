@@ -28,7 +28,7 @@ public class Game extends ThirdModel {
 	public Integer type; // 下载类型
 	
 	@Index(name = "idx_games_star")
-	public Integer star; // 热度
+	public String star; // 热度
 	
 	@URL
 	public String bbsurl;
@@ -45,39 +45,150 @@ public class Game extends ThirdModel {
 	@Required
 	public String version;
 	
+// Start 增加到20
 	@CheckWith(PicCompres.class)
 	public Blob picture1_ip5;
 	
-	@Required
 	@CheckWith(PicCompres.class)
 	public Blob picture1;
+	
+	@Column(columnDefinition="TEXT")
+	@MaxSize(2000)
+	public String txt1; // 详细内容
 	
 	@CheckWith(PicCompres.class)
 	public Blob picture2;
 	
+	@Column(columnDefinition="TEXT")
+	@MaxSize(2000)
+	public String txt2; // 详细内容
+	
 	@CheckWith(PicCompres.class)
 	public Blob picture3;
+	
+	@Column(columnDefinition="TEXT")
+	@MaxSize(2000)
+	public String txt3; // 详细内容
 	
 	@CheckWith(PicCompres.class)
 	public Blob picture4;
 	
+	@Column(columnDefinition="TEXT")
+	@MaxSize(2000)
+	public String txt4; // 详细内容
+	
 	@CheckWith(PicCompres.class)
 	public Blob picture5;
+	
+	@Column(columnDefinition="TEXT")
+	@MaxSize(2000)
+	public String txt5; // 详细内容
 	
 	@CheckWith(PicCompres.class)
 	public Blob picture6;
 	
+	@Column(columnDefinition="TEXT")
+	@MaxSize(2000)
+	public String txt6; // 详细内容
+	
 	@CheckWith(PicCompres.class)
 	public Blob picture7;
+	
+	@Column(columnDefinition="TEXT")
+	@MaxSize(2000)
+	public String txt7; // 详细内容
 	
 	@CheckWith(PicCompres.class)
 	public Blob picture8;
 	
+	@Column(columnDefinition="TEXT")
+	@MaxSize(2000)
+	public String txt8; // 详细内容
+	
 	@CheckWith(PicCompres.class)
 	public Blob picture9;
 	
+	@Column(columnDefinition="TEXT")
+	@MaxSize(2000)
+	public String txt9; // 详细内容
+	
 	@CheckWith(PicCompres.class)
 	public Blob picture10;
+	
+	@Column(columnDefinition="TEXT")
+	@MaxSize(2000)
+	public String txt10; // 详细内容
+	
+	//11-25
+	@CheckWith(PicCompres.class)
+	public Blob picture11;
+	
+	@Column(columnDefinition="TEXT")
+	@MaxSize(2000)
+	public String txt11; // 详细内容
+	
+	@CheckWith(PicCompres.class)
+	public Blob picture12;
+	
+	@Column(columnDefinition="TEXT")
+	@MaxSize(2000)
+	public String txt12; // 详细内容
+	
+	@CheckWith(PicCompres.class)
+	public Blob picture13;
+	
+	@Column(columnDefinition="TEXT")
+	@MaxSize(2000)
+	public String txt13; // 详细内容
+	
+	@CheckWith(PicCompres.class)
+	public Blob picture14;
+	
+	@Column(columnDefinition="TEXT")
+	@MaxSize(2000)
+	public String txt14; // 详细内容
+	
+	@CheckWith(PicCompres.class)
+	public Blob picture15;
+	
+	@Column(columnDefinition="TEXT")
+	@MaxSize(2000)
+	public String txt15; // 详细内容
+	
+	@CheckWith(PicCompres.class)
+	public Blob picture16;
+	
+	@Column(columnDefinition="TEXT")
+	@MaxSize(2000)
+	public String txt16; // 详细内容
+	
+	@CheckWith(PicCompres.class)
+	public Blob picture17;
+	
+	@Column(columnDefinition="TEXT")
+	@MaxSize(2000)
+	public String txt17; // 详细内容
+	
+	@CheckWith(PicCompres.class)
+	public Blob picture18;
+	
+	@Column(columnDefinition="TEXT")
+	@MaxSize(2000)
+	public String txt18; // 详细内容
+	
+	@CheckWith(PicCompres.class)
+	public Blob picture19;
+	
+	@Column(columnDefinition="TEXT")
+	@MaxSize(2000)
+	public String txt19; // 详细内容
+	
+	@CheckWith(PicCompres.class)
+	public Blob picture20;
+	
+	@Column(columnDefinition="TEXT")
+	@MaxSize(2000)
+	public String txt20; // 详细内容
 	
 	public Blob getPicture1() {
 		return picture1;
@@ -107,7 +218,7 @@ public class Game extends ThirdModel {
 
 	public void setPicture2(Blob picture2) {
 		if(picture2 != null){
-			CompressPic.compressPic(picture2.getFile().getPath(), picture2.getFile().getPath());	
+			CompressPic.compressPic(picture2.getFile().getPath(), picture2.getFile().getPath());
 		}
 		this.picture2 = picture2;
 	}
@@ -194,11 +305,124 @@ public class Game extends ThirdModel {
 	}
 
 	public void setPicture10(Blob picture10) {
-		if(picture10 != null){
+		if(picture10 != null && picture10.getFile() != null){
 			CompressPic.compressPic(picture10.getFile().getPath(), picture10.getFile().getPath());
 		}
 		this.picture10 = picture10;
 	}
+	
+	// 11-25
+	public Blob getPicture11() {
+		return picture11;
+	}
+
+	public void setPicture11(Blob picture11) {
+		if(picture11 != null){
+			CompressPic.compressPic(picture11.getFile().getPath(), picture11.getFile().getPath());
+		}
+		this.picture11 = picture11;
+	}
+
+	public Blob getPicture12() {
+		return picture12;
+	}
+
+	public void setPicture12(Blob picture12) {
+		if(picture12 != null){
+			CompressPic.compressPic(picture12.getFile().getPath(), picture12.getFile().getPath());
+		}
+		this.picture12 = picture12;
+	}
+
+	public Blob getPicture13() {
+		return picture13;
+	}
+
+	public void setPicture13(Blob picture13) {
+		if(picture13 != null){
+			CompressPic.compressPic(picture13.getFile().getPath(), picture13.getFile().getPath());
+		}
+		this.picture13 = picture13;
+	}
+
+	public Blob getPicture14() {
+		return picture14;
+	}
+
+	public void setPicture14(Blob picture14) {
+		if(picture14 != null){
+			CompressPic.compressPic(picture14.getFile().getPath(), picture14.getFile().getPath());
+		}
+		this.picture14 = picture14;
+	}
+
+	public Blob getPicture15() {
+		return picture15;
+	}
+
+	public void setPicture15(Blob picture15) {
+		if(picture15 != null){
+			CompressPic.compressPic(picture15.getFile().getPath(), picture15.getFile().getPath());
+		}
+		this.picture15 = picture15;
+	}
+
+	public Blob getPicture16() {
+		return picture16;
+	}
+
+	public void setPicture16(Blob picture16) {
+		if(picture16 != null){
+			CompressPic.compressPic(picture16.getFile().getPath(), picture16.getFile().getPath());
+		}
+		this.picture16 = picture16;
+	}
+
+	public Blob getPicture17() {
+		return picture17;
+	}
+
+	public void setPicture17(Blob picture17) {
+		if(picture17 != null){
+			CompressPic.compressPic(picture17.getFile().getPath(), picture17.getFile().getPath());
+		}
+		this.picture17 = picture17;
+	}
+
+	public Blob getPicture18() {
+		return picture18;
+	}
+
+	public void setPicture18(Blob picture18) {
+		if(picture18 != null){
+			CompressPic.compressPic(picture18.getFile().getPath(), picture18.getFile().getPath());
+		}
+		this.picture18 = picture18;
+	}
+
+	public Blob getPicture19() {
+		return picture19;
+	}
+
+	public void setPicture19(Blob picture19) {
+		if(picture19 != null){
+			CompressPic.compressPic(picture19.getFile().getPath(), picture19.getFile().getPath());
+		}
+		this.picture19 = picture19;
+	}
+
+	public Blob getPicture20() {
+		return picture20;
+	}
+
+	public void setPicture20(Blob picture20) {
+		if(picture20 != null && picture20.getFile() != null){
+			CompressPic.compressPic(picture20.getFile().getPath(), picture20.getFile().getPath());
+		}
+		this.picture20 = picture20;
+	}
+	
+	// END
 	
 	@Required
 	@Column(columnDefinition="TEXT")

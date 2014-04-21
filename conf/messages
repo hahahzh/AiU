@@ -103,7 +103,7 @@ crud.help.numeric=数字
 
 secure.title=
 secure.username=用户名:
-secure.password=密码:
+secure.password=密&nbsp;&nbsp;&nbsp;码:
 secure.remember=记住我
 secure.signin=登陆
 secure.error=错误的用户名或密码.
@@ -260,5 +260,6 @@ picture4_g_icon=游戏评测icon(179*168)
 picture5_g_icon=游戏介绍icon(179*168)
 picture6_g_icon=玩家论坛icon(179*168)
 isShowNews=是否显示在新闻列表
+p_count=礼包总数
 
 crud.help.required=<font color=red>必填</font>

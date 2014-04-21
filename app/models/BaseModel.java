@@ -2,9 +2,11 @@ package models;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
 
 import org.hibernate.annotations.Index;
 
@@ -19,7 +21,7 @@ import controllers.CRUD.Hidden;
 public class BaseModel extends Model {
 	
 	@Required
-	@MaxSize(20)
+	@MaxSize(50)
 	@MinSize(2)
 	@Index(name = "idx_title")
 	public String title;
@@ -27,9 +29,11 @@ public class BaseModel extends Model {
 	@Index(name = "idx_data")
 	@Hidden
 	public Long data = new Date().getTime();
+
 	
 	@Required
 	// 1 IOS 2 Android 3 WP
 	public int mtype;
 	
+
 }

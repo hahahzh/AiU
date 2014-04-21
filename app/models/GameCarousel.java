@@ -22,10 +22,10 @@ public class GameCarousel extends Model {
 	public int mtype;
 	
 	@Hidden
-	public Long ad_id;
+	public Long ad_id1;
 	
 	@ManyToOne(fetch=FetchType.EAGER,cascade=javax.persistence.CascadeType.REFRESH)
-	public CarouselType ct;
+	public CarouselType ct1;
 	
 	@Hidden
 	public Long ad_id2;

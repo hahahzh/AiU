@@ -317,7 +317,7 @@ public class New extends ThirdModel {
 	}
 
 	public void setPicture10(Blob picture10) {
-		if(picture10 != null && picture10.getFile() != null){
+		if(picture10 != null){
 			CompressPic.compressPic(picture10.getFile().getPath(), picture10.getFile().getPath());
 		}
 		this.picture10 = picture10;
