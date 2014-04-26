@@ -1,5 +1,6 @@
 package models;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -7,6 +8,8 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Index;
 
@@ -15,6 +18,7 @@ import play.data.validation.MinSize;
 import play.data.validation.Required;
 import play.db.jpa.JPABase;
 import play.db.jpa.Model;
+import utils.DateUtil;
 import controllers.CRUD.Hidden;
 
 @MappedSuperclass
@@ -30,6 +34,8 @@ public class BaseModel extends Model {
 	@Hidden
 	public Long data = new Date().getTime();
 
+	@Hidden
+	public String createDate = DateUtil.toFull(new Date());
 	
 	@Required
 	// 1 IOS 2 Android 3 WP

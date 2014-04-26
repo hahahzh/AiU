@@ -85,52 +85,84 @@ public class GameCarousels extends CRUD {
         Binder.bindBean(params.getRootParamNode(), "object", object);
         if(params.get("selName1") != null && !params.get("selName1").isEmpty()){
         	object.ct1 = CarouselType.findById(Long.parseLong(params.get("selName1")));
+        }else{
+        	object.ct1 = null;
         }
         if(params.get("selName2") != null && !params.get("selName2").isEmpty()){
         	object.ct2 = CarouselType.findById(Long.parseLong(params.get("selName2")));
+        }else{
+        	object.ct2 = null;
         }
         if(params.get("selName3") != null && !params.get("selName3").isEmpty()){
         	object.ct3 = CarouselType.findById(Long.parseLong(params.get("selName3")));
+        }else{
+        	object.ct3 = null;
         }
         if(params.get("selName4") != null && !params.get("selName4").isEmpty()){
         	object.ct4 = CarouselType.findById(Long.parseLong(params.get("selName4")));
+        }else{
+        	object.ct4 = null;
         }
         if(params.get("selName5") != null && !params.get("selName5").isEmpty()){
         	object.ct5 = CarouselType.findById(Long.parseLong(params.get("selName5")));
+        }else{
+        	object.ct5 = null;
         }
         if(params.get("selName6") != null && !params.get("selName6").isEmpty()){
         	object.ct6 = CarouselType.findById(Long.parseLong(params.get("selName6")));
+        }else{
+        	object.ct6 = null;
         }
         if(params.get("selName7") != null && !params.get("selName7").isEmpty()){
         	object.ct7 = CarouselType.findById(Long.parseLong(params.get("selName7")));
+        }else{
+        	object.ct7 = null;
         }
         if(params.get("selName8") != null && !params.get("selName8").isEmpty()){
         	object.ct8 = CarouselType.findById(Long.parseLong(params.get("selName8")));
+        }else{
+        	object.ct8 = null;
         }
         
         if(params.get("ad_name1") != null && !params.get("ad_name1").isEmpty()){
         	object.ad_id1 = Long.parseLong(params.get("ad_name1"));
+        }else{
+        	object.ad_id1 = 0L;
         }
         if(params.get("ad_name2") != null && !params.get("ad_name2").isEmpty()){
         	object.ad_id2 = Long.parseLong(params.get("ad_name2"));
+        }else{
+        	object.ad_id2 = 0L;
         }
         if(params.get("ad_name3") != null && !params.get("ad_name3").isEmpty()){
         	object.ad_id3 = Long.parseLong(params.get("ad_name3"));
+        }else{
+        	object.ad_id3 = 0L;
         }
         if(params.get("ad_name4") != null && !params.get("ad_name4").isEmpty()){
         	object.ad_id4 = Long.parseLong(params.get("ad_name4"));
+        }else{
+        	object.ad_id4 = 0L;
         }
         if(params.get("ad_name5") != null && !params.get("ad_name5").isEmpty()){
         	object.ad_id5 = Long.parseLong(params.get("ad_name5"));
+        }else{
+        	object.ad_id5 = 0L;
         }
         if(params.get("ad_name6") != null && !params.get("ad_name6").isEmpty()){
         	object.ad_id6 = Long.parseLong(params.get("ad_name6"));
+        }else{
+        	object.ad_id6 = 0L;
         }
         if(params.get("ad_name7") != null && !params.get("ad_name7").isEmpty()){
         	object.ad_id7 = Long.parseLong(params.get("ad_name7"));
+        }else{
+        	object.ad_id7 = 0L;
         }
         if(params.get("ad_name8") != null && !params.get("ad_name8").isEmpty()){
         	object.ad_id8 = Long.parseLong(params.get("ad_name8"));
+        }else{
+        	object.ad_id8 = 0L;
         }
         validation.valid(object);
         if (validation.hasErrors()) {

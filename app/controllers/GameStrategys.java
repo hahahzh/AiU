@@ -35,6 +35,7 @@ public class GameStrategys extends CRUD {
       		where += g.id+",";
       	}
       	if(i>0)where += "0)";
+      	where = "".equals(where)? null:where;
         List<Model> objects = type.findPage(page, search, searchFields, orderBy, order, where);
         Long count = type.count(search, searchFields, where);
         Long totalCount = type.count(null, null, where);

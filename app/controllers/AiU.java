@@ -132,6 +132,9 @@ public class AiU extends Controller {
 			String s = SendSMS.send(m, "您的验证码是：" + n + "。请不要把验证码泄露给其他人。");
 			if(!"2".equals(s)){
 				play.Logger.error("checkDigit: result="+s+" PNumber="+m+" digit="+n);
+				if(!"OK".equals(s)){
+					s = "验证码获取失败请稍后再试";
+				}
 				renderText(s);
 			}
 			CheckDigit cd = new CheckDigit();
@@ -172,42 +175,44 @@ public class AiU extends Controller {
 				renderFail("error_checkdigit");
 			}
 			c.delete();
-			
+
 			Customer m = Customer.find("byM_number", arr[6]).first();
-			if (m == null) {
-				// .......
-				Customer newUser = new Customer();
-				newUser.cid = arr[1];
-				newUser.mac = arr[3];
-				newUser.os = Integer.parseInt(arr[4]);
-				newUser.type = arr[5];
-				newUser.m_number = arr[6];
-				newUser.nickname = arr[8];
-				newUser.psd = arr[9];
-				newUser.exp = 0L;
-				newUser.lv = (LevelType)LevelType.findAll().get(0);
-				newUser.save();
-				
-				Session s = new Session();
-				s.customer = newUser;
-				s.data = new Date().getTime();
-				s.sessionID = UUID.randomUUID().toString();
-				s.save();
-				
-				JSONObject results = initResultJSON();				
-				results.put("uid", newUser.getId());
-				results.put("phone", newUser.m_number);
-				results.put("exp", newUser.exp);
-				results.put("lv", newUser.lv.level_name);
-				results.put("name", newUser.nickname);
-				results.put("session", s.sessionID);
-				RecordJob.logRecord.offer(arr[6]+","+"null"+","+"null"+","+arr[3]+","+"reg");
-				renderSuccess(results);
-			} else {
-				// .......
-				play.Logger.info("register:src");
+			if(m != null){
+				play.Logger.info("register:error_username_already_used");
 				renderFail("error_username_already_used");
 			}
+			
+			m = new Customer();
+			m.cid = arr[1];
+			m.mac = arr[3]+":aiu";
+			m.os = Integer.parseInt(arr[4]);
+			m.type = arr[5];
+			m.m_number = arr[6];
+			m.nickname = arr[8];
+			m.psd = arr[9];
+			m.exp = 0L;
+			m.lv = (LevelType)LevelType.findAll().get(0);
+			m.updatetime = new Date();
+			m.save();
+			
+			Session s = Session.find("byCustomer", m).first();
+			if(s == null)s = new Session();
+			s.customer = m;
+			s.data = new Date().getTime();
+			s.sessionID = UUID.randomUUID().toString();
+			s.save();
+			
+			JSONObject results = initResultJSON();				
+			results.put("uid", m.getId());
+			results.put("phone", m.m_number);
+			results.put("exp", m.exp);
+			results.put("lv", m.lv.level_name);
+			results.put("name", m.nickname);
+			results.put("session", s.sessionID);
+			RecordJob.logRecord.offer(arr[6]+","+"null"+","+"null"+","+arr[3]+","+"reg");
+			play.Logger.info("register:OK "+m.m_number+" "+m.mac);
+			renderSuccess(results);
+			
 		} catch (Exception e) {
 			play.Logger.info("register:src");
 			renderFail("error_unknown");

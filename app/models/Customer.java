@@ -10,6 +10,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Index;
 
@@ -66,6 +68,9 @@ public class Customer extends Model {
 
 	@Hidden
 	public Long data = new Date().getTime();
+	
+	@Hidden
+	public Date updatetime;
 	// 0 男 1 女
 	public Byte gender;
 	
