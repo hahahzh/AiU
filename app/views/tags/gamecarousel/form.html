@@ -133,77 +133,6 @@
   	#{/field}
 </div>
 
-    	
-
-
-<div class="crudField crud_relation">
-	#{field 'object.ct6'}
-       <select name="selName6" id="selName6" >
-        	<option value="" >请选择...</option>
-	        #{list items:controllers.GameCarousels.findSimpleCarouselType(), as:'c'}
-	        		<option value="${c.id}" ${c.id == currentObject.ct6?.id? 'selected="true"'.raw() : ''}>${c}</option>
-	        #{/list}
-        </select>
-           <input type="button" value="查询" onclick="change1(6, 1)"/>
-           
-    	<label for="ct6">
-		           播放信息6
-       	</label>
-       <select name="ad_name6" id="ad_id6" >
-        	<option value="" >请选择...</option>
-
-        </select>
-        <input type="button" name="" id="b_sel_1" value="清除" onclick="clearSel(6);">
-  	#{/field}
-</div>
-
-<div class="crudField crud_relation">
-	#{field 'object.ct7'}
-
-       <select name="selName7" id="selName7" >
-        	<option value="" >请选择...</option>
-	        #{list items:controllers.GameCarousels.findSimpleCarouselType(), as:'c'}
-	        		<option value="${c.id}" ${c.id == currentObject.ct7?.id? 'selected="true"'.raw() : ''}>${c}</option>
-	        #{/list}
-        </select>
-           <input type="button" value="查询" onclick="change1(7, 1)"/>
-           	<label for="ct7">
-		           播放信息7
-       	</label>
-       <select name="ad_name7" id="ad_id7" >
-        	<option value="" >请选择...</option>
-
-        </select>
-        <input type="button" name="" id="b_sel_1" value="清除" onclick="clearSel(7);">
-  	#{/field}
-</div>
-    
-
-
-<div class="crudField crud_relation">
-	#{field 'object.ct8'}
-
-       <select name="selName8" id="selName8" >
-        	<option value="" >请选择...</option>
-	        #{list items:controllers.GameCarousels.findSimpleCarouselType(), as:'c'}
-	        		<option value="${c.id}" ${c.id == currentObject.ct8?.id? 'selected="true"'.raw() : ''}>${c}</option>
-	        #{/list}
-        </select>
-           <input type="button" value="查询" onclick="change1(8, 1)"/>
-        
-  	<label for="ct8">
-		           播放信息8
-       	</label>
-       	
-       <select name="ad_name8" id="ad_id8" >
-        	<option value="" >请选择...</option>
-
-        </select>
-        <input type="button" name="" id="b_sel_1" value="清除" onclick="clearSel(8);">
-  	#{/field}
-
-</div>
-
 <script type="text/javascript">
 
 for(var i=0;i<=7;i++){
@@ -257,15 +186,6 @@ function loadXMLDoc(m, field_num, flag){
 					  break;
 					case 5:
 						x='${currentObject.ad_id5}'==jsonArray[i].id? "selected='true'":"";
-					  break;
-					case 6:
-						x='${currentObject.ad_id6}'==jsonArray[i].id? "selected='true'":"";
-					  break;
-					case 7:
-						x='${currentObject.ad_id7}'==jsonArray[i].id? "selected='true'":"";
-					  break;
-					case 8:
-						x='${currentObject.ad_id8}'==jsonArray[i].id? "selected='true'":"";
 					  break;
 					}
 					selectval += "<option value='"+jsonArray[i].id+"' "+x+" >"+jsonArray[i].title+"</option>";

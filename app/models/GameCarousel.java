@@ -51,23 +51,23 @@ public class GameCarousel extends Model {
 	@ManyToOne(fetch=FetchType.EAGER,cascade=javax.persistence.CascadeType.REFRESH)
 	public CarouselType ct5;
 	
-	@Hidden
-	public Long ad_id6;
-	
-	@ManyToOne(fetch=FetchType.EAGER,cascade=javax.persistence.CascadeType.REFRESH)
-	public CarouselType ct6;
-	
-	@Hidden
-	public Long ad_id7;
-	
-	@ManyToOne(fetch=FetchType.EAGER,cascade=javax.persistence.CascadeType.REFRESH)
-	public CarouselType ct7;
-	
-	@Hidden
-	public Long ad_id8;
-	
-	@ManyToOne(fetch=FetchType.EAGER,cascade=javax.persistence.CascadeType.REFRESH)
-	public CarouselType ct8;
+//	@Hidden
+//	public Long ad_id6;
+//	
+//	@ManyToOne(fetch=FetchType.EAGER,cascade=javax.persistence.CascadeType.REFRESH)
+//	public CarouselType ct6;
+//	
+//	@Hidden
+//	public Long ad_id7;
+//	
+//	@ManyToOne(fetch=FetchType.EAGER,cascade=javax.persistence.CascadeType.REFRESH)
+//	public CarouselType ct7;
+//	
+//	@Hidden
+//	public Long ad_id8;
+//	
+//	@ManyToOne(fetch=FetchType.EAGER,cascade=javax.persistence.CascadeType.REFRESH)
+//	public CarouselType ct8;
 	
 	@Required
 	@OneToOne(fetch=FetchType.EAGER,cascade=javax.persistence.CascadeType.REFRESH)

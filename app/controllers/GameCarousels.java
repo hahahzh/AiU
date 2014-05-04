@@ -108,21 +108,21 @@ public class GameCarousels extends CRUD {
         }else{
         	object.ct5 = null;
         }
-        if(params.get("selName6") != null && !params.get("selName6").isEmpty()){
-        	object.ct6 = CarouselType.findById(Long.parseLong(params.get("selName6")));
-        }else{
-        	object.ct6 = null;
-        }
-        if(params.get("selName7") != null && !params.get("selName7").isEmpty()){
-        	object.ct7 = CarouselType.findById(Long.parseLong(params.get("selName7")));
-        }else{
-        	object.ct7 = null;
-        }
-        if(params.get("selName8") != null && !params.get("selName8").isEmpty()){
-        	object.ct8 = CarouselType.findById(Long.parseLong(params.get("selName8")));
-        }else{
-        	object.ct8 = null;
-        }
+//        if(params.get("selName6") != null && !params.get("selName6").isEmpty()){
+//        	object.ct6 = CarouselType.findById(Long.parseLong(params.get("selName6")));
+//        }else{
+//        	object.ct6 = null;
+//        }
+//        if(params.get("selName7") != null && !params.get("selName7").isEmpty()){
+//        	object.ct7 = CarouselType.findById(Long.parseLong(params.get("selName7")));
+//        }else{
+//        	object.ct7 = null;
+//        }
+//        if(params.get("selName8") != null && !params.get("selName8").isEmpty()){
+//        	object.ct8 = CarouselType.findById(Long.parseLong(params.get("selName8")));
+//        }else{
+//        	object.ct8 = null;
+//        }
         
         if(params.get("ad_name1") != null && !params.get("ad_name1").isEmpty()){
         	object.ad_id1 = Long.parseLong(params.get("ad_name1"));
@@ -149,21 +149,21 @@ public class GameCarousels extends CRUD {
         }else{
         	object.ad_id5 = 0L;
         }
-        if(params.get("ad_name6") != null && !params.get("ad_name6").isEmpty()){
-        	object.ad_id6 = Long.parseLong(params.get("ad_name6"));
-        }else{
-        	object.ad_id6 = 0L;
-        }
-        if(params.get("ad_name7") != null && !params.get("ad_name7").isEmpty()){
-        	object.ad_id7 = Long.parseLong(params.get("ad_name7"));
-        }else{
-        	object.ad_id7 = 0L;
-        }
-        if(params.get("ad_name8") != null && !params.get("ad_name8").isEmpty()){
-        	object.ad_id8 = Long.parseLong(params.get("ad_name8"));
-        }else{
-        	object.ad_id8 = 0L;
-        }
+//        if(params.get("ad_name6") != null && !params.get("ad_name6").isEmpty()){
+//        	object.ad_id6 = Long.parseLong(params.get("ad_name6"));
+//        }else{
+//        	object.ad_id6 = 0L;
+//        }
+//        if(params.get("ad_name7") != null && !params.get("ad_name7").isEmpty()){
+//        	object.ad_id7 = Long.parseLong(params.get("ad_name7"));
+//        }else{
+//        	object.ad_id7 = 0L;
+//        }
+//        if(params.get("ad_name8") != null && !params.get("ad_name8").isEmpty()){
+//        	object.ad_id8 = Long.parseLong(params.get("ad_name8"));
+//        }else{
+//        	object.ad_id8 = 0L;
+//        }
         validation.valid(object);
         if (validation.hasErrors()) {
             renderArgs.put("error", play.i18n.Messages.get("crud.hasErrors"));

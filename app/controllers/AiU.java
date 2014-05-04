@@ -145,7 +145,7 @@ public class AiU extends Controller {
 		} catch (Exception e) {
 			play.Logger.error("checkDigit: PNumber="+m+" digit="+n);
 			play.Logger.error(e.getMessage());
-			renderText("failed");
+			renderText("系统繁忙发送失败请再次获取");
 		}
 		renderText("OK");
 	}
@@ -1364,30 +1364,30 @@ public class AiU extends Controller {
 		results.put("g_id", data.game.id);
 		
 		JSONArray adlistArr = initResultJSONArray();
-		if(data.ct1 != null && data.ad_id1 != null){
+		if(data.ct1 != null && data.ad_id1 != null && data.ad_id1 != 0){
 			adlistArr.add(setGameCarosel(data.ct1.type,data.ad_id1, z, ios_t, data.game.id));
 		}
-		if(data.ct2 != null && data.ad_id2 != null){
+		if(data.ct2 != null && data.ad_id2 != null && data.ad_id2 != 0){
 			adlistArr.add(setGameCarosel(data.ct2.type,data.ad_id2, z, ios_t, data.game.id));
 		}
-		if(data.ct3 != null && data.ad_id3 != null){
+		if(data.ct3 != null && data.ad_id3 != null && data.ad_id3 != 0){
 			adlistArr.add(setGameCarosel(data.ct3.type,data.ad_id3, z, ios_t, data.game.id));
 		}   
-		if(data.ct4 != null && data.ad_id4 != null){
+		if(data.ct4 != null && data.ad_id4 != null && data.ad_id4 != 0){
 			adlistArr.add(setGameCarosel(data.ct4.type,data.ad_id4, z, ios_t, data.game.id));
 		}
-		if(data.ct5 != null && data.ad_id5 != null){
+		if(data.ct5 != null && data.ad_id5 != null && data.ad_id5 != 0){
 			adlistArr.add(setGameCarosel(data.ct5.type,data.ad_id5, z, ios_t, data.game.id));
 		}
-		if(data.ct6 != null && data.ad_id6 != null){
-			adlistArr.add(setGameCarosel(data.ct6.type,data.ad_id6, z, ios_t, data.game.id));
-		}
-		if(data.ct7 != null && data.ad_id7 != null){
-			adlistArr.add(setGameCarosel(data.ct7.type,data.ad_id7, z, ios_t, data.game.id));
-		}
-		if(data.ct8 != null && data.ad_id8 != null){
-			adlistArr.add(setGameCarosel(data.ct8.type,data.ad_id8, z, ios_t, data.game.id));
-		}
+//		if(data.ct6 != null && data.ad_id6 != null && data.ad_id6 != 0){
+//			adlistArr.add(setGameCarosel(data.ct6.type,data.ad_id6, z, ios_t, data.game.id));
+//		}
+//		if(data.ct7 != null && data.ad_id7 != null && data.ad_id7 != 0){
+//			adlistArr.add(setGameCarosel(data.ct7.type,data.ad_id7, z, ios_t, data.game.id));
+//		}
+//		if(data.ct8 != null && data.ad_id8 != null && data.ad_id8 != 0){
+//			adlistArr.add(setGameCarosel(data.ct8.type,data.ad_id8, z, ios_t, data.game.id));
+//		}
 		
 		switch (customer.os){
 			case ONE : results.put("downloadurl", data.game.downloadurl1);
@@ -1408,9 +1408,11 @@ public class AiU extends Controller {
 	}
 	
 	private static JSONObject setGameCarosel(String type, Long ad_id, String z, String ios_t, Long gid){
-		JSONObject subad = new JSONObject();
+		JSONObject subad = null;
 	  	  if("新闻".equals(type)){
 	  		FirmNew l = FirmNew.findById(ad_id);
+	  		if(l == null) return subad;
+	  		subad = new JSONObject();
 	  		if(ios_t == null || ios_t.isEmpty()){
 	  			subad.put("icon", "/c/download?id=" + l.id + "&fileID=picture1&entity=" + l.getClass().getName() + "&z=" + z);
 	  			subad.put("icon_2", "/c/download?id=" + l.id + "&fileID=picture1_ip5&entity=" + l.getClass().getName() + "&z=" + z);
@@ -1426,6 +1428,8 @@ public class AiU extends Controller {
 			subad.put("title", l.title);
 	  	  }else if("礼包".equals(type)){
 	  		Pack l = Pack.findById(ad_id);
+	  		if(l == null) return subad;
+	  		subad = new JSONObject();
 		  	subad.put("icon", "/c/download?id=" + l.id + "&fileID=icon&entity=" + l.getClass().getName() + "&z=" + z);
 			subad.put("url", "/c/package?num=5&page=1&gid="+gid+"&z="+z);
 			subad.put("data", l.data+"");
