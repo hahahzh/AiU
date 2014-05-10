@@ -23,8 +23,62 @@ public class GameVideo extends ThirdModel {
 	public Blob video1;
 	
 	@Column(columnDefinition="TEXT")
-	@MaxSize(2000)
+	@MaxSize(500)
 	public String txt1; // 详细内容
+	
+	public Blob video2;
+	
+	@Column(columnDefinition="TEXT")
+	@MaxSize(500)
+	public String txt2; // 详细内容
+	
+	public Blob video3;
+
+	@Column(columnDefinition="TEXT")
+	@MaxSize(500)
+	public String txt3; // 详细内容
+	
+	public Blob video4;
+	
+	@Column(columnDefinition="TEXT")
+	@MaxSize(500)
+	public String txt4; // 详细内容
+	
+	public Blob video5;
+	
+	@Column(columnDefinition="TEXT")
+	@MaxSize(500)
+	public String txt5; // 详细内容
+	
+	public Blob video6;
+	
+	@Column(columnDefinition="TEXT")
+	@MaxSize(500)
+	public String txt6; // 详细内容
+	
+	public Blob video7;
+	
+	@Column(columnDefinition="TEXT")
+	@MaxSize(500)
+	public String txt7; // 详细内容
+	
+	public Blob video8;
+	
+	@Column(columnDefinition="TEXT")
+	@MaxSize(500)
+	public String txt8; // 详细内容
+	
+	public Blob video9;
+	
+	@Column(columnDefinition="TEXT")
+	@MaxSize(500)
+	public String txt9; // 详细内容
+	
+	public Blob video10;
+	
+	@Column(columnDefinition="TEXT")
+	@MaxSize(500)
+	public String txt10; // 详细内容
 	
 	public String toString(){
 		return title;
