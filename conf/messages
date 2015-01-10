@@ -55,6 +55,7 @@ clear_cache_success=清空缓存成功.
 set_move_alarm_success=设置移动报警成功.
 get_version_success=获取最新版本成功.
 carousel_name=名称
+skey=关键字(多个关键字用,分隔)
 
 crud.title=矮油互动娱乐管理平台
 crud.home=主页
@@ -225,7 +226,7 @@ m_number=手机号
 cid=产品号
 lv=等级
 exp=经验
-gender=性别
+gender=性别(0 男 1 女)
 type=类型
 pic=图片
 level_name=等级名称
@@ -275,4 +276,11 @@ video10=视频10
 GameVideo=游戏视频
 GameVideos=游戏视频
 
+Anchor=主播信息
+Anchors=主播信息
+portrait=头像
+
+IOSSwitch=IOS订阅开关
+IOSSwitchs=IOS订阅开关
+ios_switch=开关
 crud.help.required=<font color=red>必填</font>
