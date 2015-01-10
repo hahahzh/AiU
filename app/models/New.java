@@ -19,8 +19,11 @@ import check.PicCompres;
 public class New extends ThirdModel {
 	@Hidden
 	public Blob icon;
+	
 	@Required
 	public String describe_aiu; // 简介
+	
+	public String skey;
 	
 	@CheckWith(PicCompres.class)
 	public Blob picture1_ip5;

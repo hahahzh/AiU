@@ -22,6 +22,7 @@ import models.GameIcon;
 import models.GameMessage;
 import models.GameStrategy;
 import models.GameType;
+import models.IOSSwitch;
 import models.IndexPage;
 import models.LevelType;
 import models.NativeNew;
@@ -455,6 +456,13 @@ public class AiU extends Controller {
 			prechannel.add(subprec);
 		}
 		if(l != null && l.size() != 0)results.put("prechannel", prechannel);
+		
+		IOSSwitch is = IOSSwitch.findById(1L);
+		if(is.ios_switch){
+			results.put("ios_plus", 0);
+		}else{
+			results.put("ios_plus", 1);
+		}
 		renderSuccess(results);
 	}
 	

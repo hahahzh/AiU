@@ -447,6 +447,8 @@ public class Game extends ThirdModel {
 	@Required
 	public int ranking;
 	
+	public String skey;
+	
 	public String toString(){
 		return title;
 	}

@@ -145,7 +145,7 @@ public abstract class Coder {
     public static void main(String[] args){
     	String a = "5TMDAwMDZ8MTAwMDF8aW1laXxpbXNpdGVzdHxHN3w0ODB4ODAwfGFuZHJvaWR8MXwxLjF8MnwwVy8dN";
     	String b;
-    	String c = "23|12345|1.0|12,14,87,jj,ff|1|土豪金5S|15000993473|123786|haha|123456|321";
+    	String c = "23|12345|12,14,87,jj,ff|123456|123456|1|13838389446|124833|123456|321";
 		try {
 			String[] ss = c.split("\\|");
 			System.out.println(ss[3]);
